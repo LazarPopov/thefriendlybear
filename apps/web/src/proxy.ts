@@ -18,7 +18,7 @@ function getHtmlLanguage(pathname: string) {
   return "bg";
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(
     "x-friendlybear-html-lang",
