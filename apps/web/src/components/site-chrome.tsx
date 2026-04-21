@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { businessProfileSource } from "@/lib/business-profile-source";
 import type { BusinessHoursEntry } from "@/lib/business-profile-source";
 
@@ -117,13 +117,12 @@ function formatOpeningHours(entry: BusinessHoursEntry, closedLabel: string) {
   return `${entry.opens} - ${entry.closes}`;
 }
 
-export function SiteChrome({ children }: { children: React.ReactNode }) {
+export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() || "/bg";
   const touristMarketAudience = getTouristMarketAudienceFromPath(pathname);
   const locale = getLocaleFromPath(pathname);
   const languagePath = getLanguageSwitchPath(pathname, locale, touristMarketAudience);
   const isHomeRoute = pathname === "/" || pathname === "/bg" || pathname === "/en";
-  const [hasScrolled, setHasScrolled] = useState(false);
   const currentYear = new Date().getFullYear();
   const homePath = `/${locale}`;
   const menuPath = `/${locale}/menu`;
@@ -134,7 +133,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const phoneNumber = businessProfileSource.contact.phoneNumber;
   const phoneDisplay = businessProfileSource.contact.phoneDisplay ?? phoneNumber;
   const phoneHref = phoneNumber ? `tel:${normalizePhone(phoneNumber)}` : null;
-  const showHeader = !isHomeRoute || hasScrolled;
+  const showHeader = true;
+  const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const copy =
     locale === "bg"
       ? {
@@ -200,21 +200,21 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function handleScroll() {
-      setHasScrolled(window.scrollY > 96);
+      setIsHeaderCompact(window.scrollY > 56);
     }
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <>
       <header
         className={`site-header-shell ${isHomeRoute ? "site-header-shell-home" : ""} ${
           showHeader ? "site-header-shell-visible" : "site-header-shell-hidden"
-        }`}
+        } ${isHeaderCompact ? "site-header-shell-compact" : "site-header-shell-expanded"}`}
       >
         <div className="site-header">
           <Link href={homePath} className="site-brand" aria-label="The Friendly Bear Sofia home">
@@ -228,7 +228,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             />
             <span>
               <strong>The Friendly Bear</strong>
-              <small>{copy.shortSlogan}</small>
+              <small>{isHeaderCompact ? copy.shortSlogan : copy.footerNote}</small>
             </span>
           </Link>
 
@@ -257,6 +257,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <span className="site-nav-label-desktop">{copy.directions}</span>
               <span className="site-nav-label-mobile site-nav-map-label">
                 <img src="/icons/google-maps-icon.svg" alt="" className="site-nav-map-icon" />
+                <span className="site-nav-map-text">{locale === "bg" ? "Карта" : "Map"}</span>
               </span>
             </a>
             <Link href={menuPath} className="site-nav-essential site-nav-menu">
@@ -266,26 +267,28 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             <Link href={aboutPath} className="site-nav-secondary">
               {copy.about}
             </Link>
-            <a
-              href={instagramUrl}
-              className="site-nav-social"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-              title="Instagram"
-            >
-              <InstagramIcon />
-            </a>
-            <a
-              href={facebookUrl}
-              className="site-nav-social"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-              title="Facebook"
-            >
-              <FacebookIcon />
-            </a>
+            <span className="site-nav-social-pill" aria-label="Social links">
+              <a
+                href={facebookUrl}
+                className="site-nav-social site-nav-facebook"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                title="Facebook"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href={instagramUrl}
+                className="site-nav-social site-nav-instagram"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                title="Instagram"
+              >
+                <InstagramIcon />
+              </a>
+            </span>
             <Link href={languagePath} className="site-nav-essential site-nav-language">
               <span className="site-nav-label-desktop">{languageLabel}</span>
               <span className="site-nav-label-mobile">{mobileLanguageLabel}</span>

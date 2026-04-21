@@ -35,12 +35,13 @@ a {
   position: sticky;
   top: 0;
   z-index: 30;
-  padding: 12px 24px 0;
+  padding: 14px 24px 0;
   background: linear-gradient(180deg, rgba(244, 242, 238, 0.96), rgba(244, 242, 238, 0));
   backdrop-filter: blur(10px);
   transition:
     opacity 240ms ease,
-    transform 240ms ease;
+    transform 240ms ease,
+    padding 240ms ease;
 }
 
 .site-header-shell-home {
@@ -66,12 +67,29 @@ a {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 16px;
-  padding: 10px 12px;
+  gap: 18px;
+  padding: 14px 16px;
   border: 1px solid rgba(224, 220, 215, 0.92);
-  border-radius: 24px;
+  border-radius: 30px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 16px 42px rgba(31, 26, 22, 0.08);
+  transition:
+    padding 240ms ease,
+    border-radius 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease;
+}
+
+.site-header-shell-compact {
+  padding-top: 8px;
+}
+
+.site-header-shell-compact .site-header {
+  gap: 16px;
+  padding: 10px 12px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 34px rgba(31, 26, 22, 0.1);
 }
 
 .site-brand {
@@ -81,13 +99,39 @@ a {
   min-width: max-content;
 }
 
+.site-header-shell-expanded .site-brand {
+  min-width: 0;
+  max-width: 390px;
+}
+
+.site-brand span {
+  min-width: 0;
+}
+
 .site-brand-logo {
   display: block;
-  width: 46px;
-  height: 46px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 8px 18px rgba(31, 26, 22, 0.16);
+  transition:
+    width 240ms ease,
+    height 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.site-header-shell-compact .site-brand-logo {
+  width: 46px;
+  height: 46px;
+  box-shadow: 0 8px 18px rgba(31, 26, 22, 0.14);
+}
+
+.site-header-shell-compact .site-nav .site-nav-primary {
+  min-width: 0;
+  min-height: 44px;
+  padding-inline: 12px;
+  font-size: 0.92rem;
 }
 
 .site-brand strong,
@@ -98,6 +142,12 @@ a {
 .site-brand small {
   color: var(--muted);
   font-size: 0.82rem;
+}
+
+.site-header-shell-expanded .site-brand small {
+  max-width: 34ch;
+  white-space: normal;
+  line-height: 1.25;
 }
 
 .site-nav,
@@ -111,6 +161,12 @@ a {
 
 .site-nav {
   margin-left: auto;
+  min-width: 0;
+}
+
+.site-header-shell-expanded .site-nav {
+  flex: 1 1 560px;
+  justify-content: flex-end;
 }
 
 .site-nav a,
@@ -149,6 +205,10 @@ a {
   border-color: rgba(107, 35, 42, 0.34);
   background: linear-gradient(135deg, #fffaf1, #f0e6d8) !important;
   color: var(--text) !important;
+  min-width: 250px;
+  min-height: 54px;
+  padding-inline: 26px;
+  font-size: 1.08rem;
   font-weight: 800;
   box-shadow: 0 14px 30px rgba(107, 35, 42, 0.16);
 }
@@ -166,6 +226,10 @@ a {
   width: 44px;
   padding: 0;
   color: var(--accent);
+}
+
+.site-nav-social-pill {
+  display: contents;
 }
 
 .site-nav-social svg {
@@ -375,8 +439,8 @@ a {
 }
 
 .reservation-popup-card {
-  width: min(360px, calc(100vw - 32px));
-  padding: 18px;
+  width: min(500px, calc(100vw - 32px));
+  padding: 30px;
   border: 1px solid rgba(107, 35, 42, 0.16);
   border-radius: 26px;
   background:
@@ -388,19 +452,14 @@ a {
 
 .reservation-popup-topline {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.reservation-popup-topline p {
+.reservation-popup-topline h2 {
   margin: 0;
-  color: var(--accent);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .reservation-popup-topline button {
@@ -413,6 +472,8 @@ a {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.82);
   color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1;
   cursor: pointer;
   transition:
     transform 180ms ease,
@@ -427,22 +488,40 @@ a {
 
 .reservation-popup-card h2 {
   margin: 0;
-  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
   line-height: 1.08;
 }
 
 .reservation-popup-body {
-  margin: 10px 0 14px;
+  margin: 0;
   color: var(--muted);
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.55;
+}
+
+.reservation-popup-body-row {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  margin: 18px 0 22px;
+}
+
+.reservation-popup-logo {
+  width: 118px;
+  height: 118px;
+  border: 1px solid rgba(107, 35, 42, 0.14);
+  border-radius: 22px;
+  background: #fff;
+  object-fit: cover;
+  box-shadow: 0 10px 24px rgba(31, 26, 22, 0.1);
 }
 
 .reservation-popup-phone {
   display: grid;
   gap: 3px;
   margin-bottom: 12px;
-  padding: 12px 14px;
+  padding: 15px 16px;
   border: 1px solid rgba(92, 132, 118, 0.28);
   border-radius: 18px;
   background: rgba(92, 132, 118, 0.1);
@@ -458,7 +537,7 @@ a {
 }
 
 .reservation-popup-phone strong {
-  font-size: 1rem;
+  font-size: 1.08rem;
 }
 
 .reservation-popup-cta,
@@ -826,7 +905,7 @@ a {
 .home-page {
   width: min(100%, 1220px);
   margin: 0 auto;
-  padding: 32px 24px 120px;
+  padding: 148px 24px 120px;
 }
 
 .home-hero-panel {
@@ -842,6 +921,7 @@ a {
 .home-copy {
   display: grid;
   gap: 18px;
+  min-width: 0;
 }
 
 .home-lead {
@@ -1491,6 +1571,13 @@ a {
 
 .brand-showcase {
   margin-bottom: 28px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.home-copy .brand-showcase {
+  margin: 8px 0 0;
+  overflow: hidden;
 }
 
 .brand-banner {
@@ -1609,6 +1696,9 @@ a {
 
 .brand-marquee {
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow: hidden;
   padding: 10px 0;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
@@ -2277,7 +2367,7 @@ p {
 
   .page-shell,
   .home-page {
-    padding: 20px 16px 64px;
+    padding: 42px 16px 64px;
   }
 
   .menu-shell {
@@ -2287,6 +2377,10 @@ p {
   .home-hero-panel,
   .menu-hero {
     padding: 20px;
+  }
+
+  .home-hero-panel {
+    padding-top: 84px;
   }
 
   .menu-sections,
@@ -2384,10 +2478,29 @@ p {
     gap: 8px;
   }
 
+  .site-header-shell-expanded .site-header {
+    align-items: stretch;
+  }
+
+  .site-header-shell-compact .site-header {
+    padding: 8px;
+    border-radius: 20px;
+  }
+
   .site-brand {
     display: inline-flex;
     min-width: 34px;
     flex: 0 0 auto;
+  }
+
+  .site-header-shell-expanded .site-brand {
+    min-width: 62px;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .site-header-shell-compact .site-brand {
+    min-width: 34px;
   }
 
   .site-brand span {
@@ -2395,6 +2508,17 @@ p {
   }
 
   .site-brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .site-header-shell-expanded .site-brand-logo {
+    width: 62px;
+    height: 62px;
+    align-self: center;
+  }
+
+  .site-header-shell-compact .site-brand-logo {
     width: 34px;
     height: 34px;
   }
@@ -2409,6 +2533,13 @@ p {
     width: 100%;
     margin-left: 0;
     justify-content: stretch;
+    gap: 5px;
+  }
+
+  .site-header-shell-expanded .site-nav {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) 46px;
+    grid-template-rows: repeat(2, 34px);
+    align-content: center;
     gap: 5px;
   }
 
@@ -2428,12 +2559,88 @@ p {
     display: none !important;
   }
 
+  .site-nav-social-pill {
+    display: none;
+  }
+
+  .site-header-shell-expanded .site-nav-social-pill {
+    display: inline-flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 34px;
+    padding: 0;
+    border-radius: 999px;
+    background: transparent;
+  }
+
+  .site-header-shell-expanded .site-nav .site-nav-social {
+    display: inline-flex !important;
+    width: 30px;
+    min-width: 30px;
+    min-height: 34px;
+    padding: 0;
+    border-color: rgba(224, 220, 215, 0.95);
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 6px 14px rgba(31, 26, 22, 0.08);
+  }
+
+  .site-header-shell-expanded .site-nav-instagram {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .site-header-shell-expanded .site-nav-facebook {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .site-header-shell-expanded .site-nav-social svg {
+    width: 14px;
+    height: 14px;
+  }
+
   .site-nav-directions {
     display: inline-flex !important;
   }
 
-  .site-nav-primary {
+  .site-nav .site-nav-primary {
     order: 1;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 8px;
+    font-size: 0.82rem;
+  }
+
+  .site-header-shell-expanded .site-nav .site-nav-primary {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .site-header-shell-expanded .site-nav-menu {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .site-header-shell-expanded .site-nav-directions {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .site-header-shell-expanded .site-nav-language {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .site-header-shell-compact .site-nav .site-nav-primary {
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 8px;
+    font-size: 0.82rem;
   }
 
   .site-nav-menu {
@@ -2452,6 +2659,7 @@ p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
   }
 
   .site-nav-map-icon {
@@ -2460,11 +2668,29 @@ p {
     height: 21px;
   }
 
+  .site-nav-map-text {
+    display: none;
+  }
+
   .site-nav a {
     min-height: 44px;
     padding: 8px;
     font-size: 0.82rem;
     white-space: nowrap;
+  }
+
+  .site-header-shell-expanded .site-nav a {
+    min-height: 34px;
+    padding: 5px 7px;
+    font-size: 0.78rem;
+  }
+
+  .site-header-shell-expanded .site-nav-map-text {
+    display: inline;
+  }
+
+  .site-header-shell-compact .site-nav-map-text {
+    display: none;
   }
 
   .site-nav .site-nav-language {
@@ -2564,6 +2790,17 @@ p {
 
   .reservation-popup-body {
     font-size: 0.88rem;
+  }
+
+  .reservation-popup-body-row {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .reservation-popup-logo {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
   }
 
   .reservation-popup-minimized {

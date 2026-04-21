@@ -63,11 +63,9 @@ export async function EnglishHomePageCms() {
   return (
     <main className="home-page">
       <section className="home-hero-panel">
-        <BrandShowcasePanel locale="en" />
-
         <div className="home-copy">
-          <p className="eyebrow">Hidden behind the Radisson</p>
           <h1>A Cozy 1923 Urban Cabin in the Heart of Sofia</h1>
+          <BrandShowcasePanel locale="en" />
           <p className="home-lead">
             Tucked away near the National Theatre, The Friendly Bear is a labor of love built by hand. Step into our
             secret garden for slow-roasted meats and craft beer, or warm up by the fireplace in an atmosphere that

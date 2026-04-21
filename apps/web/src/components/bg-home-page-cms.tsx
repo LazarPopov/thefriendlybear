@@ -63,11 +63,9 @@ export async function BulgarianHomePageCms() {
   return (
     <main className="home-page">
       <section className="home-hero-panel">
-        <BrandShowcasePanel locale="bg" />
-
         <div className="home-copy">
-          <p className="eyebrow">Скрити зад Radisson</p>
           <h1>Уютна градска бърлога от 1923 г. в сърцето на София</h1>
+          <BrandShowcasePanel locale="bg" />
           <p className="home-lead">
             Скрит до Народния театър, The Friendly Bear е кътче, създадено изцяло на ръка. Влезте в тайната ни градина
             за бавно печени меса и крафт бира или се стоплете до камината в атмосфера, която се усеща като у дома.

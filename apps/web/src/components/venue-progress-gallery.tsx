@@ -115,7 +115,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
   bg: [
     "Вечер в тайната градина",
     "Студена бира под лампичките",
-    "Тихо място зад Radisson",
+    "Тихо място в сърцето на София",
     "До камината след работа",
     "Дълъг разговор в бърлогата",
     "Уютът си има адрес"
@@ -123,7 +123,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
   en: [
     "Evening in the secret garden",
     "Cold beer under the lights",
-    "Hidden behind the Radisson",
+    "A quiet spot in the heart of Sofia",
     "By the fireplace after work",
     "A long talk in the den",
     "Cozy has an address"
@@ -131,7 +131,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
   it: [
     "Sera nel giardino segreto",
     "Birra fredda sotto le luci",
-    "Nascosto dietro il Radisson",
+    "Un angolo tranquillo nel cuore di Sofia",
     "Accanto al camino",
     "Una lunga chiacchierata",
     "Il calore ha un indirizzo"
@@ -139,7 +139,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
   es: [
     "Noche en el jardin secreto",
     "Cerveza fria bajo las luces",
-    "Escondido detras del Radisson",
+    "Un rincon tranquilo en el centro de Sofia",
     "Junto a la chimenea",
     "Una larga conversacion",
     "Lo acogedor tiene direccion"
@@ -147,7 +147,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
   el: [
     "Βράδυ στον κρυφό κήπο",
     "Κρύα μπίρα κάτω από τα φώτα",
-    "Κρυμμένο πίσω από το Radisson",
+    "Μια ήσυχη γωνιά στο κέντρο της Σόφιας",
     "Δίπλα στο τζάκι",
     "Μια μεγάλη κουβέντα",
     "Η ζεστασιά έχει διεύθυνση"

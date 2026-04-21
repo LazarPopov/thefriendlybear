@@ -51,11 +51,9 @@ export function BulgarianHomePage() {
   return (
     <main className="home-page">
       <section className="home-hero-panel">
-        <BrandShowcasePanel locale="bg" />
-
         <div className="home-copy">
-          <p className="eyebrow">Скрити зад Radisson</p>
           <h1>Уютна градска бърлога от 1923 г. на Славянска 23</h1>
+          <BrandShowcasePanel locale="bg" />
           <p className="home-lead">
             Влезте в тайната ни градина или седнете до камината за бавно печени меса, крафт бира
             и атмосфера, която се усеща като у дома.

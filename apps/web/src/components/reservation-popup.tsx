@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { BusinessActionKind } from "@/lib/tracking";
@@ -79,7 +80,8 @@ const copy = {
   }
 } as const;
 
-const minimizedStorageKey = "friendly-bear-reservation-popup-minimized";
+const popupCooldownMs = 5 * 60 * 1000;
+const minimizedStorageKey = "friendly-bear-reservation-popup-minimized-at";
 
 function getLocaleFromPath(pathname: string): Locale {
   if (pathname.startsWith("/it")) return "it";
@@ -122,17 +124,40 @@ function getInitialPopupState(): PopupState {
     return "pending";
   }
 
+  return getRemainingMinimizedMs() > 0 ? "minimized" : "expanded";
+}
+
+function getRemainingMinimizedMs() {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
   try {
-    return window.localStorage.getItem(minimizedStorageKey) === "true" ? "minimized" : "expanded";
+    const storedValue = window.localStorage.getItem(minimizedStorageKey);
+    const minimizedAt = Number(storedValue);
+
+    if (!storedValue || !Number.isFinite(minimizedAt)) {
+      window.localStorage.removeItem(minimizedStorageKey);
+      return 0;
+    }
+
+    const remainingMs = popupCooldownMs - (Date.now() - minimizedAt);
+
+    if (remainingMs <= 0) {
+      window.localStorage.removeItem(minimizedStorageKey);
+      return 0;
+    }
+
+    return remainingMs;
   } catch {
-    return "expanded";
+    return 0;
   }
 }
 
 function setMinimizedPreference(isMinimized: boolean) {
   try {
     if (isMinimized) {
-      window.localStorage.setItem(minimizedStorageKey, "true");
+      window.localStorage.setItem(minimizedStorageKey, String(Date.now()));
     } else {
       window.localStorage.removeItem(minimizedStorageKey);
     }
@@ -151,7 +176,27 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
 
   useEffect(() => {
     setPopupState(getInitialPopupState());
-  }, []);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (popupState !== "minimized") {
+      return;
+    }
+
+    const remainingMs = getRemainingMinimizedMs();
+
+    if (remainingMs <= 0) {
+      setPopupState("expanded");
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setMinimizedPreference(false);
+      setPopupState("expanded");
+    }, remainingMs);
+
+    return () => window.clearTimeout(timer);
+  }, [popupState, pathname]);
 
   if (!action) {
     return null;
@@ -182,14 +227,22 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
   return (
     <aside className="reservation-popup reservation-popup-card" aria-label={text.aria}>
       <div className="reservation-popup-topline">
-        <p>{text.kicker}</p>
+        <h2>{text.title}</h2>
         <button type="button" onClick={() => setExpanded(false)} aria-label={text.minimize}>
-          <span aria-hidden="true">−</span>
+          <span aria-hidden="true">×</span>
         </button>
       </div>
 
-      <h2>{text.title}</h2>
-      <p className="reservation-popup-body">{text.body}</p>
+      <div className="reservation-popup-body-row">
+        <Image
+          src="/icons/friendly_bear_logo.jpg"
+          alt=""
+          width={88}
+          height={88}
+          className="reservation-popup-logo"
+        />
+        <p className="reservation-popup-body">{text.body}</p>
+      </div>
 
       {phoneDisplay ? (
         <a className="reservation-popup-phone" href={phoneHref ?? action.href}>
@@ -198,14 +251,6 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
         </a>
       ) : null}
 
-      <a
-        className="reservation-popup-cta"
-        href={action.href}
-        target={action.external ? "_blank" : undefined}
-        rel={action.external ? "noreferrer" : undefined}
-      >
-        {action.kind === "phone" ? text.phoneActionLabel : action.label}
-      </a>
     </aside>
   );
 }

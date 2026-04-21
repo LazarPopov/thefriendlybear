@@ -77,8 +77,8 @@ const alternatingGalleryImages: HomeGalleryImageSource[] = [
     src: "/images/garden_3.jpg",
     alt: "Garden setting at The Friendly Bear Sofia",
     captions: {
-      bg: "Скрито зад Radisson",
-      en: "Hidden behind the Radisson"
+      bg: "Тихо място в сърцето на София",
+      en: "A quiet spot in the heart of Sofia"
     }
   },
   {

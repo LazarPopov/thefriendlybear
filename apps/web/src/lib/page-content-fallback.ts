@@ -12,8 +12,8 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: "A cozy urban cabin on Slavyanska 23"
     },
     intro: {
-      bg: "Скрити зад Radisson, ви посрещаме с тайна градина, камина, бавно печени меса, крафт бира и атмосфера, която се усеща като у дома.",
-      en: "Hidden behind the Radisson, we welcome you with a secret garden, a fireplace, slow-roasted meats, craft beer, and an atmosphere that feels like home."
+      bg: "Скрито до Народния театър, ви посрещаме с тайна градина, камина, бавно печени меса, крафт бира и атмосфера, която се усеща като у дома.",
+      en: "Tucked away near the National Theatre, we welcome you with a secret garden, a fireplace, slow-roasted meats, craft beer, and an atmosphere that feels like home."
     },
     body: {
       bg: "<p>Елате за спокойна вечер в центъра на София: сезонно меню, тиха градина, уют до камината и бавно печени специалитети на Славянска 23.</p>",

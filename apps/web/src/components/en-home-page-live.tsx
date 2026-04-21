@@ -28,11 +28,9 @@ export async function EnglishHomePageLive() {
   return (
     <main className="home-page">
       <section className="home-hero-panel">
-        <BrandShowcasePanel locale="en" />
-
         <div className="home-copy">
-          <p className="eyebrow">Hidden behind the Radisson</p>
           <h1>A cozy 1923 urban cabin on Slavyanska 23</h1>
+          <BrandShowcasePanel locale="en" />
           <p className="home-lead">
             Step into our secret garden or sit by the fireplace for slow-roasted meats, craft beer, and an atmosphere
             that feels like home.
