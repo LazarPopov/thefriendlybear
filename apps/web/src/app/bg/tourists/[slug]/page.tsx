@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: TouristRouteProps): Promise<M
         bg: canonical,
         en: enPath,
         "bg-BG": canonical,
-        "en-BG": enPath,
+        "en-GB": enPath,
         "x-default": canonical
       }
     },

@@ -29,7 +29,7 @@ export async function BulgarianPromotionsPageCms() {
         </p>
 
         <div className="page-tags" aria-label="Промоционален статус">
-          <span>{promotionsEnabled ? "Промоциите са включени" : "Промоциите са изключени"}</span>
+          <span>{promotionsEnabled ? "Сезонните предложения са активни" : "Сезонните предложения са на пауза"}</span>
           <span>{hasPromotions ? "Има активни предложения" : "Няма активни предложения"}</span>
           <span>{businessProfile.address.bg}</span>
         </div>
@@ -66,7 +66,7 @@ export async function BulgarianPromotionsPageCms() {
         <section className="page-grid">
           <article className="page-card">
             <p className="page-card-label">Текущ статус</p>
-            <h2>{promotionsEnabled ? "В момента няма активни оферти" : "Промоционалният модул е изключен"}</h2>
+            <h2>{promotionsEnabled ? "В момента няма активни оферти" : "Сезонните предложения са на пауза"}</h2>
             <p>
               {promotionsEnabled
                 ? "Следете страницата за нови сезонни предложения, празнични менюта и специални вечери на Славянска 23."

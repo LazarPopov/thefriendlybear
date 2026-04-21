@@ -34,35 +34,35 @@ const galleryCopy: Record<
   bg: {
     eyebrow: "Atmosfera",
     title: "Gradina i ujutna vatrešna atmosfera",
-    intro: "Snimkite podkrepyat dve od nai-silnite signalni tochki na myastoto: skritata gradina i topliya interior.",
+    intro: "Snimkite pokazvat dvete lica na myastoto: skritata gradina i topliya interior.",
     gardenLabel: "Gradina",
     interiorLabel: "Interior"
   },
   en: {
     eyebrow: "Atmosphere",
     title: "Garden setting and warm interior",
-    intro: "These images reinforce two of the strongest first-impression signals for the venue: the hidden garden and the cozy indoor mood.",
+    intro: "These images show two sides of the venue: the hidden garden and the cozy indoor mood.",
     gardenLabel: "Garden",
     interiorLabel: "Interior"
   },
   it: {
     eyebrow: "Atmosfera",
     title: "Giardino riservato e interno accogliente",
-    intro: "Queste immagini rafforzano due dei segnali piu forti del locale: il giardino nascosto e l'atmosfera calda all'interno.",
+    intro: "Queste immagini mostrano due lati del locale: il giardino nascosto e l'atmosfera calda all'interno.",
     gardenLabel: "Giardino",
     interiorLabel: "Interni"
   },
   es: {
     eyebrow: "Ambiente",
     title: "Jardin tranquilo e interior acogedor",
-    intro: "Estas imagenes refuerzan dos de las senales mas fuertes del lugar: el jardin escondido y el ambiente calido del interior.",
+    intro: "Estas imagenes muestran dos lados del lugar: el jardin escondido y el ambiente calido del interior.",
     gardenLabel: "Jardin",
     interiorLabel: "Interior"
   },
   el: {
     eyebrow: "Ατμόσφαιρα",
     title: "Κήπος και ζεστό εσωτερικό",
-    intro: "Αυτές οι εικόνες ενισχύουν δύο από τα πιο δυνατά πρώτα σήματα του χώρου: τον ήσυχο κήπο και τη ζεστή εσωτερική ατμόσφαιρα.",
+    intro: "Αυτές οι εικόνες δείχνουν δύο πλευρές του χώρου: τον ήσυχο κήπο και τη ζεστή εσωτερική ατμόσφαιρα.",
     gardenLabel: "Κήπος",
     interiorLabel: "Εσωτερικό"
   }

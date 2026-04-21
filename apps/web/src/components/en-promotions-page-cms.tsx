@@ -29,7 +29,7 @@ export async function EnglishPromotionsPageCms() {
         </p>
 
         <div className="page-tags" aria-label="Promotions status">
-          <span>{promotionsEnabled ? "Promotions are enabled" : "Promotions are disabled"}</span>
+          <span>{promotionsEnabled ? "Seasonal offers are open" : "Seasonal offers are paused"}</span>
           <span>{hasPromotions ? "Active offers are available" : "No active offers right now"}</span>
           <span>{businessProfile.address.en}</span>
         </div>
@@ -66,7 +66,7 @@ export async function EnglishPromotionsPageCms() {
         <section className="page-grid">
           <article className="page-card">
             <p className="page-card-label">Current status</p>
-            <h2>{promotionsEnabled ? "There are no active offers right now" : "The promotions module is disabled"}</h2>
+            <h2>{promotionsEnabled ? "There are no active offers right now" : "Seasonal offers are paused"}</h2>
             <p>
               {promotionsEnabled
                 ? "Check back for new seasonal offers, holiday menus, and special evenings on Slavyanska 23."

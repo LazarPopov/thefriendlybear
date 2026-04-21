@@ -19,19 +19,19 @@ const touristConfigs: Record<
     eyebrow: "Italian visitors",
     title: "A friendly Sofia restaurant for Italian visitors",
     lead:
-      "This page is shaped for Italian-speaking travel intent: central location, welcoming atmosphere, clear menu access, and quick reassurance around vegetarian options and service.",
+      "A cozy place in central Sofia for Italian visitors, with a secret garden, craft beer, vegetarian options, and an English-speaking team.",
     highlights: [
       {
         title: "Central and easy to find",
         text: "Slavyanska 23 stays visible from the first screen so the restaurant is clearly anchored in central Sofia."
       },
       {
-        title: "Good menu discovery path",
-        text: "Visitors can move quickly from curiosity to the full HTML menu without friction."
+        title: "Menu in English",
+        text: "Open the menu from your phone and check seasonal dishes, allergens, and vegetarian-friendly choices before ordering."
       },
       {
         title: "Comfort and friendliness",
-        text: "The landing page is written to reduce uncertainty and make the place feel approachable."
+        text: "The garden and fireplace make the restaurant feel easy, warm, and relaxed after exploring Sofia."
       }
     ],
     checklist: [
@@ -40,7 +40,7 @@ const touristConfigs: Record<
       "Use directions for the most accurate route to Slavyanska 23."
     ],
     reassurance: [
-      "Vegetarian-friendly choices are already visible in the menu layer.",
+      "Vegetarian-friendly choices are easy to find in the menu.",
       "The page is built to feel welcoming for international visitors.",
       "The key actions stay one or two taps away on mobile."
     ]
@@ -49,19 +49,19 @@ const touristConfigs: Record<
     eyebrow: "Spanish visitors",
     title: "A welcoming Sofia restaurant for Spanish visitors",
     lead:
-      "This page targets fast restaurant discovery near the center, with a simple path to menu, reservations, and directions plus reassurance around friendly service and lighter food options.",
+      "A welcoming restaurant near Sofia's center with a secret garden, slow-roasted BBQ, vegetarian dishes, and English-speaking staff.",
     highlights: [
       {
-        title: "Discovery-first structure",
-        text: "The page answers the practical question first: where to eat near the Sofia center without wasting time."
+        title: "Easy central stop",
+        text: "We are close to the National Theatre, making us an easy dinner stop after a walk through the city."
       },
       {
         title: "Menu confidence",
         text: "The HTML menu makes it easier to scan dishes, allergens, and vegetarian-friendly options from a phone."
       },
       {
-        title: "Low-friction next step",
-        text: "Each action block points clearly toward menu, reservations, or directions instead of burying the decision."
+        title: "Simple next step",
+        text: "Open the menu, call to reserve, or get directions to Slavyanska 23 when you are ready."
       }
     ],
     checklist: [
@@ -71,7 +71,7 @@ const touristConfigs: Record<
     ],
     reassurance: [
       "Vegetarian options are not hidden deep in the site structure.",
-      "Friendly service is part of the tone and conversion path.",
+      "Friendly service is part of the experience.",
       "The central Sofia location remains visible across the page."
     ]
   },
@@ -79,15 +79,15 @@ const touristConfigs: Record<
     eyebrow: "Greek visitors",
     title: "A central Sofia restaurant for Greek visitors",
     lead:
-      "This page supports Greek visitor intent with a calm, welcoming flow focused on central location, straightforward actions, vegetarian reassurance, and easy menu access.",
+      "A warm Sofia restaurant for Greek visitors, with a central location, genuine hospitality, vegetarian options, and an English menu.",
     highlights: [
       {
         title: "Location clarity",
         text: "The page ties the brand directly to Slavyanska 23 so the restaurant is easy to place within Sofia."
       },
       {
-        title: "Friendly decision path",
-        text: "The copy reduces friction by making service, menu access, and booking paths easy to understand."
+        title: "Friendly service",
+        text: "Our team speaks English and can help with the menu, directions, or a reservation."
       },
       {
         title: "Useful from mobile",

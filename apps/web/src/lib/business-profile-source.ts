@@ -119,19 +119,19 @@ export const businessProfileSource: BusinessProfileSource = {
   },
   messaging: {
     statusMessages: {
-      bg: "Телефонът и работното време са активни. В момента ресторантът не използва WhatsApp или външен booking линк, но модулът е готов за добавяне по-късно.",
-      en: "Phone and opening hours are now live. The restaurant is not currently using WhatsApp or an external booking link, but the module is ready for those later."
+      bg: "Телефонът и работното време са активни. За резервация ни се обадете директно и ще помогнем с най-подходящата маса.",
+      en: "Phone and opening hours are live. For a reservation, call us directly and we will help with the best available table."
     },
     visitNotes: {
       bg: [
         "Локацията е подходяща за хора, които търсят място за вечеря в центъра на София.",
         "Местата на открито, камината и коктейлите правят профила на ресторанта по-ясен още от първия екран.",
-        "Телефонът и работното време вече са публикувани, а допълнителни канали могат да се добавят по-късно."
+        "Телефонът и работното време са публикувани, за да планирате посещението си спокойно."
       ],
       en: [
         "The location is a good fit for visitors looking for dinner in central Sofia.",
-        "Outdoor seating, a fireplace, and strong cocktail signals make the venue easier to understand at a glance.",
-        "Phone and opening hours are already live, while additional booking channels can be added later."
+        "Outdoor seating, a fireplace, and craft drinks make the venue easy to understand at a glance.",
+        "Phone and opening hours are published so you can plan your visit with confidence."
       ]
     },
     arrivalTips: {

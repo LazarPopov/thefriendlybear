@@ -52,7 +52,7 @@ export function getLanguageAlternates(routeKey: SiteRouteKey) {
     bg: new URL(routeMap[routeKey].bg, siteConfig.siteUrl).toString(),
     en: new URL(routeMap[routeKey].en, siteConfig.siteUrl).toString(),
     "bg-BG": new URL(routeMap[routeKey].bg, siteConfig.siteUrl).toString(),
-    "en-BG": new URL(routeMap[routeKey].en, siteConfig.siteUrl).toString(),
+    "en-GB": new URL(routeMap[routeKey].en, siteConfig.siteUrl).toString(),
     "x-default": new URL(routeMap[routeKey][siteConfig.defaultLocale], siteConfig.siteUrl).toString()
   };
 }
@@ -62,19 +62,28 @@ type BuildPageMetadataInput = {
   routeKey: SiteRouteKey;
   title: string;
   description: string;
+  robots?: Metadata["robots"];
 };
 
 export function buildPageMetadata({
   locale,
   routeKey,
   title,
-  description
+  description,
+  robots
 }: BuildPageMetadataInput): Metadata {
   const canonical = new URL(getLocalizedPath(locale, routeKey), siteConfig.siteUrl).toString();
+  const socialImage = {
+    url: new URL("/icons/friendly_bear_logo.jpg", siteConfig.siteUrl).toString(),
+    width: 320,
+    height: 320,
+    alt: "The Friendly Bear Sofia logo"
+  };
 
   return {
     title,
     description,
+    robots,
     alternates: {
       canonical,
       languages: getLanguageAlternates(routeKey)
@@ -85,12 +94,14 @@ export function buildPageMetadata({
       url: canonical,
       siteName: siteConfig.name,
       locale: openGraphLocaleMap[locale],
-      type: "website"
+      type: "website",
+      images: [socialImage]
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
+      description,
+      images: [socialImage.url]
     }
   };
 }

@@ -22,6 +22,8 @@ export const metadata: Metadata = {
     languages: {
       bg: "/bg",
       en: "/en",
+      "bg-BG": "/bg",
+      "en-GB": "/en",
       "x-default": "/bg"
     }
   }

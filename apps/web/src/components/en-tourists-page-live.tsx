@@ -6,17 +6,17 @@ const touristCards = [
   {
     slug: "italian",
     title: "Italian visitors",
-    text: "Focused on friendly service, seasonal dishes, and a comfortable discovery path to the menu and reservations."
+    text: "A warm Sofia stop with seasonal dishes, a secret garden, and an easy English menu."
   },
   {
     slug: "spanish",
     title: "Spanish visitors",
-    text: "Built for quick restaurant discovery near the center, with vegetarian reassurance and easy next actions."
+    text: "A central place for a relaxed dinner, vegetarian choices, and late-evening comfort."
   },
   {
     slug: "greek",
     title: "Greek visitors",
-    text: "Highlights central Sofia access, welcoming service, and a simple route to menu, contact, and booking."
+    text: "Central Sofia access, genuine hospitality, and a simple way to call or open the menu."
   }
 ] as const;
 
@@ -37,7 +37,7 @@ export async function EnglishTouristsPageLive() {
         <p className="eyebrow">Tourist pages</p>
         <h1>Landing pages for international visitors in Sofia</h1>
         <p className="page-lead">
-          These pages are designed for discovery intent from international visitors who want a clear answer fast:
+          These pages help international visitors feel at home before they arrive:
           where to eat, how to get there, whether the place feels welcoming, and how quickly they can check the menu.
         </p>
 

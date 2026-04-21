@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: TouristRouteProps): Promise<M
         bg: bgPath,
         en: canonical,
         "bg-BG": bgPath,
-        "en-BG": canonical,
+        "en-GB": canonical,
         "x-default": `/bg/tourists/${touristPage.localizedSlugs.bg}`
       }
     },

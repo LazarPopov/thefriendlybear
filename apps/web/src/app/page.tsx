@@ -3,12 +3,14 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "The Friendly Bear Sofia",
-  description: "Началната страница пренасочва към българската версия на сайта.",
+  description: "The Friendly Bear Sofia is a cozy restaurant and garden on Slavyanska 23 in central Sofia.",
   alternates: {
-    canonical: "/",
+    canonical: "/bg",
     languages: {
       bg: "/bg",
       en: "/en",
+      "bg-BG": "/bg",
+      "en-GB": "/en",
       "x-default": "/bg"
     }
   }

@@ -1,5 +1,5 @@
 import { ActionLink } from "@/components/action-link";
-import { businessProfile, getEnPrimaryActions } from "@/lib/business-profile-live";
+import { getEnPrimaryActions } from "@/lib/business-profile-live";
 import { buildActionTracking } from "@/lib/tracking";
 
 const decisionSignals = [
@@ -17,14 +17,6 @@ const decisionSignals = [
   }
 ] as const;
 
-const connectorStatus = [
-  { label: "Google review module", status: "Waiting for approved access" },
-  { label: "TripAdvisor snippet layer", status: "Waiting for approved source" },
-  { label: "Meta social feed", status: "Waiting for approved API access" },
-  { label: "Review themes", status: "Cozy, craft beer, vegetarian options" },
-  { label: "HTML menu and contact paths", status: "Live now" }
-] as const;
-
 const keywordThemes = ["cozy", "craft beer", "friendly service", "vegetarian options", "central Sofia"] as const;
 
 export function EnglishReviewsPageLive() {
@@ -33,12 +25,11 @@ export function EnglishReviewsPageLive() {
   return (
     <main className="page-shell">
       <section className="page-hero">
-        <p className="eyebrow">Reviews and social proof</p>
-        <h1>Review-ready signals for The Friendly Bear Sofia</h1>
+        <p className="eyebrow">Guest reviews</p>
+        <h1>What guests say about The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          This page is prepared for approved Google reviews, TripAdvisor snippets, and lightweight Meta social content.
-          Until the live connectors are available, we keep the page honest and focus on the decision signals visitors
-          actually care about.
+          Guests often remember the fireplace warmth, the relaxed garden, the craft beer, and the feeling that they
+          found a friendly place in the middle of Sofia.
         </p>
 
         <div className="page-tags" aria-label="Review signals">
@@ -78,26 +69,21 @@ export function EnglishReviewsPageLive() {
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
-          <p className="page-card-label">Current status</p>
-          <h2>What the review layer can publish today</h2>
-          <ul className="status-list">
-            {connectorStatus.map((item) => (
-              <li key={item.label} className="status-row">
-                <span>{item.label}</span>
-                <strong>{item.status}</strong>
-              </li>
-            ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.en}</p>
+          <p className="page-card-label">Guest love</p>
+          <h2>Why people recommend us</h2>
+          <p>
+            Visitors mention the cozy energy, attentive service, and easygoing dinners that turn a quick stop into a
+            longer evening.
+          </p>
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">What this page is for</p>
-          <h2>Useful for search and for real restaurant decisions</h2>
+          <p className="page-card-label">Before you visit</p>
+          <h2>Good signs for a real dinner decision</h2>
           <ul className="page-list">
-            <li>Surface the strongest comfort and atmosphere signals once verified reviews are connected.</li>
-            <li>Support keyword filters such as cozy, craft beer, and vegetarian options.</li>
-            <li>Give visitors a fast path from social proof to menu, contact, and reservations.</li>
+            <li>Comfort and atmosphere are a big part of the guest experience.</li>
+            <li>Craft beer, vegetarian options, and slow-roasted dishes are easy to ask about.</li>
+            <li>Menu, contact, and reservations stay close when you are ready to visit.</li>
           </ul>
         </article>
       </section>

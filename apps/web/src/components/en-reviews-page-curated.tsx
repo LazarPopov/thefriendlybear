@@ -3,14 +3,6 @@ import { ReviewSnippetsShowcase } from "@/components/review-snippets-showcase";
 import { getBusinessProfileData, getEnPrimaryActions } from "@/lib/business-profile-module";
 import { buildActionTracking } from "@/lib/tracking";
 
-const connectorStatus = [
-  { label: "Google review snippets", status: "Live now" },
-  { label: "TripAdvisor snippet layer", status: "Waiting for approved source" },
-  { label: "Meta social feed", status: "Waiting for approved API access" },
-  { label: "Keyword tags", status: "Live now" },
-  { label: "HTML menu and contact paths", status: "Live now" }
-] as const;
-
 const keywordThemes = ["cozy", "service", "food", "walk-in", "central Sofia"] as const;
 
 export async function EnglishReviewsPageCurated() {
@@ -20,11 +12,11 @@ export async function EnglishReviewsPageCurated() {
   return (
     <main className="page-shell">
       <section className="page-hero">
-        <p className="eyebrow">Reviews and social proof</p>
-        <h1>Google review snippets for The Friendly Bear Sofia</h1>
+        <p className="eyebrow">Guest reviews</p>
+        <h1>Guest stories from The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          The page now shows curated snippets from real Google reviews. That gives the site a working social-proof layer
-          today, while keeping the structure ready for an approved automated review source later on.
+          Read real impressions from guests who came for food, service, and atmosphere, then found a place they wanted
+          to recommend.
         </p>
 
         <div className="page-tags" aria-label="Review signals">
@@ -55,17 +47,12 @@ export async function EnglishReviewsPageCurated() {
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
-          <p className="page-card-label">Current status</p>
-          <h2>What the review layer publishes now</h2>
-          <ul className="status-list">
-            {connectorStatus.map((item) => (
-              <li key={item.label} className="status-row">
-                <span>{item.label}</span>
-                <strong>{item.status}</strong>
-              </li>
-            ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.en}</p>
+          <p className="page-card-label">Guest love</p>
+          <h2>Why people recommend us</h2>
+          <p>
+            Guests often mention the warm atmosphere, genuinely welcoming service, and food that makes a walk-in visit
+            feel like a lucky discovery.
+          </p>
         </article>
 
         <article className="page-card">

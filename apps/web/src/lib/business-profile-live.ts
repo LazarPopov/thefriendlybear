@@ -84,19 +84,19 @@ export const businessProfile = {
     { dayOfWeek: "Sunday", opens: "12:00", closes: "23:00" }
   ] as BusinessHoursEntry[],
   statusMessages: {
-    bg: "Телефонът и работното време вече са публикувани. WhatsApp и live booking линкът ще бъдат добавени след потвърждение.",
-    en: "Phone and opening hours are now live. WhatsApp and the live booking link can be added after confirmation."
+    bg: "Телефонът и работното време са публикувани. За резервация ни се обадете директно и ще помогнем с най-подходящата маса.",
+    en: "Phone and opening hours are live. For a reservation, call us directly and we will help with the best available table."
   } satisfies LocalizedText,
   visitNotes: {
     bg: [
       "Локацията е подходяща за хора, които търсят място за вечеря в центъра на София.",
-      "Има открити места, камина и силен коктейлен сигнал за вечерно посещение.",
-      "Телефонът и работното време вече са активни, а допълнителните booking канали могат да се добавят по-късно."
+      "Има открити места, камина и крафт напитки за спокойна вечер.",
+      "Телефонът и работното време са активни, за да планирате посещението си спокойно."
     ],
     en: [
       "The location is a good fit for visitors looking for dinner in central Sofia.",
-      "Outdoor seating, a fireplace, and strong cocktail signals make the venue easier to understand at a glance.",
-      "Phone and opening hours are already live, while additional booking channels can be added later."
+      "Outdoor seating, a fireplace, and craft drinks make the venue easy to understand at a glance.",
+      "Phone and opening hours are published so you can plan your visit with confidence."
     ]
   } satisfies Record<SiteLocale, string[]>,
   arrivalTips: {

@@ -1,5 +1,5 @@
 import { ActionLink } from "@/components/action-link";
-import { businessProfile, getBgPrimaryActions } from "@/lib/business-profile-live";
+import { getBgPrimaryActions } from "@/lib/business-profile-live";
 import { buildActionTracking } from "@/lib/tracking";
 
 const decisionSignals = [
@@ -17,14 +17,6 @@ const decisionSignals = [
   }
 ] as const;
 
-const connectorStatus = [
-  { label: "Google review модул", status: "Чака одобрен достъп" },
-  { label: "TripAdvisor откъси", status: "Чака одобрен източник" },
-  { label: "Meta social feed", status: "Чака одобрен API достъп" },
-  { label: "Keyword филтриране", status: "Готово във frontend структурата" },
-  { label: "HTML меню и контакти", status: "Активни сега" }
-] as const;
-
 const keywordThemes = ["уютно", "craft beer", "любезно обслужване", "вегетариански опции", "център на София"] as const;
 
 export function BulgarianReviewsPageLive() {
@@ -33,12 +25,11 @@ export function BulgarianReviewsPageLive() {
   return (
     <main className="page-shell">
       <section className="page-hero">
-        <p className="eyebrow">Отзиви и социално доказателство</p>
-        <h1>Review-ready сигнали за The Friendly Bear Sofia</h1>
+        <p className="eyebrow">Отзиви на гости</p>
+        <h1>Какво казват гостите за The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          Тази страница е подготвена за одобрени Google отзиви, TripAdvisor откъси и лек Meta social поток. Докато live
-          конекторите още не са активни, държим страницата честна и се фокусираме върху сигналите, които реално движат
-          решението за посещение.
+          Гостите често запомнят топлината на камината, спокойната градина, крафт бирата и усещането, че са намерили
+          приветливо място в центъра на София.
         </p>
 
         <div className="page-tags" aria-label="Review сигнали">
@@ -78,26 +69,21 @@ export function BulgarianReviewsPageLive() {
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
-          <p className="page-card-label">Текущ статус</p>
-          <h2>Какво review слоят може да публикува днес</h2>
-          <ul className="status-list">
-            {connectorStatus.map((item) => (
-              <li key={item.label} className="status-row">
-                <span>{item.label}</span>
-                <strong>{item.status}</strong>
-              </li>
-            ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.bg}</p>
+          <p className="page-card-label">Любими моменти</p>
+          <h2>Защо хората ни препоръчват</h2>
+          <p>
+            Посетителите често споменават добрата енергия, внимателното обслужване и спокойните вечери, които започват
+            с кратко сядане и продължават по-дълго от планираното.
+          </p>
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">За какво служи тази страница</p>
-          <h2>Полезна и за търсене, и за реален избор на ресторант</h2>
+          <p className="page-card-label">Преди да дойдете</p>
+          <h2>Добри знаци за реален избор на ресторант</h2>
           <ul className="page-list">
-            <li>Да показва най-силните сигнали за атмосфера и комфорт, когато review източниците са свързани.</li>
-            <li>Да поддържа keyword филтри като уютно, craft beer и вегетариански опции.</li>
-            <li>Да дава бърз път от социално доказателство към меню, контакт и резервации.</li>
+            <li>Уютът и атмосферата са важна част от преживяването на гостите.</li>
+            <li>Крафт бирата, вегетарианските опции и бавно печените ястия са лесни за откриване.</li>
+            <li>Менюто, контактите и резервациите остават близо, когато сте готови да дойдете.</li>
           </ul>
         </article>
       </section>

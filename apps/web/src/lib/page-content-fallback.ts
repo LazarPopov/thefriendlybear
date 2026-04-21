@@ -31,12 +31,12 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: "About The Friendly Bear Sofia"
     },
     intro: {
-      bg: "Тази страница обяснява ресторанта през сигналите, които помагат на реалния избор: централна локация, сезонни ястия и лесен мобилен път до менюто и посещението.",
-      en: "This page explains the restaurant through the signals that support a real decision: a central location, seasonal dishes, and an easy mobile path to the menu and the visit."
+      bg: "Открийте историята на нашата градска бърлога от 1923 г., създадена с любов в центъра на София.",
+      en: "Discover the story of our 1923 urban cabin, restored with love in the heart of Sofia."
     },
     body: {
-      bg: "<p>Брандът трябва ясно да се свързва със Славянска 23 и центъра на София във всяка важна страница, schema слой и CTA поток.</p><p>Сайтът не разчита на общи фрази, а подрежда разказа около менюто, атмосферата и лесния достъп от мобилен телефон.</p>",
-      en: "<p>The brand should stay clearly tied to Slavyanska 23 and central Sofia across the important pages, schema layer, and CTA flows.</p><p>The site does not rely on generic phrases. It organizes the story around the menu, the atmosphere, and the easy mobile journey.</p>"
+      bg: "<p>Спасена от събаряне и възстановена на ръка, къщата ни събира тайна градина, камина, сезонна кухня и приветливо обслужване.</p><p>Искахме място, което се усеща като дом за съседи, пътешественици и техните домашни любимци.</p>",
+      en: "<p>Saved from demolition and restored by hand, our house brings together a secret garden, fireplace, seasonal food, and warm service.</p><p>We wanted a place that feels like home for locals, travelers, and their pets.</p>"
     }
   },
   {
@@ -50,12 +50,12 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: "How to get to The Friendly Bear Sofia"
     },
     intro: {
-      bg: "Извеждаме адреса, картата и най-важните действия отпред, за да може човек веднага да ви намери и да премине към меню или резервация.",
-      en: "We bring the address, map, and key actions forward so visitors can reach the restaurant quickly and move straight to the menu or reservation path."
+      bg: "Намерете ни лесно на ул. Славянска 23 и вижте работното време, упътванията и най-честите въпроси преди посещение.",
+      en: "Find us easily on Slavyanska 23 and check opening hours, directions, and common guest questions before your visit."
     },
     body: {
-      bg: "<p>Контактната страница трябва да работи отлично на мобилен телефон, защото често се отваря точно в момента, когато човек вече е тръгнал към ресторанта.</p><p>Затова адресът, упътванията и статусът на активните канали остават ясни и лесни за сканиране.</p>",
-      en: "<p>The contact page needs to work especially well on mobile because people often open it at the exact moment they are already on their way to the restaurant.</p><p>That is why the address, directions, and active-channel status stay clear and easy to scan.</p>"
+      bg: "<p>Отворете картата, обадете се за маса или проверете FAQ за паркиране, плащане с карта, домашни любимци и тайната на ски-вратите.</p>",
+      en: "<p>Open the map, call for a table, or check the FAQ for parking, card payments, pets, and the secret of the sliding ski doors.</p>"
     }
   },
   {
@@ -65,16 +65,16 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: "reviews"
     },
     title: {
-      bg: "Google review snippets за The Friendly Bear Sofia",
-      en: "Google review snippets for The Friendly Bear Sofia"
+      bg: "Отзиви за The Friendly Bear Sofia",
+      en: "Guest reviews for The Friendly Bear Sofia"
     },
     intro: {
-      bg: "Страницата вече показва подбрани откъси от реални Google отзиви и подготвя място за одобрен бъдещ review source.",
-      en: "The page already shows curated snippets from real Google reviews and keeps the structure ready for an approved future review source."
+      bg: "Вижте реални впечатления от гости, които се връщат за бавно печеното BBQ, крафт бирата и уютната атмосфера.",
+      en: "Read real impressions from guests who come back for slow-roasted BBQ, craft beer, and the cozy atmosphere."
     },
     body: {
-      bg: "<p>Review слоят вече подчертава атмосфера, обслужване и храна чрез curated откъси и keyword тагове.</p><p>Това създава работещо social-proof присъствие още сега, без да чакаме пълната автоматизация.</p>",
-      en: "<p>The review layer already highlights atmosphere, service, and food through curated snippets and keyword tags.</p><p>That gives the site a working social-proof layer now, without waiting for full automation.</p>"
+      bg: "<p>Гостите често споменават добрата енергия, внимателното обслужване и спокойствието на нашата бърлога на Славянска 23.</p>",
+      en: "<p>Guests often mention the good energy, thoughtful service, and calm feeling of our den on Slavyanska 23.</p>"
     }
   },
   {

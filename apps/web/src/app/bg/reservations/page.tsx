@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   routeKey: "reservations",
   title: "Резервации | The Friendly Bear Sofia",
   description:
-    "Резервационна страница за The Friendly Bear Sofia с най-актуалния booking статус, меню и упътвания до Slavyanska 23."
+    "Обадете се за маса в The Friendly Bear Sofia на ул. Славянска 23 и попитайте за градината, камината или вечеря с приятели."
 });
 
 export default function Page() {

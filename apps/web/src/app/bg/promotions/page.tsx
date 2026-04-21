@@ -5,8 +5,8 @@ import { buildPageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "promotions",
-  title: "Промоции в The Friendly Bear Sofia",
-  description: "Промоции и сезонни предложения, управлявани от CMS."
+  title: "Сезонни предложения | The Friendly Bear Sofia",
+  description: "Следете сезонните предложения, специалните ястия и поводи за спокойна вечер на ул. Славянска 23."
 });
 
 export default function Page() {

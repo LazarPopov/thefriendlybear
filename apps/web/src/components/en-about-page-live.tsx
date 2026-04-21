@@ -5,12 +5,12 @@ import { buildActionTracking } from "@/lib/tracking";
 
 const aboutHighlights = [
   {
-    title: "Local identity",
-    text: "The brand should stay clearly anchored to Slavyanska 23 and central Sofia across content, metadata, schema, and action flows."
+    title: "A Slavyanska 23 story",
+    text: "The 1923 house keeps a piece of old Sofia alive while welcoming guests with a garden, fireplace, and warm cabin atmosphere."
   },
   {
-    title: "Seasonal menu first",
-    text: "The site puts HTML menu content in front of the visitor so dishes, allergens, and pricing are readable by both people and machines."
+    title: "Seasonal menu",
+    text: "Expect slow-roasted specialties, fresh salads, vegetarian choices, and clear prices for a relaxed dinner."
   },
   {
     title: "Cozy and approachable",
@@ -19,9 +19,9 @@ const aboutHighlights = [
 ] as const;
 
 const storyPoints = [
-  "The homepage and menu are built around restaurant discovery intent, not just brochure text.",
-  "Visitors can move quickly from brand discovery to menu, directions, and reservations on mobile.",
-  "The structure supports future reviews, social proof, and booking integrations without rebuilding the content model."
+  "The garden is calm and easy for long warm-weather evenings.",
+  "The fireplace and interior keep the cabin cozy in winter.",
+  "The team can help with dish recommendations, directions, and reservations."
 ] as const;
 
 export async function EnglishAboutPageLive() {
@@ -40,8 +40,8 @@ export async function EnglishAboutPageLive() {
         <p className="eyebrow">About</p>
         <h1>About The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          This page explains the restaurant through the signals visitors actually use to decide: central Sofia
-          location, seasonal dishes, mobile-friendly menu access, and a clear path to visit or reserve.
+          Saved from demolition and restored by hand, our 1923 house is a place for garden evenings, fireplace warmth,
+          slow-roasted food, and easy gatherings in central Sofia.
         </p>
 
         <div className="page-tags" aria-label="About highlights">
@@ -82,8 +82,8 @@ export async function EnglishAboutPageLive() {
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
-          <p className="page-card-label">What the brand stands on</p>
-          <h2>Clear restaurant signals instead of vague generic copy</h2>
+          <p className="page-card-label">Why guests return</p>
+          <h2>Warmth, seasonal food, and an easy welcome</h2>
           <ul className="page-list">
             {storyPoints.map((point) => (
               <li key={point}>{point}</li>
@@ -95,8 +95,8 @@ export async function EnglishAboutPageLive() {
           <p className="page-card-label">Location context</p>
           <h2>{businessProfile.address.en}</h2>
           <p>
-            The Sofia location should stay visible everywhere because it helps both users and search systems connect
-            the brand to the exact place where people want to eat.
+            Find us on Slavyanska 23, close to the National Theatre, but tucked away enough to feel calm as soon as
+            you step inside.
           </p>
           <ActionLink
             href={businessProfile.mapUrl}

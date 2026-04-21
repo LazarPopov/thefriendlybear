@@ -23,7 +23,7 @@ const localeMeta: Record<
     reviewsPath: "/bg/reviews"
   },
   en: {
-    language: "en",
+    language: "en-GB",
     homePath: "/en",
     menuPath: "/en/menu",
     contactPath: "/en/contact",
@@ -158,7 +158,7 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     sameAs: restaurantSameAs,
     founder: restaurantFounder,
     priceRange: "$$",
-    servesCuisine: ["Bulgarian", "BBQ"],
+    servesCuisine: ["Bulgarian", "BBQ", "European"],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
@@ -168,8 +168,8 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     },
     description:
       locale === "bg"
-        ? "Уютен ресторант в центъра на София с HTML меню, сезонни предложения и бърз достъп до контакти и резервации."
-        : "A cozy central Sofia restaurant with HTML menu content, seasonal specials, and fast access to contact and reservation routes.",
+        ? "Уютен ресторант в центъра на София с тайна градина, камина, бавно печено BBQ, сезонно меню и приветливо обслужване."
+        : "A cozy central Sofia restaurant with a secret garden, fireplace, slow-roasted BBQ, seasonal menu, and warm hospitality.",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.streetAddress,
@@ -197,7 +197,8 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
           closes: entry.closed ? undefined : entry.closes
         }))
       : undefined,
-    availableLanguage: ["bg", "en"],
+    availableLanguage: ["bg-BG", "en-GB"],
+    acceptsReservations: true,
     inLanguage: localeMeta[locale].language
   };
 }
@@ -208,7 +209,7 @@ function getWebsiteNode(): JsonLd {
     "@id": websiteId,
     url: siteConfig.siteUrl,
     name: siteConfig.name,
-    inLanguage: ["bg-BG", "en"],
+    inLanguage: ["bg-BG", "en-GB"],
     publisher: {
       "@id": restaurantId
     }
@@ -250,12 +251,12 @@ export function getHomePageSchema(locale: SiteLocale, profile: FrontendBusinessP
       url: homeUrl,
       name:
         locale === "bg"
-          ? "Уютен ресторант на Славянска 23 в София | The Friendly Bear Sofia"
-          : "Cozy restaurant on Slavyanska 23 in Sofia | The Friendly Bear Sofia",
+          ? "Уютен ресторант и градина в центъра на София | The Friendly Bear"
+          : "Cozy Restaurant & Garden in Sofia Center | The Friendly Bear",
       description:
         locale === "bg"
-          ? "Начална страница за The Friendly Bear Sofia с пролетно меню, адрес на Slavyanska 23 и бърз път към меню, резервации и упътвания."
-          : "Homepage for The Friendly Bear Sofia with seasonal menu, Slavyanska 23 address, and fast paths to menu, reservations, and directions.",
+          ? "Градска бърлога от 1923 г. на ул. Славянска 23 с тайна градина, камина, бавно печено BBQ, крафт бира и pet-friendly атмосфера."
+          : "A 1923 urban cabin on Slavyanska 23 with a secret garden, indoor fireplace, slow-roasted BBQ, craft beer, and pet-friendly hospitality.",
       inLanguage: localeMeta[locale].language,
       isPartOf: {
         "@id": websiteId
@@ -391,7 +392,7 @@ export function getTouristsHubSchema(locale: SiteLocale): JsonLd {
             "@type": "ListItem",
             position: 3,
             name: "Οδηγός για Έλληνες επισκέπτες",
-            url: absoluteUrl("/el/greek")
+            url: absoluteUrl("/el/estiatorio-sofia-kentro")
           }
         ]
       }

@@ -3,14 +3,6 @@ import { ReviewSnippetsShowcase } from "@/components/review-snippets-showcase";
 import { getBgPrimaryActions, getBusinessProfileData } from "@/lib/business-profile-module";
 import { buildActionTracking } from "@/lib/tracking";
 
-const connectorStatus = [
-  { label: "Google review snippets", status: "Активни сега" },
-  { label: "TripAdvisor откъси", status: "Чака одобрен източник" },
-  { label: "Meta social feed", status: "Чака одобрен API достъп" },
-  { label: "Keyword тагове", status: "Активни сега" },
-  { label: "HTML меню и контакти", status: "Активни сега" }
-] as const;
-
 const keywordThemes = ["уютно", "обслужване", "храна", "без резервация", "център на София"] as const;
 
 export async function BulgarianReviewsPageCurated() {
@@ -20,11 +12,11 @@ export async function BulgarianReviewsPageCurated() {
   return (
     <main className="page-shell">
       <section className="page-hero">
-        <p className="eyebrow">Отзиви и социално доказателство</p>
-        <h1>Google review snippets за The Friendly Bear Sofia</h1>
+        <p className="eyebrow">Отзиви на гости</p>
+        <h1>Истории от гости на The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          Страницата вече показва подбрани откъси от реални Google отзиви. Така имаме работещ слой за социално
-          доказателство още сега, а по-късно можем да го свържем към одобрен автоматизиран review source.
+          Прочетете реални впечатления от гости, които са дошли за храна, обслужване и атмосфера, а са открили място,
+          което искат да препоръчат.
         </p>
 
         <div className="page-tags" aria-label="Review сигнали">
@@ -58,17 +50,12 @@ export async function BulgarianReviewsPageCurated() {
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
-          <p className="page-card-label">Текущ статус</p>
-          <h2>Какво review слоят публикува сега</h2>
-          <ul className="status-list">
-            {connectorStatus.map((item) => (
-              <li key={item.label} className="status-row">
-                <span>{item.label}</span>
-                <strong>{item.status}</strong>
-              </li>
-            ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.bg}</p>
+          <p className="page-card-label">Любими моменти</p>
+          <h2>Защо хората ни препоръчват</h2>
+          <p>
+            Гостите често споменават топлата атмосфера, искреното обслужване и храната, която превръща случайното
+            посещение в добро откритие.
+          </p>
         </article>
 
         <article className="page-card">

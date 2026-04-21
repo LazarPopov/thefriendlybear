@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "The Friendly Bear Sofia",
   shortName: "Friendly Bear",
   description:
-    "The Friendly Bear Sofia at Slavyanska 23 in Sofia. Бърлогата на добрия вкус - влез, отпусни се, наслади се.",
+    "The Friendly Bear Sofia is a cozy restaurant and garden on Slavyanska 23 with slow-roasted BBQ, craft beer, fireplace, and pet-friendly hospitality.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://friendlybear.bg",
   defaultLocale: "bg" as const,
   locales: ["bg", "en"] as const,

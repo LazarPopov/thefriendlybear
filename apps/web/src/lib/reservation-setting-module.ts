@@ -108,32 +108,32 @@ export function getReservationHeroContent(
   if (!toggles.reservationsEnabled) {
     return locale === "bg"
       ? {
-          title: "Резервационният модул е временно изключен",
+          title: "Резервациите са по телефона",
           description:
-            "Owner-ът е изключил резервациите от CMS. Менюто, контактите и упътванията остават активни, докато модулът не бъде включен отново.",
-          statusTag: "Резервациите са изключени"
+            "Обадете ни се директно и ще помогнем с маса в градината, до камината или за вечеря с приятели.",
+          statusTag: "Обадете се за маса"
         }
       : {
-          title: "The reservations module is temporarily disabled",
+          title: "Reservations are by phone",
           description:
-            "The owner has disabled reservations from the CMS. Menu, contact, and directions remain active until the module is enabled again.",
-          statusTag: "Reservations are disabled"
+            "Call us directly and we will help with a garden seat, a fireplace table, or dinner with friends.",
+          statusTag: "Call for a table"
         };
   }
 
   if (!settings.isEnabled) {
     return locale === "bg"
       ? {
-          title: "Резервационният канал е поставен на пауза",
+          title: "Резервациите са по телефона",
           description:
-            "Модулът е активен в сайта, но текущият booking канал е спрян от CMS, докато operational режимът не бъде променен отново.",
-          statusTag: "Каналът е на пауза"
+            "В момента приемаме резервации директно по телефона. Екипът ще ви помогне с най-подходящата маса.",
+          statusTag: "Обадете се за маса"
         }
       : {
-          title: "The reservation channel is currently paused",
+          title: "Reservations are by phone",
           description:
-            "The module is live on the site, but the current booking channel has been paused from the CMS until the operational mode changes again.",
-          statusTag: "Channel paused"
+            "Right now we take reservations directly by phone. The team will help you choose the best available table.",
+          statusTag: "Call for a table"
         };
   }
 
@@ -142,13 +142,13 @@ export function getReservationHeroContent(
       ? {
           title: "Резервационният път ще бъде потвърден скоро",
           description:
-            "CMS already controls the reservation state, but the active booking channel is still marked as pending. Menu, contact, and directions stay available in the meantime.",
+            "Скоро ще добавим още възможности за резервация. Дотогава най-сигурният начин е да ни се обадите директно.",
           statusTag: "Очаква потвърждение"
         }
       : {
           title: "The reservation path will be confirmed soon",
           description:
-            "The CMS already controls the reservation state, but the active booking channel is still marked as pending. Menu, contact, and directions stay available in the meantime.",
+            "We will add more reservation options soon. For now, the safest way to book is to call us directly.",
           statusTag: "Pending confirmation"
         };
   }
@@ -158,27 +158,27 @@ export function getReservationHeroContent(
       bg: {
         title: "Обади се за резервация",
         description:
-          "В момента най-бързият резервационен път е телефонът. Този режим се управлява директно от CMS и може да се смени по-късно без code changes.",
-        statusTag: "Активен телефонен режим"
+          "В момента най-бързият начин за резервация е телефонът. Обадете се и ще ви помогнем с най-подходящата маса.",
+        statusTag: "Резервации по телефона"
       },
       en: {
         title: "Call for reservation",
         description:
-          "Right now the fastest reservation path is by phone. This mode is controlled directly from the CMS and can change later without code changes.",
-        statusTag: "Phone mode active"
+          "Right now the fastest way to reserve is by phone. Call us and we will help with the best available table.",
+        statusTag: "Phone reservations"
       }
     },
     call_whatsapp: {
       bg: {
         title: "Избери между телефон и WhatsApp",
         description:
-          "Резервационният слой е настроен да показва и двата канала, така че гостът да избере най-удобния път според ситуацията.",
+          "Можете да се свържете по телефона или през WhatsApp и да изберете най-удобния начин за резервация.",
         statusTag: "Телефон и WhatsApp"
       },
       en: {
         title: "Choose between phone and WhatsApp",
         description:
-          "The reservation layer is currently configured to surface both channels so visitors can choose the easiest path.",
+          "You can reach us by phone or WhatsApp and choose the easiest way to reserve.",
         statusTag: "Phone and WhatsApp"
       }
     },
@@ -186,28 +186,28 @@ export function getReservationHeroContent(
       bg: {
         title: "Използвай активния booking линк",
         description:
-          "Текущият operational режим подава външен booking канал отпред. Телефонът и контактите могат да останат като backup path.",
-        statusTag: "Външен booking режим"
+          "Отворете активния линк за резервации. Ако имате въпрос, телефонът остава най-бързият начин за връзка.",
+        statusTag: "Активен booking линк"
       },
       en: {
         title: "Use the active booking link",
         description:
-          "The current operational mode surfaces an external booking channel first. Phone and contact can still stay as backup paths.",
-        statusTag: "External booking mode"
+          "Open the active booking link. If you have a question, the phone remains the fastest way to reach us.",
+        statusTag: "Active booking link"
       }
     },
     hybrid: {
       bg: {
         title: "Избери най-удобния резервационен път",
         description:
-          "Хибридният режим позволява сайтът да покаже повече от един активен booking канал едновременно, без да променя frontend логиката.",
-        statusTag: "Хибриден режим"
+          "Изберете най-удобния начин за резервация: телефон, WhatsApp или активния външен линк.",
+        statusTag: "Няколко варианта"
       },
       en: {
         title: "Choose the most convenient reservation path",
         description:
-          "Hybrid mode lets the site surface more than one active booking channel at the same time without changing the frontend logic.",
-        statusTag: "Hybrid mode"
+          "Choose the easiest reservation option: phone, WhatsApp, or the active external booking link.",
+        statusTag: "Multiple options"
       }
     }
   } as const;
@@ -360,10 +360,10 @@ export function getReservationStatusRows(
 
   if (locale === "bg") {
     return [
-      { label: "Резервационен модул", status: enabled ? "Активен" : "Изключен" },
-      { label: "Активен режим", status: getReservationModeLabel(locale, settings.mode) },
+      { label: "Резервации", status: enabled ? "Отворени" : "По телефона" },
+      { label: "Начин за връзка", status: getReservationModeLabel(locale, settings.mode) },
       {
-        label: "Телефонен канал",
+        label: "Телефон",
         status:
           phoneNumber && enabled && ["call_only", "call_whatsapp", "hybrid"].includes(settings.mode)
             ? "Активен"
@@ -372,7 +372,7 @@ export function getReservationStatusRows(
               : "Не е зададен"
       },
       {
-        label: "WhatsApp канал",
+        label: "WhatsApp",
         status:
           whatsappNumber && enabled && ["call_whatsapp", "hybrid"].includes(settings.mode)
             ? "Активен"
@@ -381,7 +381,7 @@ export function getReservationStatusRows(
               : "Не се използва"
       },
       {
-        label: "Външен booking",
+        label: "Онлайн резервация",
         status:
           externalBookingUrl && enabled && ["external_booking", "hybrid"].includes(settings.mode)
             ? "Активен"
@@ -393,10 +393,10 @@ export function getReservationStatusRows(
   }
 
   return [
-    { label: "Reservations module", status: enabled ? "Active" : "Disabled" },
-    { label: "Active mode", status: getReservationModeLabel(locale, settings.mode) },
+    { label: "Reservations", status: enabled ? "Open" : "By phone" },
+    { label: "Contact option", status: getReservationModeLabel(locale, settings.mode) },
     {
-      label: "Phone channel",
+      label: "Phone",
       status:
         phoneNumber && enabled && ["call_only", "call_whatsapp", "hybrid"].includes(settings.mode)
           ? "Active"
@@ -405,7 +405,7 @@ export function getReservationStatusRows(
             : "Not set"
     },
     {
-      label: "WhatsApp channel",
+      label: "WhatsApp",
       status:
         whatsappNumber && enabled && ["call_whatsapp", "hybrid"].includes(settings.mode)
           ? "Active"
@@ -414,7 +414,7 @@ export function getReservationStatusRows(
             : "Not used"
     },
     {
-      label: "External booking",
+      label: "Online booking",
       status:
         externalBookingUrl && enabled && ["external_booking", "hybrid"].includes(settings.mode)
           ? "Active"

@@ -33,8 +33,8 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       it: "Un'atmosfera magica a Sofia: Giardino e Tradizione"
     },
     intro: {
-      bg: "Тази страница е подредена за international travel intent: централна локация, приветливо усещане, ясен достъп до менюто и бързо уверение за вегетариански опции и обслужване.",
-      en: "This page is shaped for Italian-speaking travel intent: central location, welcoming atmosphere, clear menu access, and quick reassurance around vegetarian options and service."
+      bg: "Уютно място в центъра на София за италиански гости, с тайна градина, крафт бира и меню на английски.",
+      en: "A cozy place in central Sofia for Italian visitors, with a secret garden, craft beer, and an English menu."
     },
     marketIntro: {
       it: "Nascosto dietro l'hotel InterContinental (ex Radisson) nel cuore di Sofia, The Friendly Bear e una baita urbana del 1923 restaurata a mano. Un rifugio perfetto per chi cerca cibo autentico, birra artigianale e calore umano."
@@ -47,8 +47,8 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       it: "La cucina bulgara offre splendide alternative vegetariane. Nel nostro menu troverai insalate fresche e piatti caldi chiaramente segnalati."
     },
     serviceMessage: {
-      bg: "Тонът и структурата на страницата подчертават приветливо обслужване и лесен mobile path към менюто, контактите и посоките.",
-      en: "The structure and tone of the page reinforce welcoming service and an easy mobile path toward menu, contact, and directions."
+      bg: "Екипът говори английски и ще ви помогне с менюто, упътванията или резервацията.",
+      en: "Our team speaks English and can help with the menu, directions, or your reservation."
     },
     marketServiceMessage: {
       it: "Non preoccuparti per la lingua. Il nostro staff parla inglese e il nostro menu disponibile in inglese e facile da consultare sul tuo smartphone."
@@ -121,8 +121,8 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       el: "Διαθέτουμε μεγάλη ποικιλία από φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα, όλα ξεκάθαρα σημειωμένα στο μενού μας."
     },
     serviceMessage: {
-      bg: "Страницата е умишлено проста и приветлива, така че посетителят да стигне бързо до меню, упътвания или резервационен път.",
-      en: "The page is intentionally simple and welcoming so the visitor can move quickly toward menu, directions, or the reservation path."
+      bg: "Нашият екип говори английски и ще ви посрещне спокойно, независимо дали идвате за обяд, вечеря или бира в градината.",
+      en: "Our team speaks English and will welcome you warmly, whether you come for lunch, dinner, or a beer in the garden."
     },
     marketServiceMessage: {
       el: "Θέλουμε να νιώθετε άνετα. Το προσωπικό μας μιλάει άπταιστα αγγλικά και το ψηφιακό μας μενού είναι διαθέσιμο στα αγγλικά για τη διευκόλυνσή σας."
