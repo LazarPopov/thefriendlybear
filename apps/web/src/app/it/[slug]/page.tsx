@@ -27,6 +27,10 @@ function getItalianRestaurantSchema() {
     "@id": `${productionSiteUrl}/#restaurant`,
     name: "The Friendly Bear Sofia",
     description: "Un angolo accogliente nel cuore di Sofia con giardino segreto e cucina tradizionale.",
+    image: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+    logo: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+    telephone: "+359876122114",
+    priceRange: "$$",
     servesCuisine: ["Bulgara", "BBQ", "Europea"],
     knowsLanguage: ["en", "bg", "it"],
     url: absoluteUrl(`/it/${italianSlug}`),
@@ -34,6 +38,7 @@ function getItalianRestaurantSchema() {
       "@type": "PostalAddress",
       streetAddress: "Slavyanska 23",
       addressLocality: "Sofia",
+      postalCode: "1000",
       addressCountry: "BG"
     }
   };
@@ -76,12 +81,21 @@ export async function generateMetadata({ params }: MarketRouteProps): Promise<Me
       url: canonicalUrl,
       siteName: "The Friendly Bear Sofia",
       locale: config.ogLocale,
-      type: "website"
+      type: "website",
+      images: [
+        {
+          url: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+          width: 320,
+          height: 320,
+          alt: "The Friendly Bear Sofia logo"
+        }
+      ]
     },
     twitter: {
       card: "summary_large_image",
       title: italianTitle,
-      description: italianDescription
+      description: italianDescription,
+      images: [absoluteUrl("/icons/friendly_bear_logo.jpg")]
     }
   };
 }

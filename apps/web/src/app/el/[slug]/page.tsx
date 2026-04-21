@@ -26,6 +26,10 @@ function getGreekRestaurantSchema() {
     "@type": "Restaurant",
     "@id": `${productionSiteUrl}/#restaurant`,
     name: "The Friendly Bear Sofia",
+    image: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+    logo: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+    telephone: "+359876122114",
+    priceRange: "$$",
     description: "Ένα ζεστό εστιατόριο στην καρδιά της Σόφιας με κρυφό κήπο και παραδοσιακή κουζίνα.",
     servesCuisine: ["Bulgarian", "BBQ", "European"],
     knowsLanguage: ["en", "bg", "el"],
@@ -34,6 +38,7 @@ function getGreekRestaurantSchema() {
       "@type": "PostalAddress",
       streetAddress: "Slavyanska 23",
       addressLocality: "Sofia",
+      postalCode: "1000",
       addressCountry: "BG"
     }
   };
@@ -76,12 +81,21 @@ export async function generateMetadata({ params }: MarketRouteProps): Promise<Me
       url: canonicalUrl,
       siteName: "The Friendly Bear Sofia",
       locale: config.ogLocale,
-      type: "website"
+      type: "website",
+      images: [
+        {
+          url: absoluteUrl("/icons/friendly_bear_logo.jpg"),
+          width: 320,
+          height: 320,
+          alt: "The Friendly Bear Sofia logo"
+        }
+      ]
     },
     twitter: {
       card: "summary_large_image",
       title: greekTitle,
-      description: greekDescription
+      description: greekDescription,
+      images: [absoluteUrl("/icons/friendly_bear_logo.jpg")]
     }
   };
 }
