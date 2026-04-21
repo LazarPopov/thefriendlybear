@@ -1,0 +1,98 @@
+{
+  "kind": "collectionType",
+  "collectionName": "menu_items",
+  "info": {
+    "singularName": "menu-item",
+    "pluralName": "menu-items",
+    "displayName": "Menu Item"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "categoryKey": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "name": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "description": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "allergens": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "servingLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "caloriesLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": ["BGN", "EUR"],
+      "default": "BGN"
+    },
+    "priceDisplayBgn": {
+      "type": "string"
+    },
+    "priceDisplayEur": {
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "dietaryTags": {
+      "type": "json"
+    },
+    "isVegetarian": {
+      "type": "boolean",
+      "default": false
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "sourceRefs": {
+      "type": "json"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo-metadata"
+    }
+  }
+}

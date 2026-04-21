@@ -1,0 +1,351 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { businessProfileSource } from "@/lib/business-profile-source";
+import type { BusinessHoursEntry } from "@/lib/business-profile-source";
+
+const instagramUrl = "https://www.instagram.com/friendlybear.bg/";
+const facebookUrl = "https://www.facebook.com/friendlybear.bg/";
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M7.8 2.8h8.4a5 5 0 0 1 5 5v8.4a5 5 0 0 1-5 5H7.8a5 5 0 0 1-5-5V7.8a5 5 0 0 1 5-5Zm0 1.9a3.1 3.1 0 0 0-3.1 3.1v8.4a3.1 3.1 0 0 0 3.1 3.1h8.4a3.1 3.1 0 0 0 3.1-3.1V7.8a3.1 3.1 0 0 0-3.1-3.1H7.8Zm4.2 3.2a4.1 4.1 0 1 1 0 8.2 4.1 4.1 0 0 1 0-8.2Zm0 1.9a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Zm4.35-2.35a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M13.35 21.2v-8.36h2.82l.42-3.26h-3.24V7.5c0-.94.26-1.58 1.62-1.58h1.72V3a23 23 0 0 0-2.5-.13c-2.48 0-4.18 1.51-4.18 4.28v2.43H7.2v3.26h2.81v8.36h3.34Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function normalizePhone(input: string) {
+  return input.replace(/[^\d+]/g, "");
+}
+
+function getLocaleFromPath(pathname: string) {
+  if (pathname.startsWith("/en") || getTouristMarketAudienceFromPath(pathname)) {
+    return "en";
+  }
+
+  return "bg";
+}
+
+function getOppositeLocalePath(locale: "bg" | "en") {
+  const targetLocale = locale === "bg" ? "en" : "bg";
+
+  return `/${targetLocale}`;
+}
+
+function getTouristMarketAudienceFromPath(pathname: string) {
+  if (pathname === "/it" || pathname.startsWith("/it/")) {
+    return "italian";
+  }
+
+  if (pathname === "/es" || pathname.startsWith("/es/")) {
+    return "spanish";
+  }
+
+  if (pathname === "/el" || pathname.startsWith("/el/")) {
+    return "greek";
+  }
+
+  return null;
+}
+
+const dayLabels: Record<"bg" | "en", Record<BusinessHoursEntry["dayOfWeek"], string>> = {
+  bg: {
+    Monday: "Понеделник",
+    Tuesday: "Вторник",
+    Wednesday: "Сряда",
+    Thursday: "Четвъртък",
+    Friday: "Петък",
+    Saturday: "Събота",
+    Sunday: "Неделя"
+  },
+  en: {
+    Monday: "Monday",
+    Tuesday: "Tuesday",
+    Wednesday: "Wednesday",
+    Thursday: "Thursday",
+    Friday: "Friday",
+    Saturday: "Saturday",
+    Sunday: "Sunday"
+  }
+};
+
+function formatOpeningHours(entry: BusinessHoursEntry, closedLabel: string) {
+  if (entry.closed || !entry.opens || !entry.closes) {
+    return closedLabel;
+  }
+
+  return `${entry.opens} - ${entry.closes}`;
+}
+
+export function SiteChrome({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname() || "/bg";
+  const touristMarketAudience = getTouristMarketAudienceFromPath(pathname);
+  const locale = getLocaleFromPath(pathname);
+  const languagePath = touristMarketAudience
+    ? `/en/tourists/${touristMarketAudience}`
+    : getOppositeLocalePath(locale);
+  const isHomeRoute = pathname === "/" || pathname === "/bg" || pathname === "/en";
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const currentYear = new Date().getFullYear();
+  const homePath = `/${locale}`;
+  const menuPath = `/${locale}/menu`;
+  const aboutPath = `/${locale}/about`;
+  const touristsPath = `/${locale}/tourists`;
+  const reviewsPath = `/${locale}/reviews`;
+  const phoneNumber = businessProfileSource.contact.phoneNumber;
+  const phoneDisplay = businessProfileSource.contact.phoneDisplay ?? phoneNumber;
+  const phoneHref = phoneNumber ? `tel:${normalizePhone(phoneNumber)}` : null;
+  const showHeader = !isHomeRoute || hasScrolled;
+  const copy =
+    locale === "bg"
+      ? {
+          home: "Начало",
+          menu: "Меню",
+          about: "За нас",
+          tourists: "За туристи",
+          reviews: "Отзиви",
+          language: "🇬🇧 English",
+          mobileLanguage: "EN",
+          directions: "Как да стигнете",
+          call: "Обади се за резервация",
+          phoneLabel: "Телефон за връзка",
+          mobileCall: "📞 Резерв.",
+          mobileMenu: "📖 Меню",
+          shortSlogan: "Бърлогата на добрия вкус",
+          footerNote: "Бърлогата на добрия вкус - влез, отпусни се, наслади се",
+          footerSeo:
+            "The Friendly Bear Sofia е уютен ресторант в центъра на София на ул. Славянска 23 с градина, камина, сезонно меню, вегетариански избор и телефонни резервации.",
+          navigationLabel: "Основна навигация",
+          footerNavLabel: "Полезни връзки",
+          footerMainLabel: "Ресторантът",
+          footerGuestLabel: "За гости",
+          footerSocialLabel: "Социални мрежи",
+          footerHoursLabel: "Работно време",
+          closedLabel: "Затворено",
+          rights: "Всички права запазени.",
+          ratingLabel: "Оценка 4.5 от 5 в Google, 1361 отзива",
+          ratingText: "4.5 · 1361"
+        }
+      : {
+          home: "Home",
+          menu: "Menu",
+          about: "About",
+          tourists: "For tourists",
+          reviews: "Reviews",
+          language: "🇧🇬 Bulgarian",
+          mobileLanguage: "BG",
+          directions: "How to get there",
+          call: "Call to reserve",
+          phoneLabel: "Phone",
+          mobileCall: "📞 Reserve",
+          mobileMenu: "📖 Menu",
+          shortSlogan: "The den of good taste",
+          footerNote: "The den of the good taste - come in, relax and enjoy",
+          footerSeo:
+            "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23 with a secret garden, fireplace, seasonal menu, vegetarian choices, and phone reservations.",
+          navigationLabel: "Main navigation",
+          footerNavLabel: "Useful links",
+          footerMainLabel: "Restaurant",
+          footerGuestLabel: "For guests",
+          footerSocialLabel: "Social",
+          footerHoursLabel: "Opening hours",
+          closedLabel: "Closed",
+          rights: "All rights reserved.",
+          ratingLabel: "Google rating 4.5 out of 5, 1361 reviews",
+          ratingText: "4.5 · 1361"
+        };
+  const languageLabel = touristMarketAudience ? "🇬🇧 English" : copy.language;
+  const mobileLanguageLabel = touristMarketAudience ? "EN" : copy.mobileLanguage;
+
+  useEffect(() => {
+    function handleScroll() {
+      setHasScrolled(window.scrollY > 96);
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <header
+        className={`site-header-shell ${isHomeRoute ? "site-header-shell-home" : ""} ${
+          showHeader ? "site-header-shell-visible" : "site-header-shell-hidden"
+        }`}
+      >
+        <div className="site-header">
+          <Link href={homePath} className="site-brand" aria-label="The Friendly Bear Sofia home">
+            <Image
+              src="/icons/friendly_bear_logo.jpg"
+              alt="The Friendly Bear Sofia logo"
+              width={52}
+              height={52}
+              className="site-brand-logo"
+              priority
+            />
+            <span>
+              <strong>The Friendly Bear</strong>
+              <small>{copy.shortSlogan}</small>
+            </span>
+          </Link>
+
+          <div className="site-rating-mini" aria-label={copy.ratingLabel}>
+            <span className="site-rating-mini-stars" aria-hidden="true">
+              ★★★★★
+            </span>
+            <span>{copy.ratingText}</span>
+          </div>
+
+          <nav className="site-nav" aria-label={copy.navigationLabel}>
+            {phoneHref ? (
+              <a className="site-nav-primary" href={phoneHref}>
+                <span className="site-nav-label-desktop">{copy.call}</span>
+                <span className="site-nav-label-mobile">{copy.mobileCall}</span>
+              </a>
+            ) : null}
+            <a
+              href={businessProfileSource.identity.mapUrl}
+              className="site-nav-secondary site-nav-directions"
+              target="_blank"
+              rel="noreferrer"
+              aria-label={copy.directions}
+              title={copy.directions}
+            >
+              <span className="site-nav-label-desktop">{copy.directions}</span>
+              <span className="site-nav-label-mobile site-nav-map-label">
+                <img src="/icons/google-maps-icon.svg" alt="" className="site-nav-map-icon" />
+              </span>
+            </a>
+            <Link href={menuPath} className="site-nav-essential site-nav-menu">
+              <span className="site-nav-label-desktop">{copy.menu}</span>
+              <span className="site-nav-label-mobile">{copy.mobileMenu}</span>
+            </Link>
+            <Link href={aboutPath} className="site-nav-secondary">
+              {copy.about}
+            </Link>
+            <a
+              href={instagramUrl}
+              className="site-nav-social"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href={facebookUrl}
+              className="site-nav-social"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              title="Facebook"
+            >
+              <FacebookIcon />
+            </a>
+            <Link href={languagePath} className="site-nav-essential site-nav-language">
+              <span className="site-nav-label-desktop">{languageLabel}</span>
+              <span className="site-nav-label-mobile">{mobileLanguageLabel}</span>
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {children}
+
+      <footer className="site-footer-shell">
+        <div className="site-footer">
+          <div className="site-footer-main">
+            <Link href={homePath} className="site-footer-brand-row" aria-label="The Friendly Bear Sofia home">
+              <Image
+                src="/icons/friendly_bear_logo.jpg"
+                alt="The Friendly Bear Sofia logo"
+                width={70}
+                height={70}
+                className="site-footer-logo"
+              />
+              <span>
+                <strong>The Friendly Bear Sofia</strong>
+                <small>{copy.footerNote}</small>
+              </span>
+            </Link>
+            <p className="site-footer-seo">{copy.footerSeo}</p>
+            <address className="site-footer-contact">
+              <span>{businessProfileSource.identity.address[locale]}</span>
+              {phoneHref && phoneDisplay ? (
+                <a href={phoneHref}>
+                  {copy.phoneLabel}: {phoneDisplay}
+                </a>
+              ) : null}
+            </address>
+            <p className="site-footer-rights">
+              © {currentYear} The Friendly Bear Sofia. {copy.rights}
+            </p>
+          </div>
+
+          <nav className="site-footer-nav" aria-label={copy.footerNavLabel}>
+            <div className="site-footer-column">
+              <p>{copy.footerMainLabel}</p>
+              <Link href={homePath}>{copy.home}</Link>
+              <Link href={menuPath}>{copy.menu}</Link>
+              <Link href={aboutPath}>{copy.about}</Link>
+              <Link href={reviewsPath}>{copy.reviews}</Link>
+            </div>
+
+            <div className="site-footer-column">
+              <p>{copy.footerGuestLabel}</p>
+              {phoneHref ? <a href={phoneHref}>{copy.call}</a> : null}
+              <a href={businessProfileSource.identity.mapUrl} target="_blank" rel="noreferrer">
+                {copy.directions}
+              </a>
+              <Link href={touristsPath}>{copy.tourists}</Link>
+              <Link href={languagePath}>{languageLabel}</Link>
+            </div>
+
+            <div className="site-footer-column">
+              <p>{copy.footerSocialLabel}</p>
+              <a href={instagramUrl} target="_blank" rel="noreferrer">
+                Instagram
+              </a>
+              <a href={facebookUrl} target="_blank" rel="noreferrer">
+                Facebook
+              </a>
+            </div>
+
+            <div className="site-footer-column site-footer-hours">
+              <p>{copy.footerHoursLabel}</p>
+              <ul className="site-footer-hours-list">
+                {businessProfileSource.venue.openingHours.map((entry) => (
+                  <li key={entry.dayOfWeek}>
+                    <span>{dayLabels[locale][entry.dayOfWeek]}</span>
+                    <strong>{formatOpeningHours(entry, copy.closedLabel)}</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </footer>
+    </>
+  );
+}

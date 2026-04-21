@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tourist_landing_pages",
+  "info": {
+    "singularName": "tourist-landing-page",
+    "pluralName": "tourist-landing-pages",
+    "displayName": "Tourist Landing Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "audience": {
+      "type": "enumeration",
+      "enum": ["italian", "spanish", "greek"],
+      "required": true
+    },
+    "slug": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "marketSlug": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-string"
+    },
+    "title": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "marketTitle": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-string"
+    },
+    "intro": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text",
+      "required": true
+    },
+    "marketIntro": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-text"
+    },
+    "vegetarianMessage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "marketVegetarianMessage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-text"
+    },
+    "serviceMessage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "marketServiceMessage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-text"
+    },
+    "primaryCtaLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "marketPrimaryCtaLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-string"
+    },
+    "primaryCtaUrl": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "marketPrimaryCtaUrl": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.market-string"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo-metadata"
+    }
+  }
+}

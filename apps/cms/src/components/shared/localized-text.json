@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_localized_texts",
+  "info": {
+    "displayName": "Localized Text",
+    "description": "Long bilingual plain text"
+  },
+  "options": {},
+  "attributes": {
+    "bg": {
+      "type": "text",
+      "required": true
+    },
+    "en": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

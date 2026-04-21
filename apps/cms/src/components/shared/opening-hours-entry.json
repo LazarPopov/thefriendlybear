@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_opening_hours_entries",
+  "info": {
+    "displayName": "Opening Hours Entry",
+    "description": "Single day opening hours row"
+  },
+  "options": {},
+  "attributes": {
+    "dayOfWeek": {
+      "type": "enumeration",
+      "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "required": true
+    },
+    "opens": {
+      "type": "string"
+    },
+    "closes": {
+      "type": "string"
+    },
+    "closed": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

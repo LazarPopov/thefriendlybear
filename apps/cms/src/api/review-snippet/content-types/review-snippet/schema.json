@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "review_snippets",
+  "info": {
+    "singularName": "review-snippet",
+    "pluralName": "review-snippets",
+    "displayName": "Review Snippet"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "source": {
+      "type": "enumeration",
+      "enum": ["google", "tripadvisor", "manual"],
+      "required": true
+    },
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "rating": {
+      "type": "integer",
+      "required": true
+    },
+    "reviewText": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text",
+      "required": true
+    },
+    "reviewDate": {
+      "type": "date"
+    },
+    "relativeDateLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "sourceUrl": {
+      "type": "string"
+    },
+    "keywordTags": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string-list"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo-metadata"
+    }
+  }
+}

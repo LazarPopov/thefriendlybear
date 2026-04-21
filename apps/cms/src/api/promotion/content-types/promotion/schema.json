@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promotions",
+  "info": {
+    "singularName": "promotion",
+    "pluralName": "promotions",
+    "displayName": "Promotion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "slug": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "title": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "summary": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text",
+      "required": true
+    },
+    "body": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-richtext"
+    },
+    "ctaLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "ctaUrl": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "startsAt": {
+      "type": "datetime"
+    },
+    "endsAt": {
+      "type": "datetime"
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo-metadata"
+    }
+  }
+}

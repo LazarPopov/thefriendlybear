@@ -1,0 +1,112 @@
+{
+  "kind": "singleType",
+  "collectionName": "business_profiles",
+  "info": {
+    "singularName": "business-profile",
+    "pluralName": "business-profiles",
+    "displayName": "Business Profile"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "sourceMode": {
+      "type": "enumeration",
+      "enum": ["manual"],
+      "default": "manual",
+      "required": true
+    },
+    "futureConnector": {
+      "type": "enumeration",
+      "enum": ["google_business_profile"],
+      "default": "google_business_profile"
+    },
+    "syncReady": {
+      "type": "boolean",
+      "default": false
+    },
+    "lastBusinessUpdateNote": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "area": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "mapUrl": {
+      "type": "string",
+      "required": true
+    },
+    "mapsLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "phoneNumber": {
+      "type": "string"
+    },
+    "phoneDisplay": {
+      "type": "string"
+    },
+    "whatsappNumber": {
+      "type": "string"
+    },
+    "whatsappPrefill": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "bookingMode": {
+      "type": "enumeration",
+      "enum": ["pending", "call_only", "call_whatsapp", "external_booking", "hybrid"],
+      "default": "pending",
+      "required": true
+    },
+    "externalBookingUrl": {
+      "type": "string"
+    },
+    "externalBookingLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "serviceOptions": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string-list"
+    },
+    "openingHours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.opening-hours-entry"
+    },
+    "statusMessages": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    },
+    "visitNotes": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string-list"
+    },
+    "arrivalTips": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string-list"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo-metadata"
+    }
+  }
+}

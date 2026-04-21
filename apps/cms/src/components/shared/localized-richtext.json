@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_localized_richtexts",
+  "info": {
+    "displayName": "Localized Rich Text",
+    "description": "Bilingual rich text"
+  },
+  "options": {},
+  "attributes": {
+    "bg": {
+      "type": "richtext",
+      "required": true
+    },
+    "en": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

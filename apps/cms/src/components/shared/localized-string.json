@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_localized_strings",
+  "info": {
+    "displayName": "Localized String",
+    "description": "Short bilingual text"
+  },
+  "options": {},
+  "attributes": {
+    "bg": {
+      "type": "string",
+      "required": true
+    },
+    "en": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

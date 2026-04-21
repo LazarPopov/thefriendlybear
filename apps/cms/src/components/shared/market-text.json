@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_market_texts",
+  "info": {
+    "displayName": "Market Text",
+    "description": "Optional longer text for tourist market routes"
+  },
+  "options": {},
+  "attributes": {
+    "it": {
+      "type": "text"
+    },
+    "es": {
+      "type": "text"
+    },
+    "el": {
+      "type": "text"
+    }
+  }
+}

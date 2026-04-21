@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "module_toggles",
+  "info": {
+    "singularName": "module-toggle",
+    "pluralName": "module-toggles",
+    "displayName": "Module Toggles"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "promotionsEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "reservationsEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "reviewsEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "socialFeedEnabled": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

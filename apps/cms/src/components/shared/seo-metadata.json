@@ -1,0 +1,58 @@
+{
+  "collectionName": "components_shared_seo_metadata",
+  "info": {
+    "displayName": "SEO Metadata",
+    "description": "Bilingual SEO metadata and schema flags"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string",
+      "required": true
+    },
+    "description": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text",
+      "required": true
+    },
+    "canonicalPath": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "keywords": {
+      "type": "json"
+    },
+    "noindex": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaRestaurant": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaLocalBusiness": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaMenu": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaAggregateRating": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaFaq": {
+      "type": "boolean",
+      "default": false
+    },
+    "schemaSpeakable": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

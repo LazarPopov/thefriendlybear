@@ -1,0 +1,58 @@
+{
+  "kind": "singleType",
+  "collectionName": "reservation_settings",
+  "info": {
+    "singularName": "reservation-setting",
+    "pluralName": "reservation-settings",
+    "displayName": "Reservation Settings"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "mode": {
+      "type": "enumeration",
+      "enum": ["pending", "call_only", "call_whatsapp", "external_booking", "hybrid"],
+      "default": "pending",
+      "required": true
+    },
+    "stickyCallEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "stickyWhatsappEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "phoneNumber": {
+      "type": "string"
+    },
+    "whatsappNumber": {
+      "type": "string"
+    },
+    "externalBookingUrl": {
+      "type": "string"
+    },
+    "externalBookingProvider": {
+      "type": "enumeration",
+      "enum": ["rezzo", "opentable", "other"]
+    },
+    "externalBookingDomain": {
+      "type": "string"
+    },
+    "ctaLabel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-string"
+    },
+    "confirmationMessage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.localized-text"
+    }
+  }
+}

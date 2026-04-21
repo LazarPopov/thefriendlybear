@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_localized_string_lists",
+  "info": {
+    "displayName": "Localized String List",
+    "description": "Bilingual list of short strings"
+  },
+  "options": {},
+  "attributes": {
+    "bg": {
+      "type": "json",
+      "required": true
+    },
+    "en": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

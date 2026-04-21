@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_market_strings",
+  "info": {
+    "displayName": "Market String",
+    "description": "Optional short text for tourist market routes"
+  },
+  "options": {},
+  "attributes": {
+    "it": {
+      "type": "string"
+    },
+    "es": {
+      "type": "string"
+    },
+    "el": {
+      "type": "string"
+    }
+  }
+}
