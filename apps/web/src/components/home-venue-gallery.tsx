@@ -43,74 +43,74 @@ const galleryCopy: Record<
 const alternatingGalleryImages: HomeGalleryImageSource[] = [
   {
     src: "/images/garden_1.jpg",
-    alt: "Garden seating at The Friendly Bear Sofia",
+    alt: "мечата градина at The Friendly Bear Sofia",
     captions: {
-      bg: "Първо: тайна градина",
-      en: "First: the secret garden"
+      bg: "мечата градина",
+      en: "The Bear Garden"
     }
   },
   {
     src: "/images/interior_1.jpg",
-    alt: "Interior room at The Friendly Bear Sofia",
+    alt: "cozy бърлога at The Friendly Bear Sofia",
     captions: {
-      bg: "После: вътрешният уют",
-      en: "Then: the cozy inside"
+      bg: "cozy бърлога",
+      en: "Cozy Den"
     }
   },
   {
     src: "/images/garden_2.jpg",
-    alt: "Outdoor garden atmosphere at The Friendly Bear Sofia",
+    alt: "мечата тераса at The Friendly Bear Sofia",
     captions: {
-      bg: "Лампички и тиха вечер",
-      en: "Lights and a quiet evening"
+      bg: "мечата тераса",
+      en: "The Bear Terrace"
     }
   },
   {
     src: "/images/interior_2.jpg",
-    alt: "Warm interior at The Friendly Bear Sofia",
+    alt: "маса за дълги разговори at The Friendly Bear Sofia",
     captions: {
-      bg: "Маса за дълъг разговор",
-      en: "A table for a long talk"
+      bg: "маса за дълги разговори",
+      en: "Table for Long Talks"
     }
   },
   {
     src: "/images/garden_3.jpg",
-    alt: "Garden setting at The Friendly Bear Sofia",
+    alt: "гледка от бърлогата at The Friendly Bear Sofia",
     captions: {
-      bg: "Тихо място в сърцето на София",
-      en: "A quiet spot in the heart of Sofia"
+      bg: "гледка от бърлогата",
+      en: "View from the Den"
     }
   },
   {
     src: "/images/interior_3.jpg",
-    alt: "Cozy interior atmosphere at The Friendly Bear Sofia",
+    alt: "цветният коридор at The Friendly Bear Sofia",
     captions: {
-      bg: "Топло, спокойно, мечешко",
-      en: "Warm, calm, bear-approved"
+      bg: "цветният коридор",
+      en: "The Colorful Corridor"
     }
   },
   {
     src: "/images/garden_4.jpg",
-    alt: "Garden view at The Friendly Bear Sofia",
+    alt: "мечшки зимен сън at The Friendly Bear Sofia",
     captions: {
-      bg: "Още една глътка навън",
-      en: "One more sip outside"
+      bg: "мечшки зимен сън",
+      en: "Bear Winter Sleep"
     }
   },
   {
     src: "/images/interior_4.jpg",
-    alt: "Cozy fireplace-like interior mood at The Friendly Bear Sofia",
+    alt: "мечо at The Friendly Bear Sofia",
     captions: {
-      bg: "До камината след работа",
-      en: "By the fireplace after work"
+      bg: "мечо",
+      en: "Bear Buddy"
     }
   },
   {
     src: "/images/interior_5.jpg",
-    alt: "Interior dining atmosphere at The Friendly Bear Sofia",
+    alt: "Уютна вечер at The Friendly Bear Sofia",
     captions: {
-      bg: "Уютът си има адрес",
-      en: "Cozy has an address"
+      bg: "Уютна вечер",
+      en: "Cozy Evening"
     }
   }
 ];

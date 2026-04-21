@@ -81,23 +81,23 @@ export async function BulgarianAboutPageCms() {
         images={[
           {
             src: "/images/garden_1.jpg",
-            alt: "Тайна градина в The Friendly Bear София",
-            label: "Атмосфера"
+            alt: "мечата градина в The Friendly Bear София",
+            label: "мечата градина"
           },
           {
             src: "/images/interior_1.jpg",
-            alt: "Интериор с камина в The Friendly Bear София",
-            label: "Атмосфера"
+            alt: "cozy бърлога в The Friendly Bear София",
+            label: "cozy бърлога"
           },
           {
             src: "/images/garden_3.jpg",
-            alt: "Лятна градина в The Friendly Bear София",
-            label: "Атмосфера"
+            alt: "гледка от бърлогата в The Friendly Bear София",
+            label: "гледка от бърлогата"
           },
           {
             src: "/images/interior_4.jpg",
-            alt: "Топла вътрешна атмосфера в The Friendly Bear София",
-            label: "Атмосфера"
+            alt: "мечо в The Friendly Bear София",
+            label: "мечо"
           }
         ]}
       />

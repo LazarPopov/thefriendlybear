@@ -6,37 +6,37 @@ export type StaticVenueGalleryImage = {
 export const gardenGalleryImages: StaticVenueGalleryImage[] = [
   {
     src: "/images/garden_1.jpg",
-    alt: "Garden seating at The Friendly Bear Sofia"
+    alt: "мечата градина at The Friendly Bear Sofia"
   },
   {
     src: "/images/garden_2.jpg",
-    alt: "Hidden garden atmosphere at The Friendly Bear Sofia"
+    alt: "мечата тераса at The Friendly Bear Sofia"
   },
   {
     src: "/images/garden_3.jpg",
-    alt: "Garden mood at The Friendly Bear Sofia"
+    alt: "гледка от бърлогата at The Friendly Bear Sofia"
   }
 ];
 
 export const interiorGalleryImages: StaticVenueGalleryImage[] = [
   {
     src: "/images/interior_1.jpg",
-    alt: "Interior room at The Friendly Bear Sofia"
+    alt: "cozy бърлога at The Friendly Bear Sofia"
   },
   {
     src: "/images/interior_2.jpg",
-    alt: "Warm interior details at The Friendly Bear Sofia"
+    alt: "маса за дълги разговори at The Friendly Bear Sofia"
   },
   {
     src: "/images/interior_3.jpg",
-    alt: "Cozy interior atmosphere at The Friendly Bear Sofia"
+    alt: "цветният коридор at The Friendly Bear Sofia"
   },
   {
     src: "/images/interior_4.jpg",
-    alt: "Interior ambiance at The Friendly Bear Sofia"
+    alt: "мечо at The Friendly Bear Sofia"
   },
   {
     src: "/images/interior_5.jpg",
-    alt: "Dining interior at The Friendly Bear Sofia"
+    alt: "Уютна вечер at The Friendly Bear Sofia"
   }
 ];

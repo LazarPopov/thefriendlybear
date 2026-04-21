@@ -8,17 +8,17 @@ type TouristPhotoGalleryProps = {
 };
 
 const gardenImages = [
-  { src: "/images/garden_1.jpg", alt: "Garden seating at The Friendly Bear Sofia" },
-  { src: "/images/garden_2.jpg", alt: "Outdoor garden table at The Friendly Bear Sofia" },
-  { src: "/images/garden_3.jpg", alt: "Garden atmosphere at The Friendly Bear Sofia" }
+  { src: "/images/garden_1.jpg", alt: "The Bear Garden at The Friendly Bear Sofia" },
+  { src: "/images/garden_2.jpg", alt: "The Bear Terrace at The Friendly Bear Sofia" },
+  { src: "/images/garden_3.jpg", alt: "View from the Den at The Friendly Bear Sofia" }
 ];
 
 const interiorImages = [
-  { src: "/images/interior_1.jpg", alt: "Interior dining room at The Friendly Bear Sofia" },
-  { src: "/images/interior_2.jpg", alt: "Interior detail at The Friendly Bear Sofia" },
-  { src: "/images/interior_3.jpg", alt: "Cozy interior table at The Friendly Bear Sofia" },
-  { src: "/images/interior_4.jpg", alt: "Warm indoor seating at The Friendly Bear Sofia" },
-  { src: "/images/interior_5.jpg", alt: "Restaurant interior atmosphere at The Friendly Bear Sofia" }
+  { src: "/images/interior_1.jpg", alt: "Cozy Den at The Friendly Bear Sofia" },
+  { src: "/images/interior_2.jpg", alt: "Table for Long Talks at The Friendly Bear Sofia" },
+  { src: "/images/interior_3.jpg", alt: "The Colorful Corridor at The Friendly Bear Sofia" },
+  { src: "/images/interior_4.jpg", alt: "Bear Buddy at The Friendly Bear Sofia" },
+  { src: "/images/interior_5.jpg", alt: "Cozy Evening at The Friendly Bear Sofia" }
 ];
 
 const galleryCopy: Record<

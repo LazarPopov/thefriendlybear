@@ -81,23 +81,23 @@ export async function EnglishAboutPageCms() {
         images={[
           {
             src: "/images/garden_1.jpg",
-            alt: "Secret garden at The Friendly Bear Sofia",
-            label: "Atmosphere"
+            alt: "The Bear Garden at The Friendly Bear Sofia",
+            label: "The Bear Garden"
           },
           {
             src: "/images/interior_1.jpg",
-            alt: "Fireplace interior at The Friendly Bear Sofia",
-            label: "Atmosphere"
+            alt: "Cozy Den at The Friendly Bear Sofia",
+            label: "Cozy Den"
           },
           {
             src: "/images/garden_3.jpg",
-            alt: "Summer garden atmosphere at The Friendly Bear Sofia",
-            label: "Atmosphere"
+            alt: "View from the Den at The Friendly Bear Sofia",
+            label: "View from the Den"
           },
           {
             src: "/images/interior_4.jpg",
-            alt: "Warm indoor atmosphere at The Friendly Bear Sofia",
-            label: "Atmosphere"
+            alt: "Bear Buddy at The Friendly Bear Sofia",
+            label: "Bear Buddy"
           }
         ]}
       />

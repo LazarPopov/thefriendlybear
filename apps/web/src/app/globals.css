@@ -905,7 +905,7 @@ a {
 .home-page {
   width: min(100%, 1220px);
   margin: 0 auto;
-  padding: 148px 24px 120px;
+  padding: 156px 24px 120px;
 }
 
 .home-hero-panel {
@@ -2367,7 +2367,7 @@ p {
 
   .page-shell,
   .home-page {
-    padding: 42px 16px 64px;
+    padding: 132px 16px 64px;
   }
 
   .menu-shell {
@@ -2377,10 +2377,6 @@ p {
   .home-hero-panel,
   .menu-hero {
     padding: 20px;
-  }
-
-  .home-hero-panel {
-    padding-top: 84px;
   }
 
   .menu-sections,
