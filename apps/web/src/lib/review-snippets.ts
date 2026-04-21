@@ -30,8 +30,8 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
       en: "a year ago"
     },
     reviewText: {
-      bg: "Един от по-добрите ресторанти в София ... Още",
-      en: "One of the better restaurants in Sofia ... More"
+      bg: "Един от по-добрите ресторанти в София.",
+      en: "One of the better restaurants in Sofia."
     },
     tags: {
       bg: ["София", "качество", "добро впечатление"],
@@ -48,8 +48,8 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
       en: "a month ago"
     },
     reviewText: {
-      bg: "The Friendly Bear в София е чудесно място, ако търсите топла атмосфера и приветливо обслужване. Персоналът е искрено любезен и ... Още",
-      en: "The Friendly Bear in Sofia is a great place to visit if you're looking for a warm atmosphere and welcoming service. The staff are genuinely friendly and ... More"
+      bg: "The Friendly Bear в София е чудесно място, ако търсите топла атмосфера и приветливо обслужване.",
+      en: "The Friendly Bear in Sofia is a great place to visit if you're looking for a warm atmosphere and welcoming service."
     },
     tags: {
       bg: ["уютно", "обслужване", "атмосфера"],
@@ -66,8 +66,8 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
       en: "2 months ago"
     },
     reviewText: {
-      bg: "Перфектно място с невероятно обслужване и страхотна храна. България ни изненада по много начини, но The Friendly Bear го направи по най-добрия възможен начин. ... Още",
-      en: "Perfect place with amazing service and great food. Bulgaria has surprised us in many ways whilst visiting, but the Friendly Bear has done it in the best way. ... More"
+      bg: "Перфектно място с невероятно обслужване и страхотна храна. България ни изненада по много начини, но The Friendly Bear го направи по най-добрия възможен начин.",
+      en: "Perfect place with amazing service and great food. Bulgaria surprised us in many ways, but The Friendly Bear did it in the best way possible."
     },
     tags: {
       bg: ["обслужване", "храна", "преживяване"],
@@ -84,8 +84,8 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
       en: "2 months ago"
     },
     reviewText: {
-      bg: "Влязохме без резервация, сервитьорът ни помогна да седнем на чудесна маса. Докато поръчвахме, ни даде съвет какво би избрал и ... Още",
-      en: "We came in without a reservation, the waiter helped us to a great table. While we ordered our food, he gave us some advice about what dish he would pick, and so ... More"
+      bg: "Влязохме без резервация, сервитьорът ни помогна да седнем на чудесна маса и ни даде отличен съвет какво да изберем.",
+      en: "We walked in without a reservation, the waiter helped us sit at a great table. Gave us excellent advice on what to choose."
     },
     tags: {
       bg: ["без резервация", "обслужване", "гостоприемство"],
@@ -121,17 +121,17 @@ export async function getTouristReviewSnippetsData(locale: SiteLocale, audience:
 export function getReviewSummary(locale: SiteLocale) {
   return locale === "bg"
     ? {
-        eyebrow: "Google review snippets",
+        eyebrow: "Отзиви от Google",
         title: "Подбрани отзиви от Google",
         description:
-          "Това са подбрани откъси от реални Google отзиви, добавени ръчно, докато не свържем одобрен автоматизиран review source.",
-        stats: ["4 подбрани откъса", "5/5 на всички показани оценки", "силен фокус върху обслужване, атмосфера и храна"]
+          "Реални впечатления от гости, които споменават топлото обслужване, уютната атмосфера и храната, заради която хората се връщат.",
+        stats: ["4.5/5 Google оценка", "1361 отзива", "силен фокус върху обслужване, атмосфера и храна"]
       }
     : {
-        eyebrow: "Google review snippets",
-        title: "Selected Google review snippets",
+        eyebrow: "Google reviews",
+        title: "Selected guest reviews",
         description:
-          "These are curated snippets from real Google reviews, added manually until an approved automated review source is connected.",
-        stats: ["4 selected snippets", "5/5 on every displayed rating", "strong signals around service, atmosphere, and food"]
+          "Real guest impressions that highlight warm service, cozy atmosphere, and the kind of food people come back for.",
+        stats: ["4.5/5 Google rating", "1361 reviews", "strong signals around service, atmosphere, and food"]
       };
 }

@@ -24,9 +24,12 @@ export async function ReviewSnippetsShowcase({ locale }: ReviewSnippetsShowcaseP
 
       <div className="page-grid page-grid-two">
         {reviews.map((review) => (
-          <article key={review.id} className="page-card">
+          <article key={review.id} className="page-card review-card">
             <p className="page-card-label">
               {review.source} / {review.rating}/5
+            </p>
+            <p className="review-stars" aria-label={`${review.rating} out of 5 stars`}>
+              ★★★★★
             </p>
             <h2>{review.author}</h2>
             <p className="page-note">{review.relativeDate}</p>

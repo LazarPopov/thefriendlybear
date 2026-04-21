@@ -1,15 +1,24 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { EnglishReviewsPageCms } from "@/components/en-reviews-page-cms";
+import { StructuredData } from "@/components/structured-data";
 import { buildPageMetadata } from "@/lib/metadata";
+import { getReviewsPageSchemaData } from "@/lib/schema";
 
 export const metadata: Metadata = buildPageMetadata({
   locale: "en",
   routeKey: "reviews",
-  title: "Reviews and social proof | The Friendly Bear Sofia",
+  title: "Guest Reviews & Ratings | The Friendly Bear Sofia",
   description:
-    "English social proof page for The Friendly Bear Sofia prepared for Google reviews, TripAdvisor snippets, and keyword-driven restaurant discovery."
+    "See why guests love The Friendly Bear. High ratings for our slow-roasted lamb, craft beer, and cozy 1923 atmosphere. Read real reviews from our Sofia community."
 });
 
-export default function Page() {
-  return <EnglishReviewsPageCms />;
+export default async function Page() {
+  const schema = await getReviewsPageSchemaData("en");
+
+  return (
+    <>
+      <StructuredData data={schema} />
+      <EnglishReviewsPageCms />
+    </>
+  );
 }

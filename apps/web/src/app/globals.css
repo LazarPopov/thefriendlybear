@@ -1016,6 +1016,13 @@ a {
   box-shadow: 0 18px 42px rgba(31, 26, 22, 0.08);
 }
 
+.review-stars {
+  margin: 6px 0 10px;
+  color: #d49a16;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+}
+
 .contact-faq-item {
   padding: 18px 20px;
   border: 1px solid rgba(224, 220, 215, 0.92);

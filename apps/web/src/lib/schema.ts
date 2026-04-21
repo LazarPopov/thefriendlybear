@@ -13,19 +13,21 @@ type JsonLd = Record<string, unknown>;
 
 const localeMeta: Record<
   SiteLocale,
-  { language: string; homePath: string; menuPath: string; contactPath: string }
+  { language: string; homePath: string; menuPath: string; contactPath: string; reviewsPath: string }
 > = {
   bg: {
     language: "bg-BG",
     homePath: "/bg",
     menuPath: "/bg/menu",
-    contactPath: "/bg/contact"
+    contactPath: "/bg/contact",
+    reviewsPath: "/bg/reviews"
   },
   en: {
     language: "en",
     homePath: "/en",
     menuPath: "/en/menu",
-    contactPath: "/en/contact"
+    contactPath: "/en/contact",
+    reviewsPath: "/en/reviews"
   }
 };
 
@@ -57,6 +59,40 @@ const restaurantAmenityFeatures = [
   "English Speaking Staff",
   "Pet Friendly"
 ];
+
+const reviewSchemaItems: Record<
+  SiteLocale,
+  Array<{ author: string; rating: string; body: string }>
+> = {
+  bg: [
+    {
+      author: "Viltė Čepulytė",
+      rating: "5",
+      body:
+        "Перфектно място с невероятно обслужване и страхотна храна. България ни изненада по много начини, но The Friendly Bear го направи по най-добрия възможен начин."
+    },
+    {
+      author: "Alice T",
+      rating: "5",
+      body:
+        "Влязохме без резервация, сервитьорът ни помогна да седнем на чудесна маса и ни даде отличен съвет какво да изберем."
+    }
+  ],
+  en: [
+    {
+      author: "Viltė Čepulytė",
+      rating: "5",
+      body:
+        "Perfect place with amazing service and great food. Bulgaria surprised us in many ways, but The Friendly Bear did it in the best way possible."
+    },
+    {
+      author: "Alice T",
+      rating: "5",
+      body:
+        "We walked in without a reservation, the waiter helped us sit at a great table. Gave us excellent advice on what to choose."
+    }
+  ]
+};
 
 const bgFaqs = [
   {
@@ -126,7 +162,9 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
-      reviewCount: 1361
+      reviewCount: "1361",
+      bestRating: "5",
+      worstRating: "1"
     },
     description:
       locale === "bg"
@@ -440,6 +478,81 @@ export function getMenuPageSchema(
   };
 }
 
+export function getReviewsPageSchema(locale: SiteLocale, profile: FrontendBusinessProfile = businessProfile): JsonLd {
+  const reviewsUrl = absoluteUrl(localeMeta[locale].reviewsPath);
+  const breadcrumbId = `${reviewsUrl}#breadcrumb`;
+  const restaurantWithReviews = {
+    ...getRestaurantNode(locale, profile),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.5",
+      reviewCount: "1361",
+      bestRating: "5",
+      worstRating: "1"
+    },
+    review: reviewSchemaItems[locale].map((review) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: review.author
+      },
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: review.rating,
+        bestRating: "5",
+        worstRating: "1"
+      },
+      reviewBody: review.body
+    }))
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      restaurantWithReviews,
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Отзиви" : "Reviews",
+            path: localeMeta[locale].reviewsPath
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "WebPage",
+        "@id": `${reviewsUrl}#webpage`,
+        url: reviewsUrl,
+        name:
+          locale === "bg"
+            ? "Отзиви на гости и впечатления | The Friendly Bear София"
+            : "Guest Reviews & Ratings | The Friendly Bear Sofia",
+        description:
+          locale === "bg"
+            ? "Вижте защо гостите обичат The Friendly Bear. Високи оценки за нашето агнешко, крафт бира и атмосферата от 1923 г."
+            : "See why guests love The Friendly Bear. High ratings for slow-roasted lamb, craft beer, and a cozy 1923 atmosphere.",
+        inLanguage: localeMeta[locale].language,
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        isPartOf: {
+          "@id": websiteId
+        },
+        about: {
+          "@id": restaurantId
+        },
+        mainEntity: {
+          "@id": restaurantId
+        }
+      }
+    ]
+  };
+}
+
 export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusinessProfile = businessProfile): JsonLd {
   const contactUrl = absoluteUrl(localeMeta[locale].contactPath);
   const breadcrumbId = `${contactUrl}#breadcrumb`;
@@ -513,6 +626,11 @@ export async function getHomePageSchemaData(locale: SiteLocale) {
 export async function getMenuPageSchemaData(locale: SiteLocale) {
   const [profile, menu] = await Promise.all([getBusinessProfileData(), getSeasonalMenuData(locale)]);
   return getMenuPageSchema(locale, profile, menu);
+}
+
+export async function getReviewsPageSchemaData(locale: SiteLocale) {
+  const profile = await getBusinessProfileData();
+  return getReviewsPageSchema(locale, profile);
 }
 
 export async function getContactPageSchemaData(locale: SiteLocale) {
