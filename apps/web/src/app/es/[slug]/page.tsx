@@ -44,6 +44,58 @@ function getSpanishRestaurantSchema() {
   };
 }
 
+function getSpanishPageSchema() {
+  const pageUrl = absoluteUrl(`/es/${spanishSlug}`);
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: absoluteUrl("/en")
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Sofia visitor guide",
+            item: absoluteUrl("/en/tourists")
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Spanish visitor guide",
+            item: pageUrl
+          }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: spanishTitle,
+        description: spanishDescription,
+        inLanguage: "es-ES",
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        about: {
+          "@id": `${productionSiteUrl}/#restaurant`
+        },
+        mainEntity: {
+          "@id": `${productionSiteUrl}/#restaurant`
+        }
+      }
+    ]
+  };
+}
+
 export async function generateMetadata({ params }: MarketRouteProps): Promise<Metadata> {
   const { slug } = await params;
   const config = getTouristMarketConfig("es");
@@ -55,6 +107,7 @@ export async function generateMetadata({ params }: MarketRouteProps): Promise<Me
 
   const canonical = `/es/${spanishSlug}`;
   const canonicalUrl = absoluteUrl(canonical);
+  const englishAudienceUrl = absoluteUrl(`/en/tourists/${config.audience}`);
 
   if (slug !== spanishSlug) {
     return {
@@ -71,8 +124,10 @@ export async function generateMetadata({ params }: MarketRouteProps): Promise<Me
       canonical: canonicalUrl,
       languages: {
         es: canonicalUrl,
-        en: absoluteUrl(`/en/tourists/${config.audience}`),
-        "x-default": canonicalUrl
+        "es-ES": canonicalUrl,
+        en: englishAudienceUrl,
+        "en-GB": englishAudienceUrl,
+        "x-default": englishAudienceUrl
       }
     },
     openGraph: {
@@ -115,6 +170,7 @@ export default async function Page({ params }: MarketRouteProps) {
   return (
     <>
       <StructuredData data={getSpanishRestaurantSchema()} />
+      <StructuredData data={getSpanishPageSchema()} />
       <TouristMarketPage marketLocale="es" />
     </>
   );

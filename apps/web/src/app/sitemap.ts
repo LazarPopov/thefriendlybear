@@ -34,6 +34,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getTouristMarketSlug("es"),
     getTouristMarketSlug("el")
   ]);
+  const marketAlternatesByAudience = {
+    italian: {
+      it: absoluteUrl(`/it/${itSlug}`),
+      "it-IT": absoluteUrl(`/it/${itSlug}`)
+    },
+    spanish: {
+      es: absoluteUrl(`/es/${esSlug}`),
+      "es-ES": absoluteUrl(`/es/${esSlug}`)
+    },
+    greek: {
+      el: absoluteUrl(`/el/${elSlug}`),
+      "el-GR": absoluteUrl(`/el/${elSlug}`)
+    }
+  } as const;
 
   const localizedRoutes: MetadataRoute.Sitemap = indexableRouteKeys.flatMap((routeKey) =>
     Object.values(routeMap[routeKey]).map((path) => ({
@@ -59,6 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           en: absoluteUrl(entry.paths.en),
           "bg-BG": absoluteUrl(entry.paths.bg),
           "en-GB": absoluteUrl(entry.paths.en),
+          ...marketAlternatesByAudience[entry.audience],
           "x-default": absoluteUrl(entry.paths.en)
         }
       }
@@ -70,7 +85,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: `/it/${itSlug}`,
       languages: {
         it: absoluteUrl(`/it/${itSlug}`),
+        "it-IT": absoluteUrl(`/it/${itSlug}`),
         en: absoluteUrl("/en/tourists/italian"),
+        "en-GB": absoluteUrl("/en/tourists/italian"),
         "x-default": absoluteUrl("/en/tourists/italian")
       }
     },
@@ -78,7 +95,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: `/es/${esSlug}`,
       languages: {
         es: absoluteUrl(`/es/${esSlug}`),
+        "es-ES": absoluteUrl(`/es/${esSlug}`),
         en: absoluteUrl("/en/tourists/spanish"),
+        "en-GB": absoluteUrl("/en/tourists/spanish"),
         "x-default": absoluteUrl("/en/tourists/spanish")
       }
     },
@@ -86,7 +105,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: `/el/${elSlug}`,
       languages: {
         el: absoluteUrl(`/el/${elSlug}`),
+        "el-GR": absoluteUrl(`/el/${elSlug}`),
         en: absoluteUrl("/en/tourists/greek"),
+        "en-GB": absoluteUrl("/en/tourists/greek"),
         "x-default": absoluteUrl("/en/tourists/greek")
       }
     }

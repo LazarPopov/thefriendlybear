@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TouristLandingPageCms } from "@/components/tourist-landing-page-cms";
 import { getTouristLandingPageDataBySlug } from "@/lib/tourist-landing-page-module";
+import { getTouristMarketSlug } from "@/lib/tourist-market";
 import { siteConfig } from "@/lib/site";
 
 type TouristRouteProps = {
@@ -9,6 +10,18 @@ type TouristRouteProps = {
     slug: string;
   }>;
 };
+
+const marketLocaleByAudience = {
+  italian: "it",
+  spanish: "es",
+  greek: "el"
+} as const;
+
+const marketRegionalCode = {
+  it: "it-IT",
+  es: "es-ES",
+  el: "el-GR"
+} as const;
 
 export async function generateMetadata({ params }: TouristRouteProps): Promise<Metadata> {
   const { slug } = await params;
@@ -20,6 +33,8 @@ export async function generateMetadata({ params }: TouristRouteProps): Promise<M
 
   const canonical = `/bg/tourists/${touristPage.localizedSlugs.bg}`;
   const enPath = `/en/tourists/${touristPage.localizedSlugs.en}`;
+  const marketLocale = marketLocaleByAudience[touristPage.audience];
+  const marketPath = `/${marketLocale}/${await getTouristMarketSlug(marketLocale)}`;
 
   return {
     title: touristPage.page.title,
@@ -31,7 +46,9 @@ export async function generateMetadata({ params }: TouristRouteProps): Promise<M
         en: enPath,
         "bg-BG": canonical,
         "en-GB": enPath,
-        "x-default": canonical
+        [marketLocale]: marketPath,
+        [marketRegionalCode[marketLocale]]: marketPath,
+        "x-default": enPath
       }
     },
     openGraph: {
