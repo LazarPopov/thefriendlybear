@@ -1,9 +1,9 @@
+import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
-import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
   getBusinessProfileData,
-  getEnContactStatusRows,
   getEnPrimaryActions,
+  getPhoneHref,
   getOpeningHoursRows
 } from "@/lib/business-profile-module";
 import { contactFaqItems } from "@/lib/contact-faq";
@@ -25,6 +25,17 @@ const contactHighlights = [
   }
 ] as const;
 
+const socialLinks = [
+  {
+    label: "Instagram: @friendlybear.bg",
+    href: "https://www.instagram.com/friendlybear.bg/"
+  },
+  {
+    label: "Facebook: The Friendly Bear Sofia",
+    href: "https://www.facebook.com/friendlybear.bg/"
+  }
+] as const;
+
 export async function EnglishContactPageCms() {
   const [businessProfile, toggles] = await Promise.all([
     getBusinessProfileData(),
@@ -32,8 +43,8 @@ export async function EnglishContactPageCms() {
   ]);
 
   const primaryActions = filterActionsByModuleToggles(getEnPrimaryActions(businessProfile), toggles);
-  const contactStatusRows = getEnContactStatusRows(businessProfile);
   const openingHoursRows = getOpeningHoursRows("en", businessProfile);
+  const phoneHref = getPhoneHref(businessProfile);
 
   return (
     <main className="page-shell">
@@ -82,33 +93,6 @@ export async function EnglishContactPageCms() {
         ))}
       </section>
 
-      <VenueSnapshotSection
-        locale="en"
-        eyebrow="On site"
-        title="A few details to recognize when you arrive"
-        intro="Look for the garden, the warm wooden interior, and yes - the sliding ski doors by the bathroom."
-        images={[
-          {
-            src: "/images/garden_2.jpg",
-            alt: "Garden seating at The Friendly Bear Sofia",
-            label: "Venue details",
-            caption: "Garden seating before dinner."
-          },
-          {
-            src: "/images/interior_5.jpg",
-            alt: "Interior atmosphere at The Friendly Bear Sofia",
-            label: "Venue details",
-            caption: "A warm cabin corner."
-          },
-          {
-            src: "/images/skis.jpg",
-            alt: "Unique sliding doors made of vintage skis at The Friendly Bear Sofia",
-            label: "Venue details",
-            caption: "The secret sliding ski doors."
-          }
-        ]}
-      />
-
       <section className="page-grid page-grid-two">
         <article className="page-card">
           <p className="page-card-label">Address and map</p>
@@ -136,17 +120,30 @@ export async function EnglishContactPageCms() {
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">Contact channels</p>
-          <h2>What is active right now</h2>
-          <ul className="status-list">
-            {contactStatusRows.map((channel) => (
-              <li key={channel.label} className="status-row">
-                <span>{channel.label}</span>
-                <strong>{channel.status}</strong>
-              </li>
+          <p className="page-card-label">Connect & Social</p>
+          <h2>Connect with the Bear</h2>
+          <div className="contact-link-list" aria-label="Contact and social links">
+            {phoneHref ? (
+              <ActionLink
+                href={phoneHref}
+                label={`📞 Call for a table: ${businessProfile.phoneDisplay ?? "+359 87 612 2114"}`}
+                className="contact-direct-link"
+                tracking={buildActionTracking({
+                  kind: "phone",
+                  locale: "en",
+                  location: "contact_connect_card",
+                  label: "Call for a table",
+                  target: phoneHref,
+                  external: false
+                })}
+              />
+            ) : null}
+            {socialLinks.map((link) => (
+              <a key={link.href} className="contact-direct-link" href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
             ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.en}</p>
+          </div>
         </article>
       </section>
 
@@ -165,13 +162,18 @@ export async function EnglishContactPageCms() {
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">On site</p>
-          <h2>What we already make easy for visitors</h2>
-          <ul className="page-list">
-            {businessProfile.visitNotes.en.map((note) => (
-              <li key={note}>{note}</li>
-            ))}
-          </ul>
+          <p className="page-card-label">Ski Secret</p>
+          <h2>Vintage ski doors</h2>
+          <Image
+            src="/images/skis.jpg"
+            alt="Unique sliding doors made of vintage skis at The Friendly Bear Sofia"
+            width={720}
+            height={480}
+            className="contact-secret-image"
+            sizes="(max-width: 768px) 100vw, 46vw"
+            priority
+          />
+          <p className="page-note">A playful 1923 cabin detail, kept here as a visual clue before you arrive.</p>
         </article>
       </section>
 

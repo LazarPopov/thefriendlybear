@@ -10,10 +10,12 @@ export type ContactFaqItem = {
 export const contactFaqItems: Record<SiteLocale, ContactFaqItem[]> = {
   bg: [
     {
-      question: "Най-важният въпрос: къде е тоалетната?",
-      answer: "След китарата вляво има врати със ски - плъзгат се настрани!",
+      question: "Къде е тоалетната?",
+      answer:
+        "Не търсете обикновена врата. След китарата вляво потърсете старите ски - плъзнете ги настрани.",
       schemaQuestion: "Къде е тоалетната в The Friendly Bear?",
-      schemaAnswer: "След китарата вляво има врати от стари ски - плъзгат се настрани!"
+      schemaAnswer:
+        "Не търсете обикновена врата. След китарата вляво потърсете старите ски - плъзнете ги настрани."
     },
     {
       question: "Приемате ли кредитни карти?",
@@ -37,11 +39,12 @@ export const contactFaqItems: Record<SiteLocale, ContactFaqItem[]> = {
   ],
   en: [
     {
-      question: "The most important question: where is the bathroom?",
-      answer: "Follow the guitar to the left. You'll find doors made of vintage skis—they slide sideways!",
+      question: "Where is the bathroom?",
+      answer:
+        "Don't look for a regular door. Follow the guitar to the left and look for the vintage skis - they slide sideways to reveal the way.",
       schemaQuestion: "Where is the bathroom at The Friendly Bear?",
       schemaAnswer:
-        "Follow the guitar to the left. You'll find doors made of vintage skis—they slide sideways!"
+        "Don't look for a regular door. Follow the guitar to the left and look for the vintage skis - they slide sideways to reveal the way."
     },
     {
       question: "Do you accept credit cards?",

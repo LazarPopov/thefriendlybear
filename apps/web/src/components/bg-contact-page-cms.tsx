@@ -1,9 +1,9 @@
+import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
-import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
-  getBgContactStatusRows,
   getBgPrimaryActions,
   getBusinessProfileData,
+  getPhoneHref,
   getOpeningHoursRows
 } from "@/lib/business-profile-module";
 import { contactFaqItems } from "@/lib/contact-faq";
@@ -25,6 +25,17 @@ const contactHighlights = [
   }
 ] as const;
 
+const socialLinks = [
+  {
+    label: "Instagram: @friendlybear.bg",
+    href: "https://www.instagram.com/friendlybear.bg/"
+  },
+  {
+    label: "Facebook: The Friendly Bear Sofia",
+    href: "https://www.facebook.com/friendlybear.bg/"
+  }
+] as const;
+
 export async function BulgarianContactPageCms() {
   const [businessProfile, toggles] = await Promise.all([
     getBusinessProfileData(),
@@ -32,8 +43,8 @@ export async function BulgarianContactPageCms() {
   ]);
 
   const primaryActions = filterActionsByModuleToggles(getBgPrimaryActions(businessProfile), toggles);
-  const contactStatusRows = getBgContactStatusRows(businessProfile);
   const openingHoursRows = getOpeningHoursRows("bg", businessProfile);
+  const phoneHref = getPhoneHref(businessProfile);
 
   return (
     <main className="page-shell">
@@ -82,33 +93,6 @@ export async function BulgarianContactPageCms() {
         ))}
       </section>
 
-      <VenueSnapshotSection
-        locale="bg"
-        eyebrow="На място"
-        title="Няколко детайла, по които ще ни познаете"
-        intro="Градината, топлият интериор и да - плъзгащите се врати със ски до тоалетната."
-        images={[
-          {
-            src: "/images/garden_2.jpg",
-            alt: "Градината на The Friendly Bear Sofia",
-            label: "Детайли от мястото",
-            caption: "Градината преди вечеря."
-          },
-          {
-            src: "/images/interior_5.jpg",
-            alt: "Интериорна атмосфера в The Friendly Bear Sofia",
-            label: "Детайли от мястото",
-            caption: "Топъл ъгъл от бърлогата."
-          },
-          {
-            src: "/images/skis.jpg",
-            alt: "Уникални плъзгащи се врати от стари ски в The Friendly Bear София",
-            label: "Детайли от мястото",
-            caption: "Тайната на плъзгащите се ски-врати."
-          }
-        ]}
-      />
-
       <section className="page-grid page-grid-two">
         <article className="page-card">
           <p className="page-card-label">Адрес и карта</p>
@@ -136,17 +120,30 @@ export async function BulgarianContactPageCms() {
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">Контактни канали</p>
-          <h2>Кои действия са активни сега</h2>
-          <ul className="status-list">
-            {contactStatusRows.map((channel) => (
-              <li key={channel.label} className="status-row">
-                <span>{channel.label}</span>
-                <strong>{channel.status}</strong>
-              </li>
+          <p className="page-card-label">Контакт и социални мрежи</p>
+          <h2>Свържете се с нас</h2>
+          <div className="contact-link-list" aria-label="Контакт и социални профили">
+            {phoneHref ? (
+              <ActionLink
+                href={phoneHref}
+                label={`📞 Резервирайте маса: ${businessProfile.phoneDisplay ?? "+359 87 612 2114"}`}
+                className="contact-direct-link"
+                tracking={buildActionTracking({
+                  kind: "phone",
+                  locale: "bg",
+                  location: "contact_connect_card",
+                  label: "Резервирайте маса",
+                  target: phoneHref,
+                  external: false
+                })}
+              />
+            ) : null}
+            {socialLinks.map((link) => (
+              <a key={link.href} className="contact-direct-link" href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
             ))}
-          </ul>
-          <p className="page-note">{businessProfile.statusMessages.bg}</p>
+          </div>
         </article>
       </section>
 
@@ -165,13 +162,18 @@ export async function BulgarianContactPageCms() {
         </article>
 
         <article className="page-card">
-          <p className="page-card-label">На място</p>
-          <h2>Какво подчертаваме още отсега</h2>
-          <ul className="page-list">
-            {businessProfile.visitNotes.bg.map((note) => (
-              <li key={note}>{note}</li>
-            ))}
-          </ul>
+          <p className="page-card-label">Ski Secret</p>
+          <h2>Ски-вратите</h2>
+          <Image
+            src="/images/skis.jpg"
+            alt="Уникални плъзгащи се врати от стари ски в The Friendly Bear София"
+            width={720}
+            height={480}
+            className="contact-secret-image"
+            sizes="(max-width: 768px) 100vw, 46vw"
+            priority
+          />
+          <p className="page-note">Малък визуален жокер от нашата къща от 1923-та, преди да дойдете.</p>
         </article>
       </section>
 
