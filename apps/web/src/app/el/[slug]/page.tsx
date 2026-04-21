@@ -1,14 +1,43 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
+import { StructuredData } from "@/components/structured-data";
 import { TouristMarketPage } from "@/components/tourist-market-page";
 import { getTouristMarketConfig, getTouristMarketPageData } from "@/lib/tourist-market";
-import { siteConfig } from "@/lib/site";
 
 type MarketRouteProps = {
   params: Promise<{
     slug: string;
   }>;
 };
+
+const greekSlug = "estiatorio-sofia-kentro";
+const greekTitle = "Εστιατόριο με Κήπο στο Κέντρο της Σόφιας | The Friendly Bear";
+const greekDescription =
+  "Ψάχνετε εστιατόριο στο κέντρο της Σόφιας; Το The Friendly Bear προσφέρει αυθεντική κουζίνα, κρυφό κήπο και χορτοφαγικές επιλογές. Το προσωπικό μιλάει αγγλικά. Κάντε κράτηση!";
+const productionSiteUrl = "https://friendlybear.bg";
+
+function absoluteUrl(path: string) {
+  return new URL(path, productionSiteUrl).toString();
+}
+
+function getGreekRestaurantSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "@id": `${productionSiteUrl}/#restaurant`,
+    name: "The Friendly Bear Sofia",
+    description: "Ένα ζεστό εστιατόριο στην καρδιά της Σόφιας με κρυφό κήπο και παραδοσιακή κουζίνα.",
+    servesCuisine: ["Bulgarian", "BBQ", "European"],
+    knowsLanguage: ["en", "bg", "el"],
+    url: absoluteUrl(`/el/${greekSlug}`),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Slavyanska 23",
+      addressLocality: "Sofia",
+      addressCountry: "BG"
+    }
+  };
+}
 
 export async function generateMetadata({ params }: MarketRouteProps): Promise<Metadata> {
   const { slug } = await params;
@@ -19,38 +48,40 @@ export async function generateMetadata({ params }: MarketRouteProps): Promise<Me
     return {};
   }
 
-  const canonical = `/el/${page.slug}`;
+  const canonical = `/el/${greekSlug}`;
+  const canonicalUrl = absoluteUrl(canonical);
 
-  if (slug !== page.slug) {
+  if (slug !== greekSlug) {
     return {
       alternates: {
-        canonical
+        canonical: canonicalUrl
       }
     };
   }
 
   return {
-    title: page.title,
-    description: page.intro,
+    title: greekTitle,
+    description: greekDescription,
     alternates: {
-      canonical,
+      canonical: canonicalUrl,
       languages: {
-        en: `/en/tourists/${config.audience}`,
-        "x-default": canonical
+        el: canonicalUrl,
+        en: absoluteUrl(`/en/tourists/${config.audience}`),
+        "x-default": canonicalUrl
       }
     },
     openGraph: {
-      title: page.title,
-      description: page.intro,
-      url: canonical,
-      siteName: siteConfig.name,
+      title: greekTitle,
+      description: greekDescription,
+      url: canonicalUrl,
+      siteName: "The Friendly Bear Sofia",
       locale: config.ogLocale,
       type: "website"
     },
     twitter: {
       card: "summary_large_image",
-      title: page.title,
-      description: page.intro
+      title: greekTitle,
+      description: greekDescription
     }
   };
 }
@@ -63,9 +94,14 @@ export default async function Page({ params }: MarketRouteProps) {
     notFound();
   }
 
-  if (slug !== page.slug) {
-    permanentRedirect(`/el/${page.slug}`);
+  if (slug !== greekSlug) {
+    permanentRedirect(`/el/${greekSlug}`);
   }
 
-  return <TouristMarketPage marketLocale="el" />;
+  return (
+    <>
+      <StructuredData data={getGreekRestaurantSchema()} />
+      <TouristMarketPage marketLocale="el" />
+    </>
+  );
 }

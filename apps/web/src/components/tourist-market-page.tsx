@@ -1,6 +1,4 @@
 import { ActionLink } from "@/components/action-link";
-import { FoodShowcaseStrip } from "@/components/food-showcase-strip";
-import { TouristReviewSnippets } from "@/components/tourist-review-snippets";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
   getBusinessProfileData,
@@ -8,7 +6,6 @@ import {
   getPhoneHref
 } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
-import { getTouristReviewSnippetsData } from "@/lib/review-snippets";
 import {
   getTouristActionKind,
   type TouristAudience
@@ -42,20 +39,20 @@ const venueMomentsCopy = {
     interiorLabel: "Atmosfera"
   },
   es: {
-    eyebrow: "El lugar",
-    title: "Jardin reservado y salas acogedoras",
+    eyebrow: "Ambiente",
+    title: "Jardín secreto y calidez interior",
     intro:
-      "En lugar de poner todas las fotos en un unico bloque, distribuimos las imagenes del espacio a lo largo de la pagina.",
-    gardenLabel: "Jardin",
-    interiorLabel: "Interior"
+      "Una pequeña galería para sentir el lugar antes de llegar: terraza tranquila, detalles acogedores y el encanto de una casa de 1923.",
+    gardenLabel: "Ambiente",
+    interiorLabel: "Ambiente"
   },
   el: {
-    eyebrow: "Ο χώρος",
-    title: "Ήσυχος κήπος και ζεστό εσωτερικό",
+    eyebrow: "Ατμόσφαιρα",
+    title: "Κρυφός κήπος και ζεστό εσωτερικό",
     intro:
-      "Αντί να συγκεντρώνουμε όλες τις φωτογραφίες σε ένα μόνο σημείο, απλώνουμε τα οπτικά στοιχεία του χώρου μέσα στη σελίδα.",
-    gardenLabel: "Κήπος",
-    interiorLabel: "Εσωτερικό"
+      "Μια μικρή gallery για να νιώσετε τον χώρο πριν φτάσετε: κήπος, ζεστασιά, ξύλινες λεπτομέρειες και αληθινή φιλοξενία.",
+    gardenLabel: "Ατμόσφαιρα",
+    interiorLabel: "Ατμόσφαιρα"
   }
 } as const;
 
@@ -89,8 +86,102 @@ const italianPageCopy = {
   ]
 } as const;
 
+const spanishPageCopy = {
+  title: "Un refugio con historia en el corazón de Sofía",
+  intro:
+    "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local.",
+  vegetarian:
+    "No todo es carne. Tenemos una variada selección de ensaladas frescas y platos vegetarianos calientes claramente indicados en nuestra carta.",
+  service:
+    "Queremos que te sientas como en casa. Nuestro equipo habla inglés con fluidez y nuestro menú digital está disponible en inglés para tu comodidad.",
+  lateDinnerNote:
+    "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía.",
+  cards: [
+    {
+      label: "Ubicación",
+      title: "Pleno Centro",
+      text:
+        "Nos encontramos a unos pasos del Teatro Nacional. Es el lugar perfecto para cenar después de caminar por el centro de la ciudad."
+    },
+    {
+      label: "Vegetariano",
+      title: "Opciones Vegetarianas",
+      text:
+        "No todo es carne. Tenemos una variada selección de ensaladas frescas y platos vegetarianos calientes claramente indicados en nuestra carta."
+    },
+    {
+      label: "Idioma",
+      title: "Hablamos Inglés",
+      text:
+        "Queremos que te sientas como en casa. Nuestro equipo habla inglés con fluidez y nuestro menú digital está disponible en inglés para tu comodidad."
+    }
+  ]
+} as const;
+
+const greekPageCopy = {
+  title: "Μια ζεστή γωνιά με ιστορία στην καρδιά της Σόφιας",
+  intro:
+    "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία του 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες.",
+  vegetarian:
+    "Διαθέτουμε μεγάλη ποικιλία από φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα, όλα ξεκάθαρα σημειωμένα στο μενού μας.",
+  service:
+    "Θέλουμε να νιώθετε άνετα. Το προσωπικό μας μιλάει άπταιστα αγγλικά και το ψηφιακό μας μενού είναι διαθέσιμο στα αγγλικά για τη διευκόλυνσή σας.",
+  welcomeNote:
+    "Σας περιμένουμε με ζεστή φιλοξενία, κρυφό κήπο και φαγητό στο κέντρο της Σόφιας.",
+  cards: [
+    {
+      label: "Τοποθεσία",
+      title: "Κεντρικό Σημείο",
+      text:
+        "Θα μας βρείτε λίγα βήματα από το Εθνικό Θέατρο. Η ιδανική στάση για φαγητό κατά τη διάρκεια της περιήγησής σας στην πόλη."
+    },
+    {
+      label: "Χορτοφάγοι",
+      title: "Χορτοφαγικές Επιλογές",
+      text:
+        "Διαθέτουμε μεγάλη ποικιλία από φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα, όλα ξεκάθαρα σημειωμένα στο μενού μας."
+    },
+    {
+      label: "Εξυπηρέτηση",
+      title: "Μιλάμε Αγγλικά",
+      text:
+        "Θέλουμε να νιώθετε άνετα. Το προσωπικό μας μιλάει άπταιστα αγγλικά και το ψηφιακό μας μενού είναι διαθέσιμο στα αγγλικά για τη διευκόλυνσή σας."
+    }
+  ]
+} as const;
+
+function getLocalizedMarketPageCopy(marketLocale: TouristMarketLocale) {
+  if (marketLocale === "it") {
+    return {
+      ...italianPageCopy,
+      primaryCtaLabel: "Vedi il Menu (English)",
+      callLabel: "Chiama per Prenotare"
+    };
+  }
+
+  if (marketLocale === "es") {
+    return {
+      ...spanishPageCopy,
+      primaryCtaLabel: "Ver el Menú (English)",
+      callLabel: "Llamar para Reservar"
+    };
+  }
+
+  if (marketLocale === "el") {
+    return {
+      ...greekPageCopy,
+      primaryCtaLabel: "Δείτε το Μενού (English)",
+      callLabel: "Κλήση για Κράτηση"
+    };
+  }
+
+  return null;
+}
+
 function createVenueImages(marketLocale: TouristMarketLocale, venueCopy: (typeof venueMomentsCopy)[TouristMarketLocale]) {
-  if (marketLocale !== "it") {
+  const useSingleCarousel = marketLocale === "it" || marketLocale === "es" || marketLocale === "el";
+
+  if (!useSingleCarousel) {
     return [
       ...gardenGalleryImages.map((image) => ({
         ...image,
@@ -113,7 +204,12 @@ function createVenueImages(marketLocale: TouristMarketLocale, venueCopy: (typeof
     if (gardenImage) {
       images.push({
         ...gardenImage,
-        alt: "Giardino segreto del ristorante The Friendly Bear a Sofia",
+        alt:
+          marketLocale === "es"
+            ? "Jardín tranquilo del restaurante The Friendly Bear en Sofía"
+            : marketLocale === "el"
+              ? "Ο πανέμορφος κήπος του εστιατορίου The Friendly Bear στη Σόφια"
+              : "Giardino segreto del ristorante The Friendly Bear a Sofia",
         label: venueCopy.gardenLabel
       });
     }
@@ -121,7 +217,12 @@ function createVenueImages(marketLocale: TouristMarketLocale, venueCopy: (typeof
     if (interiorImage) {
       images.push({
         ...interiorImage,
-        alt: "Interno accogliente del ristorante The Friendly Bear a Sofia",
+        alt:
+          marketLocale === "es"
+            ? "Interior acogedor del restaurante The Friendly Bear en Sofía"
+            : marketLocale === "el"
+              ? "Το ζεστό εσωτερικό του εστιατορίου The Friendly Bear στη Σόφια"
+              : "Interno accogliente del ristorante The Friendly Bear a Sofia",
         label: venueCopy.interiorLabel
       });
     }
@@ -185,26 +286,27 @@ function buildMarketActions(
 export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps) {
   const config = getTouristMarketConfig(marketLocale);
   const venueCopy = venueMomentsCopy[marketLocale];
-  const isItalian = marketLocale === "it";
-  const [businessProfile, toggles, touristPage, audienceReviews] = await Promise.all([
+  const isSpanish = marketLocale === "es";
+  const isGreek = marketLocale === "el";
+  const localizedCopy = getLocalizedMarketPageCopy(marketLocale);
+  const [businessProfile, toggles, touristPage] = await Promise.all([
     getBusinessProfileData(),
     getModuleTogglesData(),
-    getTouristMarketPageData(marketLocale),
-    getTouristReviewSnippetsData("en", config.audience)
+    getTouristMarketPageData(marketLocale)
   ]);
 
   if (!touristPage) {
     return null;
   }
 
-  const renderedTouristPage = isItalian
+  const renderedTouristPage = localizedCopy
     ? {
         ...touristPage,
-        title: italianPageCopy.title,
-        intro: italianPageCopy.intro,
-        vegetarianMessage: italianPageCopy.vegetarian,
-        serviceMessage: italianPageCopy.service,
-        primaryCtaLabel: "Vedi il Menu (English)",
+        title: localizedCopy.title,
+        intro: localizedCopy.intro,
+        vegetarianMessage: localizedCopy.vegetarian,
+        serviceMessage: localizedCopy.service,
+        primaryCtaLabel: localizedCopy.primaryCtaLabel,
         primaryCtaUrl: "/en/menu"
       }
     : touristPage;
@@ -223,18 +325,18 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
   );
 
   const primaryCtaExternal = /^https?:\/\//.test(renderedTouristPage.primaryCtaUrl);
-  const heroActions: MarketAction[] = isItalian
+  const heroActions: MarketAction[] = localizedCopy
     ? [
         {
           href: "/en/menu",
-          label: "Vedi il Menu (English)",
+          label: localizedCopy.primaryCtaLabel,
           kind: "menu"
         },
         ...(phoneHref
           ? [
               {
                 href: phoneHref,
-                label: "Chiama per Prenotare",
+                label: localizedCopy.callLabel,
                 kind: "phone" as const
               }
             ]
@@ -265,19 +367,6 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
           external: true
         }
       ];
-
-  const nextSteps = [
-    `${renderedTouristPage.primaryCtaLabel}.`,
-    toggles.reservationsEnabled ? config.ui.openReservations : config.ui.openContact,
-    config.ui.openDirections
-  ];
-
-  const localSignals = [
-    businessProfile.address.en,
-    config.ui.centralSignal,
-    renderedTouristPage.vegetarianMessage,
-    renderedTouristPage.serviceMessage
-  ];
 
   return (
     <main className="page-shell">
@@ -322,8 +411,8 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
       />
 
       <section className="page-grid page-grid-three">
-        {isItalian
-          ? italianPageCopy.cards.map((card) => (
+        {localizedCopy
+          ? localizedCopy.cards.map((card) => (
               <article key={card.title} className="page-card">
                 <p className="page-card-label">{card.label}</p>
                 <h2>{card.title}</h2>
@@ -350,47 +439,19 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
             )}
       </section>
 
-      {isItalian ? null : <FoodShowcaseStrip locale={marketLocale} />}
+      {isSpanish ? (
+        <aside className="page-card tourist-late-dinner-note" aria-label="Abierto hasta las 23:00">
+          <p className="page-card-label">Cena tarde</p>
+          <p>{spanishPageCopy.lateDinnerNote}</p>
+        </aside>
+      ) : null}
 
-      {isItalian ? null : (
-        <TouristReviewSnippets
-          eyebrow={config.ui.highlights}
-          title={
-            marketLocale === "es"
-              ? "Resenas relevantes, solo cuando existen de verdad"
-              : "Σχετικές κριτικές, μόνο όταν υπάρχουν πραγματικά"
-          }
-          intro={
-            marketLocale === "es"
-              ? "Este bloque aparece solo si tenemos una resena real que podemos asociar honestamente con este publico."
-              : "Αυτό το μπλοκ εμφανίζεται μόνο όταν έχουμε μια πραγματική κριτική που μπορούμε ειλικρινά να συνδέσουμε με αυτό το κοινό."
-          }
-          tagsLabel={config.ui.highlights}
-          reviews={audienceReviews}
-        />
-      )}
-
-      {isItalian ? null : <section className="page-grid page-grid-two">
-        <article className="page-card">
-          <p className="page-card-label">{config.ui.nextSteps}</p>
-          <h2>{config.ui.nextSteps}</h2>
-          <ol className="page-list page-list-numbered">
-            {nextSteps.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ol>
-        </article>
-
-        <article className="page-card">
-          <p className="page-card-label">{config.ui.whyThisWorks}</p>
-          <h2>{config.ui.whyThisWorks}</h2>
-          <ul className="page-list">
-            {localSignals.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>}
+      {isGreek ? (
+        <aside className="page-card tourist-late-dinner-note" aria-label="Σας περιμένουμε">
+          <p className="page-card-label">Φιλοξενία</p>
+          <p>{greekPageCopy.welcomeNote}</p>
+        </aside>
+      ) : null}
 
       <nav className="mobile-quickbar" aria-label={config.ui.quickActions}>
         {marketActions.map((action) => (

@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  icons: {
+    icon: [{ url: "/icons/friendly_bear_logo.jpg", type: "image/jpeg" }],
+    shortcut: [{ url: "/icons/friendly_bear_logo.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/icons/friendly_bear_logo.jpg", type: "image/jpeg" }]
+  },
   alternates: {
     languages: {
       bg: "/bg",

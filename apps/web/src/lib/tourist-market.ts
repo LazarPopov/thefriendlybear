@@ -68,7 +68,7 @@ const touristMarketConfig: Record<TouristMarketLocale, TouristMarketConfig> = {
       reservations: "Reservas",
       contact: "Contacto",
       directions: "Como llegar",
-      phone: "Llamar / Reservar"
+      phone: "Llamar para Reservar"
     },
     ui: {
       pageLabel: "Pagina para visitantes hispanohablantes",
@@ -76,10 +76,10 @@ const touristMarketConfig: Record<TouristMarketLocale, TouristMarketConfig> = {
       vegetarian: "Opciones vegetarianas",
       service: "Servicio y atencion",
       nextSteps: "Que hacer ahora",
-      whyThisWorks: "Por que esta pagina funciona",
+      whyThisWorks: "Por que elegir The Friendly Bear",
       quickActions: "Acciones rapidas",
-      openReservations: "Abre la pagina de reservas para ver el proceso actual.",
-      openContact: "Abre la pagina de contacto si quieres informacion practica antes de ir.",
+      openReservations: "Llama para reservar o abre el menu en ingles antes de venir.",
+      openContact: "Llama para reservar o abre el menu en ingles antes de venir.",
       openDirections: "Abre las indicaciones hacia Slavyanska 23 cuando estes listo.",
       centralSignal: "Ubicacion centrica en Sofia"
     }
@@ -93,18 +93,18 @@ const touristMarketConfig: Record<TouristMarketLocale, TouristMarketConfig> = {
       reservations: "Κρατήσεις",
       contact: "Επικοινωνία",
       directions: "Οδηγίες",
-      phone: "Κλήση"
+      phone: "Κλήση για Κράτηση"
     },
     ui: {
       pageLabel: "Σελίδα για επισκέπτες από την Ελλάδα",
       highlights: "Βασικά σημεία",
       vegetarian: "Χορτοφαγικές επιλογές",
       service: "Εξυπηρέτηση και φιλοξενία",
-      nextSteps: "Τι να κάνετε τώρα",
-      whyThisWorks: "Γιατί λειτουργεί αυτή η σελίδα",
+      nextSteps: "Πρακτικές πληροφορίες",
+      whyThisWorks: "Γιατί να επιλέξετε The Friendly Bear",
       quickActions: "Γρήγορες ενέργειες",
-      openReservations: "Ανοίξτε τη σελίδα κρατήσεων για να δείτε την τρέχουσα διαδικασία.",
-      openContact: "Ανοίξτε τη σελίδα επικοινωνίας αν θέλετε πρακτικές πληροφορίες πριν την επίσκεψη.",
+      openReservations: "Καλέστε για κράτηση ή ανοίξτε το μενού στα αγγλικά πριν την επίσκεψη.",
+      openContact: "Καλέστε για κράτηση ή ανοίξτε το μενού στα αγγλικά πριν την επίσκεψη.",
       openDirections: "Ανοίξτε τις οδηγίες προς Slavyanska 23 όταν είστε έτοιμοι να ξεκινήσετε.",
       centralSignal: "Κεντρική τοποθεσία στη Σόφια"
     }

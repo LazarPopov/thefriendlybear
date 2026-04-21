@@ -63,44 +63,73 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
     slug: { bg: "spanish", en: "spanish" },
     marketSlug: { es: "restaurante-centro-sofia" },
     title: {
-      bg: "Приветлив ресторант в София за испански посетители",
-      en: "A welcoming Sofia restaurant for Spanish visitors"
+      bg: "Историческо място в София за испански посетители",
+      en: "A historic Sofia refuge for Spanish visitors"
+    },
+    marketTitle: {
+      es: "Un refugio con historia en el corazón de Sofía"
     },
     intro: {
-      bg: "Тази страница е насочена към бързо restaurant discovery около центъра, с ясен път към меню, резервации и упътвания, плюс увереност за любезно обслужване и по-леки опции.",
-      en: "This page targets fast restaurant discovery near the center, with a simple path to menu, reservations, and directions plus reassurance around friendly service and lighter food options."
+      bg: "Уютен ресторант в къща от 1923 г. на ул. Славянска 23, с градина, топъл интериор и спокойна атмосфера за вечеря след разходка в центъра.",
+      en: "A warm restaurant in a 1923 house on Slavyanska 23, with a secret garden, cozy interior, and an easy place to relax after exploring central Sofia."
+    },
+    marketIntro: {
+      es: "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local."
     },
     vegetarianMessage: {
-      bg: "Вегетарианските опции не са скрити дълбоко в сайта и могат да се открият бързо още при първия преглед на менюто.",
-      en: "Vegetarian options are not buried deep in the site structure and can be found quickly from the first menu scan."
+      bg: "В менюто има свежи салати и топли вегетариански ястия, ясно описани за гостите, които търсят по-леки опции.",
+      en: "The menu includes fresh salads and warm vegetarian dishes, clearly described for guests looking for lighter options."
+    },
+    marketVegetarianMessage: {
+      es: "No todo es carne. Tenemos una variada selección de ensaladas frescas y platos vegetarianos calientes claramente indicados en nuestra carta."
     },
     serviceMessage: {
-      bg: "Страницата е написана така, че friendly service да се усеща още преди човек да отвори контактите или резервациите.",
-      en: "The page is written so friendly service comes through before the visitor even opens contact or reservations."
+      bg: "Екипът говори английски, а менюто е лесно за преглед от телефон, за да се чувствате спокойни още преди да дойдете.",
+      en: "The team speaks English, and the menu is easy to check from your phone, so you can feel comfortable before you arrive."
+    },
+    marketServiceMessage: {
+      es: "Queremos que te sientas como en casa. Nuestro equipo habla inglés con fluidez y nuestro menú digital está disponible en inglés para tu comodidad."
     },
     primaryCtaLabel: { bg: "Отвори менюто", en: "Open the menu" },
+    marketPrimaryCtaLabel: { es: "Ver el Menú (English)" },
+    marketPrimaryCtaUrl: { es: "/en/menu" },
     primaryCtaUrl: { bg: "/bg/menu", en: "/en/menu" }
   },
   {
     audience: "greek",
     slug: { bg: "greek", en: "greek" },
+    marketSlug: { el: "estiatorio-sofia-kentro" },
     title: {
-      bg: "Централен ресторант в София за гръцки посетители",
-      en: "A central Sofia restaurant for Greek visitors"
+      bg: "Топъл ресторант в София за гръцки посетители",
+      en: "A warm Sofia restaurant for Greek visitors"
+    },
+    marketTitle: {
+      el: "Μια ζεστή γωνιά με ιστορία στην καρδιά της Σόφιας"
     },
     intro: {
-      bg: "Тази страница поддържа Greek visitor intent с по-спокоен и welcoming flow, фокусиран върху централна локация, ясни действия, вегетарианско уверение и лесен достъп до менюто.",
-      en: "This page supports Greek visitor intent with a calm, welcoming flow focused on central location, straightforward actions, vegetarian reassurance, and easy menu access."
+      bg: "Уютно място в къща от 1923 г. на Славянска 23, с градина, камина, автентична храна и спокоен път към менюто и резервацията.",
+      en: "A cozy place in a 1923 house on Slavyanska 23, with a garden, fireplace, authentic food, and an easy path to the menu and reservation."
+    },
+    marketIntro: {
+      el: "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία του 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες."
     },
     vegetarianMessage: {
       bg: "Вегетарианските предложения вече са част от менюто и могат да се видят без излишно търсене от мобилен телефон.",
       en: "Vegetarian-friendly choices are already part of the menu content and can be checked quickly from a phone."
     },
+    marketVegetarianMessage: {
+      el: "Διαθέτουμε μεγάλη ποικιλία από φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα, όλα ξεκάθαρα σημειωμένα στο μενού μας."
+    },
     serviceMessage: {
       bg: "Страницата е умишлено проста и приветлива, така че посетителят да стигне бързо до меню, упътвания или резервационен път.",
       en: "The page is intentionally simple and welcoming so the visitor can move quickly toward menu, directions, or the reservation path."
     },
+    marketServiceMessage: {
+      el: "Θέλουμε να νιώθετε άνετα. Το προσωπικό μας μιλάει άπταιστα αγγλικά και το ψηφιακό μας μενού είναι διαθέσιμο στα αγγλικά για τη διευκόλυνσή σας."
+    },
     primaryCtaLabel: { bg: "Към менюто", en: "Go to the menu" },
+    marketPrimaryCtaLabel: { el: "Δείτε το Μενού (English)" },
+    marketPrimaryCtaUrl: { el: "/en/menu" },
     primaryCtaUrl: { bg: "/bg/menu", en: "/en/menu" }
   }
 ];
