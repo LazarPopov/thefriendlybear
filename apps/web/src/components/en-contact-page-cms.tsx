@@ -6,29 +6,28 @@ import {
   getEnPrimaryActions,
   getOpeningHoursRows
 } from "@/lib/business-profile-module";
+import { contactFaqItems } from "@/lib/contact-faq";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
-import { getPageContentData } from "@/lib/page-module";
 import { buildActionTracking } from "@/lib/tracking";
 
 const contactHighlights = [
   {
-    title: "Address",
-    text: "The Friendly Bear Sofia is on Slavyanska 23 in central Sofia."
+    title: "A Heritage Spot in the Center",
+    text: "We are located just behind the InterContinental (former Radisson), a 2-minute walk from the National Theatre."
   },
   {
-    title: "Service options",
-    text: "Outdoor seating, a fireplace, and great cocktails help visitors understand the venue faster."
+    title: "Call to reserve",
+    text: "Reservations are currently handled by phone, so we can help you choose the garden, the fireplace room, or the best table available."
   },
   {
-    title: "Conversion ready",
-    text: "Click-to-call is already live, opening hours are published, and more booking channels can be added later."
+    title: "Easy visit",
+    text: "Cards, cash, pet-friendly seating, English-speaking staff, and clear opening hours are all covered before you arrive."
   }
 ] as const;
 
 export async function EnglishContactPageCms() {
-  const [businessProfile, page, toggles] = await Promise.all([
+  const [businessProfile, toggles] = await Promise.all([
     getBusinessProfileData(),
-    getPageContentData("contact", "en"),
     getModuleTogglesData()
   ]);
 
@@ -40,10 +39,10 @@ export async function EnglishContactPageCms() {
     <main className="page-shell">
       <section className="page-hero">
         <p className="eyebrow">Contact and visit</p>
-        <h1>{page?.title ?? "How to get to The Friendly Bear Sofia"}</h1>
+        <h1>Contact, directions, and the little things before you arrive</h1>
         <p className="page-lead">
-          {page?.intro ??
-            "We bring the address, map, and key actions forward so visitors can reach the restaurant quickly and move straight to the menu or reservation path."}
+          Tucked away at Slavyanska 23, our 1923 cabin is ready to welcome you. Below you'll find
+          directions, our hours, and answers to the most common guest questions.
         </p>
 
         <div className="page-tags" aria-label="Key information">
@@ -74,12 +73,6 @@ export async function EnglishContactPageCms() {
         </div>
       </section>
 
-      {page?.bodyHtml ? (
-        <section className="page-grid">
-          <article className="page-card cms-richtext" dangerouslySetInnerHTML={{ __html: page.bodyHtml }} />
-        </section>
-      ) : null}
-
       <section className="page-grid page-grid-three">
         {contactHighlights.map((item) => (
           <article key={item.title} className="page-card">
@@ -92,18 +85,26 @@ export async function EnglishContactPageCms() {
       <VenueSnapshotSection
         locale="en"
         eyebrow="On site"
-        title="Garden and interior cues before the visit"
-        intro="The contact page is a natural place to show the venue itself, because this is where visitors already check the map, the address, and whether the atmosphere fits."
+        title="A few details to recognize when you arrive"
+        intro="Look for the garden, the warm wooden interior, and yes - the sliding ski doors by the bathroom."
         images={[
           {
             src: "/images/garden_2.jpg",
             alt: "Garden seating at The Friendly Bear Sofia",
-            label: "Garden"
+            label: "Venue details",
+            caption: "Garden seating before dinner."
           },
           {
             src: "/images/interior_5.jpg",
             alt: "Interior atmosphere at The Friendly Bear Sofia",
-            label: "Interior"
+            label: "Venue details",
+            caption: "A warm cabin corner."
+          },
+          {
+            src: "/images/skis.jpg",
+            alt: "Unique sliding doors made of vintage skis at The Friendly Bear Sofia",
+            label: "Venue details",
+            caption: "The secret sliding ski doors."
           }
         ]}
       />
@@ -172,6 +173,23 @@ export async function EnglishContactPageCms() {
             ))}
           </ul>
         </article>
+      </section>
+
+      <section className="home-section contact-faq" aria-labelledby="contact-faq-title">
+        <div className="home-section-heading">
+          <p className="eyebrow">FAQ</p>
+          <h2 id="contact-faq-title">Good things to know before you visit</h2>
+          <p>Practical answers for finding us, paying, parking, bringing a dog, and locating the ski-door bathroom.</p>
+        </div>
+
+        <div className="contact-faq-grid">
+          {contactFaqItems.en.map((item, index) => (
+            <details key={item.question} className={`contact-faq-item ${index === 0 ? "contact-faq-featured" : ""}`}>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
       </section>
 
       <nav className="mobile-quickbar" aria-label="Quick actions">

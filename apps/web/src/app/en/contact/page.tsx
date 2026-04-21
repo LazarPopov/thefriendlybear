@@ -7,9 +7,9 @@ import { getContactPageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "en",
   routeKey: "contact",
-  title: "Contact and directions | The Friendly Bear Sofia",
+  title: "Contact, Directions & FAQ | The Friendly Bear Sofia",
   description:
-    "English contact page for The Friendly Bear Sofia with Slavyanska 23 address, directions, menu access, and reservation status."
+    "Find us at Slavyanska 23. Opening hours, card payment info, pet-friendly rules, and the secret of the sliding ski doors."
 });
 
 export default async function Page() {

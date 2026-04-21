@@ -44,10 +44,32 @@ function getLocaleFromPath(pathname: string) {
   return "bg";
 }
 
-function getOppositeLocalePath(locale: "bg" | "en") {
-  const targetLocale = locale === "bg" ? "en" : "bg";
+function getOppositeLocale(locale: "bg" | "en") {
+  return locale === "bg" ? "en" : "bg";
+}
+
+function getRootLocalePath(locale: "bg" | "en") {
+  const targetLocale = getOppositeLocale(locale);
 
   return `/${targetLocale}`;
+}
+
+function getLanguageSwitchPath(pathname: string, locale: "bg" | "en", touristMarketAudience: string | null) {
+  if (touristMarketAudience) {
+    return `/en/tourists/${touristMarketAudience}`;
+  }
+
+  const targetLocale = locale === "bg" ? "en" : "bg";
+
+  if (pathname === "/" || pathname === `/${locale}`) {
+    return `/${targetLocale}`;
+  }
+
+  if (pathname.startsWith(`/${locale}/`)) {
+    return pathname.replace(`/${locale}`, `/${targetLocale}`);
+  }
+
+  return getRootLocalePath(locale);
 }
 
 function getTouristMarketAudienceFromPath(pathname: string) {
@@ -99,15 +121,14 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/bg";
   const touristMarketAudience = getTouristMarketAudienceFromPath(pathname);
   const locale = getLocaleFromPath(pathname);
-  const languagePath = touristMarketAudience
-    ? `/en/tourists/${touristMarketAudience}`
-    : getOppositeLocalePath(locale);
+  const languagePath = getLanguageSwitchPath(pathname, locale, touristMarketAudience);
   const isHomeRoute = pathname === "/" || pathname === "/bg" || pathname === "/en";
   const [hasScrolled, setHasScrolled] = useState(false);
   const currentYear = new Date().getFullYear();
   const homePath = `/${locale}`;
   const menuPath = `/${locale}/menu`;
   const aboutPath = `/${locale}/about`;
+  const contactPath = `/${locale}/contact`;
   const touristsPath = `/${locale}/tourists`;
   const reviewsPath = `/${locale}/reviews`;
   const phoneNumber = businessProfileSource.contact.phoneNumber;
@@ -122,6 +143,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           about: "За нас",
           tourists: "За туристи",
           reviews: "Отзиви",
+          contact: "Контакти",
           language: "🇬🇧 English",
           mobileLanguage: "EN",
           directions: "Как да стигнете",
@@ -150,6 +172,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           about: "About",
           tourists: "For tourists",
           reviews: "Reviews",
+          contact: "Contact",
           language: "🇧🇬 Bulgarian",
           mobileLanguage: "BG",
           directions: "How to get there",
@@ -309,6 +332,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <Link href={homePath}>{copy.home}</Link>
               <Link href={menuPath}>{copy.menu}</Link>
               <Link href={aboutPath}>{copy.about}</Link>
+              <Link href={contactPath}>{copy.contact}</Link>
               <Link href={reviewsPath}>{copy.reviews}</Link>
             </div>
 

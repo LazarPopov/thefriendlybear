@@ -5,6 +5,7 @@ import {
   hasOpeningHours,
   type FrontendBusinessProfile
 } from "@/lib/business-profile-module";
+import { contactFaqItems } from "@/lib/contact-faq";
 import type { FrontendSeasonalMenu } from "@/lib/cms/menu-adapter";
 import { getSeasonalMenuData, getSeasonalMenuFallback } from "@/lib/menu-module";
 
@@ -121,7 +122,7 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     sameAs: restaurantSameAs,
     founder: restaurantFounder,
     priceRange: "$$",
-    servesCuisine: ["Bulgarian", "BBQ", "European"],
+    servesCuisine: ["Bulgarian", "BBQ"],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
@@ -442,6 +443,10 @@ export function getMenuPageSchema(
 export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusinessProfile = businessProfile): JsonLd {
   const contactUrl = absoluteUrl(localeMeta[locale].contactPath);
   const breadcrumbId = `${contactUrl}#breadcrumb`;
+  const contactPageDescription =
+    locale === "bg"
+      ? "Намерете ни на ул. Славянска 23. Работно време, плащане с карти, правила за домашни любимци и тайната на вратите със ски."
+      : "Find us at Slavyanska 23. Opening hours, card payment info, pet-friendly rules, and the secret of the sliding ski doors.";
 
   return {
     "@context": "https://schema.org",
@@ -466,12 +471,9 @@ export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusine
         url: contactUrl,
         name:
           locale === "bg"
-            ? "Контакти и упътвания | The Friendly Bear Sofia"
-            : "Contact and directions | The Friendly Bear Sofia",
-        description:
-          locale === "bg"
-            ? "Контактна страница за The Friendly Bear Sofia с адрес на ул. Славянска 23, упътвания, меню и резервационен статус."
-            : "Contact page for The Friendly Bear Sofia with Slavyanska 23 address, directions, menu, and reservation status.",
+            ? "Контакт, упътвания и FAQ | The Friendly Bear София"
+            : "Contact, Directions & FAQ | The Friendly Bear Sofia",
+        description: contactPageDescription,
         inLanguage: localeMeta[locale].language,
         breadcrumb: {
           "@id": breadcrumbId
@@ -485,6 +487,19 @@ export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusine
         mainEntity: {
           "@id": restaurantId
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${contactUrl}#faq`,
+        inLanguage: localeMeta[locale].language,
+        mainEntity: contactFaqItems[locale].map((item) => ({
+          "@type": "Question",
+          name: item.schemaQuestion ?? item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.schemaAnswer ?? item.answer
+          }
+        }))
       }
     ]
   };

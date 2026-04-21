@@ -49,11 +49,11 @@ export function getLocalizedPath(locale: SiteLocale, routeKey: SiteRouteKey) {
 
 export function getLanguageAlternates(routeKey: SiteRouteKey) {
   return {
-    bg: routeMap[routeKey].bg,
-    en: routeMap[routeKey].en,
-    "bg-BG": routeMap[routeKey].bg,
-    "en-BG": routeMap[routeKey].en,
-    "x-default": routeMap[routeKey][siteConfig.defaultLocale]
+    bg: new URL(routeMap[routeKey].bg, siteConfig.siteUrl).toString(),
+    en: new URL(routeMap[routeKey].en, siteConfig.siteUrl).toString(),
+    "bg-BG": new URL(routeMap[routeKey].bg, siteConfig.siteUrl).toString(),
+    "en-BG": new URL(routeMap[routeKey].en, siteConfig.siteUrl).toString(),
+    "x-default": new URL(routeMap[routeKey][siteConfig.defaultLocale], siteConfig.siteUrl).toString()
   };
 }
 
@@ -70,7 +70,7 @@ export function buildPageMetadata({
   title,
   description
 }: BuildPageMetadataInput): Metadata {
-  const canonical = getLocalizedPath(locale, routeKey);
+  const canonical = new URL(getLocalizedPath(locale, routeKey), siteConfig.siteUrl).toString();
 
   return {
     title,

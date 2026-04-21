@@ -52,7 +52,7 @@ export const businessProfile = {
     en: "Sofia Center"
   } satisfies LocalizedText,
   mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=Sofia+Center%2C+Slavyanska+St+23%2C+1000+Sofia%2C+Bulgaria",
+    "https://www.google.com/maps/search/?api=1&query=The+Friendly+Bear+Sofia%2C+Slavyanska+23&query_place_id=ChIJ1_FHY3SFqkAR2aUhguBOwqQ",
   mapsLabel: {
     bg: "Sofia Center, Slavyanska St 23, 1000 Sofia, Bulgaria",
     en: "Sofia Center, Slavyanska St 23, 1000 Sofia, Bulgaria"

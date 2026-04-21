@@ -11,7 +11,8 @@ export const venueInfo = {
     bg: "Център на София",
     en: "Central Sofia"
   } satisfies LocalizedText,
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=Slavyanska+23+Sofia+Bulgaria",
+  mapUrl:
+    "https://www.google.com/maps/search/?api=1&query=The+Friendly+Bear+Sofia%2C+Slavyanska+23&query_place_id=ChIJ1_FHY3SFqkAR2aUhguBOwqQ",
   mapsLabel: {
     bg: "Slavyanska 23, Sofia, Bulgaria",
     en: "Slavyanska 23, Sofia, Bulgaria"

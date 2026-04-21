@@ -35,6 +35,7 @@ function buildPopupAction(
   return {
     href: action.href,
     label: normalizeActionLabel(locale, action),
+    kind: action.kind,
     external: action.external
   };
 }

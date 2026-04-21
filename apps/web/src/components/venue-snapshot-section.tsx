@@ -31,14 +31,14 @@ export async function VenueSnapshotSection({
     const existingGroup = allGroups.find((group) => group.label === image.label);
 
     if (existingGroup) {
-      existingGroup.images.push({ src: image.src, alt: image.alt });
+      existingGroup.images.push({ src: image.src, alt: image.alt, caption: image.caption });
       return allGroups;
     }
 
     allGroups.push({
       id: `group-${allGroups.length + 1}`,
       label: image.label,
-      images: [{ src: image.src, alt: image.alt }]
+      images: [{ src: image.src, alt: image.alt, caption: image.caption }]
     });
 
     return allGroups;
