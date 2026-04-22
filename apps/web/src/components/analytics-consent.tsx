@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnalyticsEvents } from "@/components/analytics-events";
+import { AnalyticsEvents, trackAnalyticsEvent } from "@/components/analytics-events";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { GoogleTagManager } from "@/components/google-tag-manager";
 
@@ -155,6 +155,7 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
   const directGaMeasurementId = gtmId ? undefined : gaMeasurementId;
   const hasAnalyticsProvider = Boolean(gtmId || directGaMeasurementId);
   const [consentStatus, setConsentStatus] = useState<ConsentStatus>("unknown");
+  const [pendingConsentEvent, setPendingConsentEvent] = useState<"accepted" | null>(null);
   const [showPanel, setShowPanel] = useState(false);
   const [locale, setLocale] = useState<"bg" | "en">("en");
   const copy = getCopy(locale);
@@ -168,6 +169,27 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
     setShowPanel(hasAnalyticsProvider && savedConsentStatus === "unknown");
   }, [hasAnalyticsProvider]);
 
+  useEffect(() => {
+    if (!analyticsEnabled || pendingConsentEvent !== "accepted") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      trackAnalyticsEvent("cookie_consent_click", {
+        action_type: "cookies",
+        location: "cookie_banner",
+        label: "accept",
+        locale,
+        target: "analytics_consent",
+        is_external: false,
+        consent_status: "granted"
+      });
+      setPendingConsentEvent(null);
+    }, 600);
+
+    return () => window.clearTimeout(timer);
+  }, [analyticsEnabled, locale, pendingConsentEvent]);
+
   if (!hasAnalyticsProvider) {
     return null;
   }
@@ -176,6 +198,7 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
     writeConsent(true);
     setConsentStatus("granted");
     setShowPanel(false);
+    setPendingConsentEvent("accepted");
   }
 
   function rejectAnalytics() {
@@ -224,7 +247,18 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
       ) : null}
 
       {consentStatus !== "unknown" ? (
-        <button type="button" className="cookie-consent-settings" onClick={() => setShowPanel(true)}>
+        <button
+          type="button"
+          className="cookie-consent-settings"
+          data-track-event="cookie_settings_click"
+          data-track-action-type="cookies"
+          data-track-location="cookie_settings_button"
+          data-track-label={copy.settings}
+          data-track-locale={locale}
+          data-track-target="analytics_consent"
+          data-track-external="false"
+          onClick={() => setShowPanel(true)}
+        >
           {copy.settings}
         </button>
       ) : null}

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { businessProfileSource } from "@/lib/business-profile-source";
 import type { BusinessHoursEntry } from "@/lib/business-profile-source";
+import { buildActionTracking, getActionTrackingAttributes, type BusinessActionKind } from "@/lib/tracking";
 
 const instagramUrl = "https://www.instagram.com/friendlybear.bg/";
 const facebookUrl = "https://www.facebook.com/friendlybear.bg/";
@@ -197,6 +198,23 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         };
   const languageLabel = touristMarketAudience ? "🇬🇧 English" : copy.language;
   const mobileLanguageLabel = touristMarketAudience ? "EN" : copy.mobileLanguage;
+  const tracking = (
+    kind: BusinessActionKind,
+    location: string,
+    label: string,
+    target: string,
+    external = false
+  ) =>
+    getActionTrackingAttributes(
+      buildActionTracking({
+        kind,
+        locale,
+        location,
+        label,
+        target,
+        external
+      })
+    );
 
   useEffect(() => {
     function handleScroll() {
@@ -241,7 +259,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
 
           <nav className="site-nav" aria-label={copy.navigationLabel}>
             {phoneHref ? (
-              <a className="site-nav-primary" href={phoneHref}>
+              <a className="site-nav-primary" href={phoneHref} {...tracking("phone", "header_call", copy.call, phoneHref)}>
                 <span className="site-nav-label-desktop">{copy.call}</span>
                 <span className="site-nav-label-mobile">{copy.mobileCall}</span>
               </a>
@@ -253,6 +271,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
               rel="noreferrer"
               aria-label={copy.directions}
               title={copy.directions}
+              {...tracking("directions", "header_directions", copy.directions, businessProfileSource.identity.mapUrl, true)}
             >
               <span className="site-nav-label-desktop">{copy.directions}</span>
               <span className="site-nav-label-mobile site-nav-map-label">
@@ -260,11 +279,11 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                 <span className="site-nav-map-text">{locale === "bg" ? "Карта" : "Map"}</span>
               </span>
             </a>
-            <Link href={menuPath} className="site-nav-essential site-nav-menu">
+            <Link href={menuPath} className="site-nav-essential site-nav-menu" {...tracking("menu", "header_menu", copy.menu, menuPath)}>
               <span className="site-nav-label-desktop">{copy.menu}</span>
               <span className="site-nav-label-mobile">{copy.mobileMenu}</span>
             </Link>
-            <Link href={aboutPath} className="site-nav-secondary">
+            <Link href={aboutPath} className="site-nav-secondary" {...tracking("about", "header_about", copy.about, aboutPath)}>
               {copy.about}
             </Link>
             <span className="site-nav-social-pill" aria-label="Social links">
@@ -275,6 +294,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                 rel="noreferrer"
                 aria-label="Facebook"
                 title="Facebook"
+                {...tracking("facebook", "header_social", "Facebook", facebookUrl, true)}
               >
                 <FacebookIcon />
               </a>
@@ -285,11 +305,16 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                 rel="noreferrer"
                 aria-label="Instagram"
                 title="Instagram"
+                {...tracking("instagram", "header_social", "Instagram", instagramUrl, true)}
               >
                 <InstagramIcon />
               </a>
             </span>
-            <Link href={languagePath} className="site-nav-essential site-nav-language">
+            <Link
+              href={languagePath}
+              className="site-nav-essential site-nav-language"
+              {...tracking("language", "header_language", languageLabel, languagePath)}
+            >
               <span className="site-nav-label-desktop">{languageLabel}</span>
               <span className="site-nav-label-mobile">{mobileLanguageLabel}</span>
             </Link>
@@ -333,28 +358,53 @@ export function SiteChrome({ children }: { children: ReactNode }) {
             <div className="site-footer-column">
               <p>{copy.footerMainLabel}</p>
               <Link href={homePath}>{copy.home}</Link>
-              <Link href={menuPath}>{copy.menu}</Link>
-              <Link href={aboutPath}>{copy.about}</Link>
+              <Link href={menuPath} {...tracking("menu", "footer_menu", copy.menu, menuPath)}>
+                {copy.menu}
+              </Link>
+              <Link href={aboutPath} {...tracking("about", "footer_about", copy.about, aboutPath)}>
+                {copy.about}
+              </Link>
               <Link href={contactPath}>{copy.contact}</Link>
               <Link href={reviewsPath}>{copy.reviews}</Link>
             </div>
 
             <div className="site-footer-column">
               <p>{copy.footerGuestLabel}</p>
-              {phoneHref ? <a href={phoneHref}>{copy.call}</a> : null}
-              <a href={businessProfileSource.identity.mapUrl} target="_blank" rel="noreferrer">
+              {phoneHref ? (
+                <a href={phoneHref} {...tracking("phone", "footer_call", copy.call, phoneHref)}>
+                  {copy.call}
+                </a>
+              ) : null}
+              <a
+                href={businessProfileSource.identity.mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                {...tracking("directions", "footer_directions", copy.directions, businessProfileSource.identity.mapUrl, true)}
+              >
                 {copy.directions}
               </a>
               <Link href={touristsPath}>{copy.tourists}</Link>
-              <Link href={languagePath}>{languageLabel}</Link>
+              <Link href={languagePath} {...tracking("language", "footer_language", languageLabel, languagePath)}>
+                {languageLabel}
+              </Link>
             </div>
 
             <div className="site-footer-column">
               <p>{copy.footerSocialLabel}</p>
-              <a href={instagramUrl} target="_blank" rel="noreferrer">
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                {...tracking("instagram", "footer_social", "Instagram", instagramUrl, true)}
+              >
                 Instagram
               </a>
-              <a href={facebookUrl} target="_blank" rel="noreferrer">
+              <a
+                href={facebookUrl}
+                target="_blank"
+                rel="noreferrer"
+                {...tracking("facebook", "footer_social", "Facebook", facebookUrl, true)}
+              >
                 Facebook
               </a>
             </div>

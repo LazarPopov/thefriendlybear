@@ -57,7 +57,7 @@ export function SeasonalMenu({ locale, menu }: SeasonalMenuProps) {
 
   return (
     <main className="menu-shell">
-      <section className="menu-hero">
+      <section className="menu-hero" data-track-section="menu_hero" data-track-section-label={menu.title}>
         <p className="eyebrow">{menu.eyebrow}</p>
         <h1>{menu.title}</h1>
         <p className="menu-intro">{menu.intro}</p>
@@ -90,6 +90,8 @@ export function SeasonalMenu({ locale, menu }: SeasonalMenuProps) {
             key={section.title}
             id={`menu-section-${locale}-${index + 1}`}
             className="menu-section-card"
+            data-track-section={`menu_category_${index + 1}`}
+            data-track-section-label={section.title}
           >
             <header className="menu-section-header">
               <p className="menu-section-label">{section.title}</p>

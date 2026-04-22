@@ -54,9 +54,9 @@ const galleryCopy: Record<
   },
   es: {
     eyebrow: "Ambiente",
-    title: "Jardin tranquilo e interior acogedor",
-    intro: "Estas imagenes muestran dos lados del lugar: el jardin escondido y el ambiente calido del interior.",
-    gardenLabel: "Jardin",
+    title: "Jardín tranquilo e interior acogedor",
+    intro: "Estas imágenes muestran dos lados del lugar: el jardín escondido y el ambiente cálido del interior.",
+    gardenLabel: "Jardín",
     interiorLabel: "Interior"
   },
   el: {

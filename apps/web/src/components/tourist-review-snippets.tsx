@@ -20,7 +20,7 @@ export function TouristReviewSnippets({
   }
 
   return (
-    <section className="page-grid">
+    <section className="page-grid" data-track-section="tourist_reviews" data-track-section-label={title}>
       <article className="page-card">
         <p className="page-card-label">{eyebrow}</p>
         <h2>{title}</h2>

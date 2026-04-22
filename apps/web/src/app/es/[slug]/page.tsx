@@ -13,7 +13,7 @@ type MarketRouteProps = {
 const spanishSlug = "restaurante-centro-sofia";
 const spanishTitle = "Restaurante con Jardín en el Centro de Sofía | The Friendly Bear";
 const spanishDescription =
-  "¿Buscas dónde comer en el centro de Sofía? The Friendly Bear ofrece comida búlgara artesanal, un jardín secreto y opciones vegetarianas. Personal habla inglés. ¡Reserva hoy!";
+  "¿Buscas dónde comer o cenar en el centro de Sofía? The Friendly Bear ofrece comida búlgara artesanal, jardín secreto y algo barato frente a muchas trampas turísticas. ¡Reserva hoy!";
 const productionSiteUrl = "https://friendlybear.bg";
 
 function absoluteUrl(path: string) {
@@ -30,7 +30,7 @@ function getSpanishRestaurantSchema() {
     logo: absoluteUrl("/icons/friendly_bear_logo.jpg"),
     telephone: "+359876122114",
     priceRange: "$$",
-    description: "Un restaurante acogedor en el centro de Sofía con jardín secreto y cocina tradicional búlgara.",
+    description: "Un restaurante acogedor en el centro de Sofía para comer o cenar comida tradicional búlgara, con jardín secreto y buena relación calidad-precio.",
     servesCuisine: ["Búlgara", "Barbacoa", "Europea"],
     knowsLanguage: ["en", "bg", "es"],
     url: absoluteUrl(`/es/${spanishSlug}`),
@@ -64,13 +64,13 @@ function getSpanishPageSchema() {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Sofia visitor guide",
+            name: "Guía para visitantes en Sofía",
             item: absoluteUrl("/en/tourists")
           },
           {
             "@type": "ListItem",
             position: 3,
-            name: "Spanish visitor guide",
+            name: "Guía para visitantes españoles",
             item: pageUrl
           }
         ]

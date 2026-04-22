@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { BusinessActionKind } from "@/lib/tracking";
+import { trackAnalyticsEvent } from "@/components/analytics-events";
+import { buildActionTracking, getActionTrackingAttributes, type BusinessActionKind } from "@/lib/tracking";
 
 type Locale = "bg" | "en" | "it" | "es" | "el";
 type ActionLocale = "bg" | "en";
@@ -50,7 +51,7 @@ const copy = {
     kicker: "Prenotazioni",
     title: "Chiama per prenotare",
     body:
-      "Per prenotare un tavolo al The Friendly Bear Sofia, chiamaci in inglese. Il nostro staff parla inglese e ti aiutera con giardino, camino o cena con amici.",
+      "Per prenotare un tavolo al The Friendly Bear Sofia, chiamaci in inglese. Ti aiuteremo con giardino, camino o cena con amici.",
     phoneLabel: "Telefono",
     minimize: "Minimizza",
     expand: "Prenota",
@@ -61,18 +62,18 @@ const copy = {
     kicker: "Reservas",
     title: "Llama para reservar",
     body:
-      "Para reservar una mesa en The Friendly Bear Sofia, llamanos en ingles. Nuestro equipo habla ingles y te ayudara con una mesa en el jardin, junto a la chimenea o para cenar con amigos.",
-    phoneLabel: "Telefono",
+      "Para reservar una mesa y cenar en The Friendly Bear Sofia, llámanos en inglés. Te ayudaremos con una mesa en el jardín, junto a la chimenea o para comer con amigos.",
+    phoneLabel: "Teléfono",
     minimize: "Minimizar",
     expand: "Reservar",
-    phoneActionLabel: "Llamar para reservar en ingles"
+    phoneActionLabel: "Llamar para reservar en inglés"
   },
   el: {
     aria: "Κρατήσεις",
     kicker: "Κρατήσεις",
     title: "Καλέστε για κράτηση",
     body:
-      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας στα αγγλικά. Το προσωπικό μας μιλάει αγγλικά και θα σας βοηθήσει με τραπέζι στον κήπο, κοντά στο τζάκι ή για δείπνο με φίλους.",
+      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας στα αγγλικά. Θα σας βοηθήσουμε με τραπέζι στον κήπο, κοντά στο τζάκι ή για δείπνο με φίλους.",
     phoneLabel: "Τηλέφωνο",
     minimize: "Ελαχιστοποίηση",
     expand: "Κράτηση",
@@ -173,6 +174,16 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
   const action = actions[getActionLocale(locale)] ?? actions.bg ?? actions.en;
   const [popupState, setPopupState] = useState<PopupState>(getInitialPopupState);
   const isExpanded = popupState === "expanded";
+  const phoneTarget = phoneHref ?? action?.href ?? "";
+  const phoneTracking = getActionTrackingAttributes(
+    buildActionTracking({
+      kind: "phone",
+      locale,
+      location: "reservation_popup_phone",
+      label: text.phoneActionLabel,
+      target: phoneTarget
+    })
+  );
 
   useEffect(() => {
     setPopupState(getInitialPopupState());
@@ -198,6 +209,22 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
     return () => window.clearTimeout(timer);
   }, [popupState, pathname]);
 
+  useEffect(() => {
+    if (!action || popupState === "pending") {
+      return;
+    }
+
+    trackAnalyticsEvent("reservation_popup_impression", {
+      action_type: "reservations",
+      location: popupState === "expanded" ? "reservation_popup_card" : "reservation_popup_minimized",
+      label: text.title,
+      locale,
+      target: phoneTarget || "reservation_popup",
+      is_external: false,
+      popup_state: popupState
+    });
+  }, [action, locale, phoneTarget, popupState, text.title]);
+
   if (!action) {
     return null;
   }
@@ -216,6 +243,13 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
       <button
         type="button"
         className="reservation-popup reservation-popup-minimized"
+        data-track-event="reservation_widget_expand_click"
+        data-track-action-type="reservations"
+        data-track-location="reservation_popup_minimized"
+        data-track-label={text.expand}
+        data-track-locale={locale}
+        data-track-target="reservation_popup"
+        data-track-external="false"
         onClick={() => setExpanded(true)}
         aria-label={text.aria}
       >
@@ -228,7 +262,18 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
     <aside className="reservation-popup reservation-popup-card" aria-label={text.aria}>
       <div className="reservation-popup-topline">
         <h2>{text.title}</h2>
-        <button type="button" onClick={() => setExpanded(false)} aria-label={text.minimize}>
+        <button
+          type="button"
+          data-track-event="reservation_popup_close"
+          data-track-action-type="reservations"
+          data-track-location="reservation_popup_card"
+          data-track-label={text.minimize}
+          data-track-locale={locale}
+          data-track-target="reservation_popup"
+          data-track-external="false"
+          onClick={() => setExpanded(false)}
+          aria-label={text.minimize}
+        >
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -245,7 +290,7 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
       </div>
 
       {phoneDisplay ? (
-        <a className="reservation-popup-phone" href={phoneHref ?? action.href}>
+        <a className="reservation-popup-phone" href={phoneTarget} {...phoneTracking}>
           <span>{text.phoneLabel}</span>
           <strong>{phoneDisplay}</strong>
         </a>

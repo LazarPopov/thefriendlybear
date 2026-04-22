@@ -10,7 +10,7 @@ export async function ReviewSnippetsShowcase({ locale }: ReviewSnippetsShowcaseP
   const reviews = await getReviewSnippetsData(locale);
 
   return (
-    <section className="page-grid">
+    <section className="page-grid" data-track-section="reviews_showcase" data-track-section-label={summary.title}>
       <article className="page-card">
         <p className="page-card-label">{summary.eyebrow}</p>
         <h2>{summary.title}</h2>

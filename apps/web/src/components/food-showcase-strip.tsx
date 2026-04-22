@@ -65,8 +65,8 @@ const showcaseCopy: Record<
   },
   es: {
     eyebrow: "Platos",
-    title: "Una mirada rapida a la cocina",
-    intro: "Antes de abrir el menu completo, el visitante ya percibe el estilo de la comida."
+    title: "Una mirada rápida a la cocina",
+    intro: "Antes de abrir el menú completo, el visitante ya percibe el estilo de la comida."
   },
   el: {
     eyebrow: "Πιάτα",

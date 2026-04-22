@@ -1,10 +1,17 @@
 # GA4 Event Map
 
-Този документ описва текущия tracking слой за основните CTA действия в българската версия на сайта.
+This document describes the consent-gated Google Analytics tracking layer for The Friendly Bear website.
 
-## Data Attributes
+## Consent Boundary
 
-Интерактивните CTA елементи вече изкарват следните атрибути:
+- Analytics scripts load only after the visitor accepts analytics cookies.
+- Rejecting or ignoring the cookie banner keeps GA disabled.
+- GA cannot report on visitors who reject or never answer the cookie prompt under this GDPR-safe setup.
+- The accepted-cookie population can be analyzed by page, locale, CTA location, and interaction type.
+
+## Shared Parameters
+
+Tracked CTA elements use these attributes:
 
 - `data-track-event`
 - `data-track-action-type`
@@ -14,84 +21,122 @@
 - `data-track-target`
 - `data-track-external`
 
-Това позволява GTM да чете едни и същи сигнали независимо дали елементът е вътрешен линк, външен линк, телефонен линк или WhatsApp линк.
+Most GA4 events include:
 
-## Event Names
+- `action_type`
+- `location`
+- `label`
+- `locale`
+- `target`
+- `is_external`
+- `page_path`
+- `page_location`
+- `page_title`
 
-- `click_to_call`
-  Използва се за `tel:` CTA бутони.
+Observer-based events may also include:
 
-- `whatsapp_click`
-  Използва се за WhatsApp CTA бутони.
+- `route_key`
+- `tourist_audience`
+- `section_index`
+- `section_id`
+- `section_class`
+- `section_label`
 
-- `external_booking_click`
-  Използва се за външни booking платформи.
+## CTA Events
 
-- `menu_cta_click`
-  Използва се за основни CTA бутони към менюто.
+- `click_to_call`: Phone CTA clicks, including header, footer, reservation popup, mobile quickbar, and venue gallery final slide.
+- `directions_click`: Google Maps or directions CTA clicks.
+- `external_map_open`: Secondary event fired together with `directions_click`, useful as a key event.
+- `menu_cta_click`: Clicks that lead toward the menu page.
+- `menu_category_click`: Menu category jump-link clicks on the HTML menu page.
+- `story_cta_click`: About/story CTA clicks.
+- `reservation_cta_click`: Reservation page CTA clicks.
+- `contact_cta_click`: Contact CTA clicks.
+- `whatsapp_click`: WhatsApp CTA clicks if enabled in business profile data.
+- `external_booking_click`: External booking platform clicks if enabled in business profile data.
+- `social_click`: Facebook and Instagram link clicks.
+- `language_switch_click`: Header and footer language switch clicks.
+- `quickbar_click`: Secondary event fired when a tracked CTA is clicked inside `.mobile-quickbar`.
 
-- `menu_category_click`
-  Използва се за вътрешните category jump links в менюто.
+## Consent Events
 
-- `reservation_cta_click`
-  Използва се за CTA бутони към резервационната страница.
+- `cookie_consent_click`: Sent when a visitor accepts analytics cookies.
+- `cookie_settings_click`: Sent when a consented visitor opens cookie settings again.
 
-- `contact_cta_click`
-  Използва се за CTA бутони към контактната страница.
+## Reservation Popup Events
 
-- `directions_click`
-  Използва се за Google Maps и други direction CTA елементи.
+- `reservation_popup_impression`: Popup card or minimized widget is shown to a consented visitor.
+- `reservation_popup_close`: Expanded popup is minimized.
+- `reservation_widget_expand_click`: Minimized widget is opened.
+- `click_to_call` with `location=reservation_popup_phone`: Popup phone reservation click.
+
+## Menu Intent Events
+
+- `menu_view_intent`: Fired on menu page load and when a visitor clicks a menu CTA/category link.
+- `menu_category_view`: Fired when a menu category section scrolls into view.
+- `menu_category_click`: Fired when a visitor taps a category jump link.
+
+## Page Engagement Events
+
+- `scroll_depth`: Fired once per page at 50%, 75%, and 90% scroll depth.
+- `section_view`: Fired once when important `section`/`aside` blocks enter view.
+- `review_interaction`: Fired on reviews page view and when review sections enter view.
+- `tourist_language_page_engagement`: Fired on tourist/language landing page view and at scroll milestones.
+- `dead_end_404`: Fired when a consented visitor reaches the custom 404 page.
+
+## Venue Gallery Events
+
+- `venue_gallery_stage_click`: Fired when a visitor advances the venue gallery.
+- `venue_gallery_final_reached`: Fired when a visitor reaches the final gallery slide.
+- `click_to_call` with `location=venue_gallery_final`: Reservation from gallery final slide.
+- `directions_click` with `location=venue_gallery_final`: Directions from gallery final slide.
+
+Gallery-specific parameters:
+
+- `gallery_group`
+- `gallery_label`
+- `slide_index`
+- `slide_count`
+- `next_slide_index`
+- `click_source`
+- `is_final_slide`
 
 ## Current UI Locations
 
-- `home_hero`
-- `home_featured_menu`
-- `home_visit_panel`
-- `about_hero`
-- `about_location_card`
-- `contact_hero`
-- `contact_map_card`
-- `reviews_hero`
-- `reservations_hero`
-- `menu_hero`
-- `menu_category_nav`
-- `tourists_index_hero`
-- `tourists_index_grid`
-- `tourist_page_hero`
+- `header_call`
+- `header_directions`
+- `header_menu`
+- `header_about`
+- `header_social`
+- `header_language`
+- `footer_call`
+- `footer_directions`
+- `footer_menu`
+- `footer_about`
+- `footer_social`
+- `footer_language`
 - `mobile_quickbar`
+- `reservation_popup_card`
+- `reservation_popup_minimized`
+- `reservation_popup_phone`
+- `venue_gallery_stage`
+- `venue_gallery_final`
+- `menu_category_nav`
+- `menu_category_section`
+- `section_observer`
+- `page_scroll`
+- `page_load`
+- `reviews_page`
+- `review_section`
+- `not_found_page`
 
-## Suggested GTM Mapping
+## Suggested GA4 Key Events
 
-- Trigger:
-  Click on element where `data-track-event` exists.
+- `click_to_call`
+- `external_map_open`
+- `reservation_widget_expand_click`
+- `venue_gallery_final_reached`
+- `menu_view_intent`
+- `dead_end_404`
 
-- Container bootstrap:
-  Add `NEXT_PUBLIC_GTM_ID` in `apps/web/.env.local` to activate the GTM script in the frontend layout.
-
-- Variables:
-  Read each `data-track-*` attribute as a DOM element variable.
-
-- GA4 event name:
-  Use the value from `data-track-event`.
-
-- Suggested GA4 parameters:
-  - `action_type`
-  - `location`
-  - `label`
-  - `locale`
-  - `target`
-  - `is_external`
-
-## Consent Gate
-
-- Analytics scripts load through `AnalyticsConsent`, not directly in the root layout.
-- Visitors must accept analytics cookies before GTM or direct GA4 loads.
-- Rejecting stores the choice, removes visible GA cookies, and keeps analytics disabled.
-- The persistent cookie settings button lets visitors change their choice later.
-- If `NEXT_PUBLIC_GTM_ID` is set, GTM is used as the analytics provider. If not, `NEXT_PUBLIC_GA_MEASUREMENT_ID` loads direct GA4.
-
-## Notes
-
-- `click_to_call`, `whatsapp_click` и `external_booking_click` ще започнат да се използват автоматично веднага щом в `business-profile.ts` бъдат добавени реални данни.
-- `menu_category_click` е вече подготвен за category interaction tracking на HTML менюто.
-- Следващата стъпка може да добави готов GTM `dataLayer.push()` helper, ако искаме fallback и за custom JS tracking.
+For a tighter dashboard, break down key events by `location`, `page_path`, `locale`, and `tourist_audience`.

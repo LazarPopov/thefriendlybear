@@ -74,7 +74,7 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       en: "A warm restaurant in a 1923 house on Slavyanska 23, with a secret garden, cozy interior, and an easy place to relax after exploring central Sofia."
     },
     marketIntro: {
-      es: "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local."
+      es: "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse sin caer en una trampa turística cara. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea si buscas algo barato frente a muchas zonas turísticas del centro."
     },
     vegetarianMessage: {
       bg: "В менюто има свежи салати и топли вегетариански ястия, ясно описани за гостите, които търсят по-леки опции.",

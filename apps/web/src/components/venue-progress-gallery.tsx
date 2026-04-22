@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { ActionLink } from "@/components/action-link";
+import { trackAnalyticsEvent } from "@/components/analytics-events";
 import type { SiteLocale } from "@/lib/site";
+import { buildActionTracking } from "@/lib/tracking";
 
 type GalleryLocale = SiteLocale | "it" | "es" | "el";
 
@@ -31,12 +33,13 @@ type VenueProgressGalleryProps = {
 };
 
 const clickDelayMs = 720;
+const maxImagesBeforeCta = 4;
 const bearReactionEmoji = "\uD83D\uDC3B";
-const galleryReactionEmojis = ["\u2764\uFE0F", "\uD83D\uDE0D", "\uD83D\uDC4D", "\u2728", bearReactionEmoji];
+const galleryReactionEmojis = ["\u2764\uFE0F", "\uD83D\uDE0D", "\uD83D\uDC4D", "\u2728"];
 
 function vibrateForBearReaction(emoji: string) {
   if (emoji !== bearReactionEmoji || typeof navigator === "undefined" || !navigator.vibrate) return;
-  navigator.vibrate([80, 35, 130]);
+  navigator.vibrate([140, 40, 180, 50, 240]);
 }
 
 const galleryUiCopy: Record<
@@ -92,10 +95,10 @@ const galleryUiCopy: Record<
   es: {
     previousAria: "Foto anterior",
     nextAria: "Foto siguiente",
-    restartAria: "Reiniciar galeria",
-    finalEyebrow: "Dejemos algo a la imaginacion",
+    restartAria: "Reiniciar galería",
+    finalEyebrow: "Dejemos algo a la imaginación",
     finalTitle: "Ven a la guarida del buen gusto",
-    finalText: "Lo demas se disfruta mejor en persona. Entra, relajate y disfruta.",
+    finalText: "Lo demás se disfruta mejor en persona. Entra, relájate y disfruta.",
     directions: "Indicaciones",
     callToReserve: "Llama para reservar"
   },
@@ -137,12 +140,12 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Il calore ha un indirizzo"
   ],
   es: [
-    "Noche en el jardin secreto",
-    "Cerveza fria bajo las luces",
-    "Un rincon tranquilo en el centro de Sofia",
+    "Noche en el jardín secreto",
+    "Cerveza fría bajo las luces",
+    "Un rincón tranquilo en el centro de Sofía",
     "Junto a la chimenea",
-    "Una larga conversacion",
-    "Lo acogedor tiene direccion"
+    "Una larga conversación",
+    "Lo acogedor tiene dirección"
   ],
   el: [
     "Βράδυ στον κρυφό κήπο",
@@ -180,8 +183,8 @@ const galleryReviewCopy: Record<
     { eyebrow: "Recensione da Google", quote: "Siamo arrivati senza prenotazione e il cameriere ci ha trovato un ottimo tavolo.", author: "Alice T", meta: "5/5 · 2 mesi fa" }
   ],
   es: [
-    { eyebrow: "Resena de Google", quote: "Lugar perfecto, servicio increible y comida muy buena.", author: "Viltė Čepulytė", meta: "5/5 · hace 2 meses" },
-    { eyebrow: "Resena de Google", quote: "Llegamos sin reserva y el camarero nos ayudo a encontrar una mesa estupenda.", author: "Alice T", meta: "5/5 · hace 2 meses" }
+    { eyebrow: "Reseña de Google", quote: "Lugar perfecto, servicio increíble y comida muy buena.", author: "Viltė Čepulytė", meta: "5/5 · hace 2 meses" },
+    { eyebrow: "Reseña de Google", quote: "Llegamos sin reserva y el camarero nos ayudó a encontrar una mesa estupenda.", author: "Alice T", meta: "5/5 · hace 2 meses" }
   ],
   el: [
     { eyebrow: "Κριτική από Google", quote: "Τέλειο μέρος με εξαιρετική εξυπηρέτηση και πολύ καλό φαγητό.", author: "Viltė Čepulytė", meta: "5/5 · πριν από 2 μήνες" },
@@ -214,11 +217,43 @@ function VenueGalleryCard({
   const stageRef = useRef<HTMLDivElement>(null);
   const clickCountRef = useRef(0);
   
-  const finalIndex = group.images.length;
+  const visibleImages = group.images.slice(0, maxImagesBeforeCta);
+  const finalIndex = visibleImages.length;
   const index = activeIndex;
   const isFinalSlide = index === finalIndex;
+  const isLastImageBeforeFinal = index === finalIndex - 1;
   const captionOffset = group.id === "interior" ? 3 : 0;
-  const polaroidCaption = group.images[index]?.caption ?? polaroidCaptions[(index + captionOffset) % polaroidCaptions.length];
+  const activeImage = visibleImages[index];
+  const polaroidCaption = activeImage?.caption ?? polaroidCaptions[(index + captionOffset) % polaroidCaptions.length];
+
+  function trackGalleryAdvance(source: string) {
+    const nextIndex = index >= finalIndex ? 0 : index + 1;
+    const basePayload = {
+      action_type: "gallery",
+      location: "venue_gallery_stage",
+      label: group.label,
+      locale,
+      target: group.id,
+      is_external: false,
+      gallery_group: group.id,
+      gallery_label: group.label,
+      slide_index: index,
+      slide_count: visibleImages.length,
+      next_slide_index: nextIndex,
+      click_source: source,
+      is_final_slide: isFinalSlide
+    };
+
+    trackAnalyticsEvent("venue_gallery_stage_click", basePayload);
+
+    if (nextIndex === finalIndex) {
+      trackAnalyticsEvent("venue_gallery_final_reached", {
+        ...basePayload,
+        label: `${group.label} final slide`,
+        is_final_slide: true
+      });
+    }
+  }
 
   useEffect(() => {
     return () => {
@@ -235,11 +270,13 @@ function VenueGalleryCard({
   }, [isFinalSlide]);
 
   // Instant transition (used for keyboard or restart button)
-  function goNext() {
+  function goNext(source = "keyboard") {
     if (locked) return;
     setLocked(true);
     
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    trackGalleryAdvance(source);
     
     onActiveIndexChange(index >= finalIndex ? 0 : index + 1);
     
@@ -263,8 +300,11 @@ function VenueGalleryCard({
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    const currentEmoji = galleryReactionEmojis[clickCountRef.current % galleryReactionEmojis.length];
+    const currentEmoji = isLastImageBeforeFinal
+      ? bearReactionEmoji
+      : galleryReactionEmojis[clickCountRef.current % galleryReactionEmojis.length];
     vibrateForBearReaction(currentEmoji);
+    trackGalleryAdvance(event.currentTarget instanceof HTMLButtonElement ? "arrow" : "stage");
     
     // Increment for the next click
     clickCountRef.current += 1;
@@ -329,7 +369,7 @@ function VenueGalleryCard({
           <button
             type="button"
             className="venue-gallery-stage-arrow venue-gallery-stage-arrow-right"
-            onClick={isFinalSlide ? (e) => { e.stopPropagation(); goNext(); } : handleEmojiClick}
+            onClick={isFinalSlide ? (e) => { e.stopPropagation(); goNext("restart"); } : handleEmojiClick}
             disabled={locked}
             aria-label={isFinalSlide ? ui.restartAria : ui.nextAria}
             title={isFinalSlide ? ui.restartAria : ui.nextAria}
@@ -359,8 +399,32 @@ function VenueGalleryCard({
             />
             
             <div className="actions venue-gallery-actions" onClick={(event) => event.stopPropagation()}>
-              {callHref ? <ActionLink href={callHref} label={ui.callToReserve} /> : null}
-              <ActionLink href={directionsHref} label={ui.directions} external />
+              {callHref ? (
+                <ActionLink
+                  href={callHref}
+                  label={ui.callToReserve}
+                  tracking={buildActionTracking({
+                    kind: "phone",
+                    locale,
+                    location: "venue_gallery_final",
+                    label: ui.callToReserve,
+                    target: callHref
+                  })}
+                />
+              ) : null}
+              <ActionLink
+                href={directionsHref}
+                label={ui.directions}
+                external
+                tracking={buildActionTracking({
+                  kind: "directions",
+                  locale,
+                  location: "venue_gallery_final",
+                  label: ui.directions,
+                  target: directionsHref,
+                  external: true
+                })}
+              />
             </div>
           </div>
         ) : (
@@ -371,8 +435,8 @@ function VenueGalleryCard({
             }`}
           >
             <img
-              src={group.images[index].src}
-              alt={group.images[index].alt}
+              src={activeImage.src}
+              alt={activeImage.alt}
               className="venue-gallery-image"
               loading="lazy"
               fetchPriority="auto"
@@ -393,7 +457,12 @@ function VenueGalleryReview({ locale, index }: { locale: GalleryLocale; index: n
   const review = reviews[index % reviews.length];
 
   return (
-    <aside className="venue-gallery-review" aria-label={review.eyebrow}>
+    <aside
+      className="venue-gallery-review"
+      aria-label={review.eyebrow}
+      data-track-section="venue_gallery_review"
+      data-track-section-label={review.eyebrow}
+    >
       <div key={`${locale}-${index}`} className="venue-gallery-review-content">
         <p className="page-card-label">{review.eyebrow}</p>
         <p className="venue-gallery-review-stars" aria-label="5 stars">
@@ -419,7 +488,7 @@ function VenueGalleryFeature({
   callHref: string | null;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const isFinalSlide = activeIndex === group.images.length;
+  const isFinalSlide = activeIndex === Math.min(group.images.length, maxImagesBeforeCta);
 
   return (
     <div className={`venue-progress-gallery-feature ${isFinalSlide ? "venue-progress-gallery-feature-final" : ""}`}>
@@ -448,7 +517,7 @@ export function VenueProgressGallery({
   const hasCopy = Boolean(eyebrow || title || intro);
 
   return (
-    <section className="venue-progress-gallery">
+    <section className="venue-progress-gallery" data-track-section="venue_gallery" data-track-section-label={title}>
       {hasCopy ? (
         <div className="venue-progress-gallery-copy">
           {eyebrow ? <p className="page-card-label">{eyebrow}</p> : null}

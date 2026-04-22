@@ -64,24 +64,24 @@ const touristMarketConfig: Record<TouristMarketLocale, TouristMarketConfig> = {
     label: "Visitantes hispanohablantes",
     ogLocale: "es_ES",
     nav: {
-      menu: "Menu",
+      menu: "Menú",
       reservations: "Reservas",
       contact: "Contacto",
-      directions: "Como llegar",
+      directions: "Cómo llegar",
       phone: "Llamar para Reservar"
     },
     ui: {
-      pageLabel: "Pagina para visitantes hispanohablantes",
+      pageLabel: "Página para visitantes hispanohablantes",
       highlights: "Puntos clave",
       vegetarian: "Opciones vegetarianas",
-      service: "Servicio y atencion",
-      nextSteps: "Que hacer ahora",
-      whyThisWorks: "Por que elegir The Friendly Bear",
-      quickActions: "Acciones rapidas",
-      openReservations: "Llama para reservar o abre el menu en ingles antes de venir.",
-      openContact: "Llama para reservar o abre el menu en ingles antes de venir.",
-      openDirections: "Abre las indicaciones hacia Slavyanska 23 cuando estes listo.",
-      centralSignal: "Ubicacion centrica en Sofia"
+      service: "Servicio y atención",
+      nextSteps: "Qué hacer ahora",
+      whyThisWorks: "Por qué elegir The Friendly Bear",
+      quickActions: "Acciones rápidas",
+      openReservations: "Llama para reservar o abre el menú en inglés antes de venir.",
+      openContact: "Llama para reservar o abre el menú en inglés antes de venir.",
+      openDirections: "Abre las indicaciones hacia Slavyanska 23 cuando estés listo.",
+      centralSignal: "Ubicación céntrica en Sofía"
     }
   },
   el: {

@@ -89,13 +89,13 @@ const italianPageCopy = {
 const spanishPageCopy = {
   title: "Un refugio con historia en el corazón de Sofía",
   intro:
-    "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local.",
+    "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local.",
   vegetarian:
     "No todo es carne. Tenemos una variada selección de ensaladas frescas y platos vegetarianos calientes claramente indicados en nuestra carta.",
   service:
     "Queremos que te sientas como en casa. Nuestro equipo habla inglés con fluidez y nuestro menú digital está disponible en inglés para tu comodidad.",
   lateDinnerNote:
-    "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía.",
+    "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía, con comida auténtica si buscas algo barato frente a muchas trampas turísticas del centro.",
   cards: [
     {
       label: "Ubicación",
