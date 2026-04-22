@@ -111,7 +111,7 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       en: "A cozy place in a 1923 house on Slavyanska 23, with a garden, fireplace, authentic food, and an easy path to the menu and reservation."
     },
     marketIntro: {
-      el: "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία του 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες."
+      el: "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία από το 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες."
     },
     vegetarianMessage: {
       bg: "Вегетарианските предложения вече са част от менюто и могат да се видят без излишно търсене от мобилен телефон.",

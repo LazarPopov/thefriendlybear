@@ -62,22 +62,22 @@ const copy = {
     kicker: "Reservas",
     title: "Llama para reservar",
     body:
-      "Para reservar una mesa y cenar en The Friendly Bear Sofia, llámanos en inglés. Te ayudaremos con una mesa en el jardín, junto a la chimenea o para comer con amigos.",
+      "Para reservar una mesa y cenar en The Friendly Bear Sofia, llámanos y te ayudaremos con una mesa en el jardín, junto a la chimenea o para comer con amigos. Hablamos inglés.",
     phoneLabel: "Teléfono",
     minimize: "Minimizar",
     expand: "Reservar",
-    phoneActionLabel: "Llamar para reservar en inglés"
+    phoneActionLabel: "Llamar para reservar"
   },
   el: {
     aria: "Κρατήσεις",
     kicker: "Κρατήσεις",
     title: "Καλέστε για κράτηση",
     body:
-      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας στα αγγλικά. Θα σας βοηθήσουμε με τραπέζι στον κήπο, κοντά στο τζάκι ή για δείπνο με φίλους.",
+      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας και θα σας βοηθήσουμε με τραπέζι στον κήπο, κοντά στο τζάκι ή για δείπνο με φίλους. Μιλάμε Αγγλικά.",
     phoneLabel: "Τηλέφωνο",
     minimize: "Ελαχιστοποίηση",
     expand: "Κράτηση",
-    phoneActionLabel: "Καλέστε για κράτηση στα αγγλικά"
+    phoneActionLabel: "Καλέστε για κράτηση"
   }
 } as const;
 
@@ -108,8 +108,8 @@ function getReservationText(locale: Locale, pathname: string) {
     return {
       ...text,
       body:
-        "Visiting Sofia? Call us in English to reserve a table at The Friendly Bear Sofia on Slavyanska 23. We will help with garden seats, fireplace tables, or dinner with friends.",
-      phoneActionLabel: "Call to reserve in English"
+        "Visiting Sofia? Call us to reserve a table at The Friendly Bear Sofia on Slavyanska 23. We will help with garden seats, fireplace tables, or dinner with friends. English-speaking staff are available.",
+      phoneActionLabel: "Call to reserve"
     };
   }
 
