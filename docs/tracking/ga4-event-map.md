@@ -82,6 +82,14 @@
   - `target`
   - `is_external`
 
+## Consent Gate
+
+- Analytics scripts load through `AnalyticsConsent`, not directly in the root layout.
+- Visitors must accept analytics cookies before GTM or direct GA4 loads.
+- Rejecting stores the choice, removes visible GA cookies, and keeps analytics disabled.
+- The persistent cookie settings button lets visitors change their choice later.
+- If `NEXT_PUBLIC_GTM_ID` is set, GTM is used as the analytics provider. If not, `NEXT_PUBLIC_GA_MEASUREMENT_ID` loads direct GA4.
+
 ## Notes
 
 - `click_to_call`, `whatsapp_click` и `external_booking_click` ще започнат да се използват автоматично веднага щом в `business-profile.ts` бъдат добавени реални данни.

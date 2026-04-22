@@ -54,8 +54,8 @@ export function BrandShowcasePanel({ locale = "bg" }: BrandShowcasePanelProps) {
                 width={420}
                 height={315}
                 className="food-card-image"
-                sizes="(max-width: 640px) 78vw, (max-width: 1024px) 40vw, 300px"
-                priority={index < 3}
+                sizes="(max-width: 640px) 220px, 300px"
+                priority={index === 0}
               />
             </article>
           ))}

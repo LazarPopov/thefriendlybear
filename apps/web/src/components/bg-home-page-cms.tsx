@@ -1,6 +1,7 @@
 import { ActionLink } from "@/components/action-link";
 import { BrandShowcasePanel } from "@/components/brand-showcase-panel";
 import { CopyAddressButton } from "@/components/copy-address-button";
+import { DeferredMapEmbed } from "@/components/deferred-map-embed";
 import { HomeVenueGallery } from "@/components/home-venue-gallery";
 import { getBusinessProfileData, getPhoneHref } from "@/lib/business-profile-module";
 import { buildActionTracking, type BusinessActionKind } from "@/lib/tracking";
@@ -144,13 +145,10 @@ export async function BulgarianHomePageCms() {
         </div>
 
         <div className="home-visit-map-card" aria-label="Карта до The Friendly Bear Sofia">
-          <iframe
-            className="home-visit-map-frame"
+          <DeferredMapEmbed
             src={mapEmbedSrc}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            sandbox="allow-scripts allow-same-origin allow-popups"
             title="The Friendly Bear Sofia map"
+            loadLabel={"\u0417\u0430\u0440\u0435\u0434\u0438 \u043a\u0430\u0440\u0442\u0430\u0442\u0430"}
           />
         </div>
       </section>

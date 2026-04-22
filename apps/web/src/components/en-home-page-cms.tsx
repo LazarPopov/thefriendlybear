@@ -1,6 +1,7 @@
 import { ActionLink } from "@/components/action-link";
 import { BrandShowcasePanel } from "@/components/brand-showcase-panel";
 import { CopyAddressButton } from "@/components/copy-address-button";
+import { DeferredMapEmbed } from "@/components/deferred-map-embed";
 import { HomeVenueGallery } from "@/components/home-venue-gallery";
 import { getBusinessProfileData, getPhoneHref } from "@/lib/business-profile-module";
 import { buildActionTracking, type BusinessActionKind } from "@/lib/tracking";
@@ -145,14 +146,7 @@ export async function EnglishHomePageCms() {
         </div>
 
         <div className="home-visit-map-card" aria-label="Map to The Friendly Bear Sofia">
-          <iframe
-            className="home-visit-map-frame"
-            src={mapEmbedSrc}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            sandbox="allow-scripts allow-same-origin allow-popups"
-            title="The Friendly Bear Sofia map"
-          />
+          <DeferredMapEmbed src={mapEmbedSrc} title="The Friendly Bear Sofia map" loadLabel="Load map" />
         </div>
       </section>
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { GoogleTagManager } from "@/components/google-tag-manager";
+import { AnalyticsConsent } from "@/components/analytics-consent";
 import { ReservationPopupShell } from "@/components/reservation-popup-shell";
 import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/site";
@@ -49,16 +49,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const htmlLanguage = await getHtmlLanguage();
 
   return (
     <html lang={htmlLanguage}>
-      <head>
-        <link rel="preconnect" href="https://maps.googleapis.com" />
-        <link rel="preconnect" href="https://maps.gstatic.com" />
-      </head>
       <body>
-        <GoogleTagManager gtmId={gtmId} />
+        <AnalyticsConsent gtmId={gtmId} gaMeasurementId={gaMeasurementId} />
         <SiteChrome>
           {children}
           <ReservationPopupShell />

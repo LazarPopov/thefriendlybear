@@ -374,8 +374,8 @@ function VenueGalleryCard({
               src={group.images[index].src}
               alt={group.images[index].alt}
               className="venue-gallery-image"
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              loading="lazy"
+              fetchPriority="auto"
               decoding="async"
             />
             <div className="venue-gallery-polaroid-caption" aria-hidden="true">
