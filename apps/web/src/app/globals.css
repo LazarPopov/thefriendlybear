@@ -24,6 +24,8 @@ body {
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 a {
@@ -2902,6 +2904,8 @@ p {
 
   .venue-gallery-stage-inner-image {
     align-items: center;
+    grid-template-rows: minmax(0, 1fr) minmax(108px, auto);
+    padding: 14px 14px 24px;
   }
 
   .venue-gallery-image {
@@ -2943,7 +2947,20 @@ p {
   }
 
   .venue-gallery-polaroid-caption {
-    min-height: 0;
+    min-height: 108px;
+    padding: 8px 10px 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    line-height: 1.04;
+  }
+
+  .venue-gallery-polaroid-title {
+    display: block;
+    max-width: 20rem;
+    font-size: clamp(1.48rem, 7vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-wrap: balance;
   }
 
   .venue-gallery-polaroid-tilt-1,

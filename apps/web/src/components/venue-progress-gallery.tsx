@@ -225,6 +225,7 @@ function VenueGalleryCard({
   const captionOffset = group.id === "interior" ? 3 : 0;
   const activeImage = visibleImages[index];
   const polaroidCaption = activeImage?.caption ?? polaroidCaptions[(index + captionOffset) % polaroidCaptions.length];
+  const preloadSources = visibleImages.map((image) => image.src).join("|");
 
   function trackGalleryAdvance(source: string) {
     const nextIndex = index >= finalIndex ? 0 : index + 1;
@@ -268,6 +269,20 @@ function VenueGalleryCard({
     }, 120);
     return () => clearTimeout(scrollTimer);
   }, [isFinalSlide]);
+
+  useEffect(() => {
+    if (!preloadSources || typeof window === "undefined") return;
+
+    const warmupTimer = window.setTimeout(() => {
+      visibleImages.forEach((image) => {
+        const preload = new window.Image();
+        preload.decoding = "async";
+        preload.src = image.src;
+      });
+    }, 450);
+
+    return () => window.clearTimeout(warmupTimer);
+  }, [preloadSources]);
 
   // Instant transition (used for keyboard or restart button)
   function goNext(source = "keyboard") {
@@ -438,7 +453,7 @@ function VenueGalleryCard({
               src={activeImage.src}
               alt={activeImage.alt}
               className="venue-gallery-image"
-              loading="lazy"
+              loading={index === 0 ? "eager" : "lazy"}
               fetchPriority="auto"
               decoding="async"
             />
