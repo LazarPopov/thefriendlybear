@@ -6,6 +6,8 @@ import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
+const defaultGaMeasurementId = "G-4EBJBB4BND";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
@@ -48,8 +50,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim() || undefined;
+  const gaMeasurementId =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || defaultGaMeasurementId;
   const htmlLanguage = await getHtmlLanguage();
 
   return (

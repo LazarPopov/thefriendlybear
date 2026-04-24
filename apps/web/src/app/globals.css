@@ -2553,7 +2553,10 @@ p {
     padding: 24px;
   }
 
-  .page-shell,
+  .page-shell {
+    padding: 24px 16px 64px;
+  }
+
   .home-page {
     padding: 132px 16px 64px;
   }
