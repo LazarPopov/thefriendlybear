@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AnalyticsEvents, trackAnalyticsEvent } from "@/components/analytics-events";
-import { GoogleAnalytics } from "@/components/google-analytics";
 import { GoogleTagManager } from "@/components/google-tag-manager";
 
 type AnalyticsConsentProps = {
@@ -32,7 +31,7 @@ function getCopy(locale: "bg" | "en") {
     return {
       title: "\u0411\u0438\u0441\u043a\u0432\u0438\u0442\u043a\u0438 \u0437\u0430 \u0430\u043d\u0430\u043b\u0438\u0442\u0438\u043a\u0430",
       body:
-        "\u0418\u0437\u043f\u043e\u043b\u0437\u0432\u0430\u043c\u0435 Google Analytics \u0441\u0430\u043c\u043e \u0430\u043a\u043e \u043d\u0438 \u0440\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u0435, \u0437\u0430 \u0434\u0430 \u0440\u0430\u0437\u0431\u0435\u0440\u0435\u043c \u043a\u043e\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0438 \u0438 \u0431\u0443\u0442\u043e\u043d\u0438 \u043f\u043e\u043c\u0430\u0433\u0430\u0442 \u043d\u0430 \u0433\u043e\u0441\u0442\u0438\u0442\u0435 \u0434\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u0430\u0442 \u043f\u043e-\u043b\u0435\u0441\u043d\u043e.",
+        "\u0417\u0430\u0440\u0435\u0436\u0434\u0430\u043c\u0435 Google Analytics \u0441 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0437\u0430 \u043f\u043e\u0432\u0435\u0440\u0438\u0442\u0435\u043b\u043d\u043e\u0441\u0442 \u043f\u043e \u043f\u043e\u0434\u0440\u0430\u0437\u0431\u0438\u0440\u0430\u043d\u0435 \u0438 \u0432\u043a\u043b\u044e\u0447\u0432\u0430\u043c\u0435 \u0430\u043d\u0430\u043b\u0438\u0442\u0438\u0447\u043d\u0438\u0442\u0435 \u0431\u0438\u0441\u043a\u0432\u0438\u0442\u043a\u0438 \u0441\u0430\u043c\u043e \u0430\u043a\u043e \u043d\u0438 \u0440\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u0435, \u0437\u0430 \u0434\u0430 \u0440\u0430\u0437\u0431\u0435\u0440\u0435\u043c \u043a\u043e\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0438 \u0438 \u0431\u0443\u0442\u043e\u043d\u0438 \u043f\u043e\u043c\u0430\u0433\u0430\u0442 \u043d\u0430 \u0433\u043e\u0441\u0442\u0438\u0442\u0435 \u0434\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u0430\u0442 \u043f\u043e-\u043b\u0435\u0441\u043d\u043e.",
       accept: "\u041f\u0440\u0438\u0435\u043c\u0430\u043c",
       reject: "\u041e\u0442\u043a\u0430\u0437\u0432\u0430\u043c",
       settings: "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0437\u0430 \u0431\u0438\u0441\u043a\u0432\u0438\u0442\u043a\u0438",
@@ -44,7 +43,7 @@ function getCopy(locale: "bg" | "en") {
   return {
     title: "Analytics cookies",
     body:
-      "We use Google Analytics only if you allow it, so we can understand which pages and actions help guests reserve more easily.",
+      "We load Google Analytics with privacy-safe defaults and turn on analytics cookies only if you allow it, so we can understand which pages and actions help guests reserve more easily.",
     accept: "Accept",
     reject: "Reject",
     settings: "Cookie settings",
@@ -151,6 +150,12 @@ function removeAnalyticsCookies() {
   });
 }
 
+function updateGoogleAnalyticsConsent(granted: boolean) {
+  window.gtag?.("consent", "update", {
+    analytics_storage: granted ? "granted" : "denied"
+  });
+}
+
 export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentProps) {
   const directGaMeasurementId = gtmId ? undefined : gaMeasurementId;
   const hasAnalyticsProvider = Boolean(gtmId || directGaMeasurementId);
@@ -164,10 +169,14 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
   useEffect(() => {
     const savedConsentStatus = readConsent();
 
+    if (directGaMeasurementId && savedConsentStatus !== "unknown") {
+      updateGoogleAnalyticsConsent(savedConsentStatus === "granted");
+    }
+
     setLocale(getLocaleFromPath(window.location.pathname));
     setConsentStatus(savedConsentStatus);
     setShowPanel(hasAnalyticsProvider && savedConsentStatus === "unknown");
-  }, [hasAnalyticsProvider]);
+  }, [directGaMeasurementId, hasAnalyticsProvider]);
 
   useEffect(() => {
     if (!analyticsEnabled || pendingConsentEvent !== "accepted") {
@@ -195,6 +204,10 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
   }
 
   function acceptAnalytics() {
+    if (directGaMeasurementId) {
+      updateGoogleAnalyticsConsent(true);
+    }
+
     writeConsent(true);
     setConsentStatus("granted");
     setShowPanel(false);
@@ -203,6 +216,10 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
 
   function rejectAnalytics() {
     const wasGranted = consentStatus === "granted";
+
+    if (directGaMeasurementId) {
+      updateGoogleAnalyticsConsent(false);
+    }
 
     writeConsent(false);
     removeAnalyticsCookies();
@@ -219,7 +236,6 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
       {analyticsEnabled ? (
         <>
           <GoogleTagManager gtmId={gtmId} />
-          <GoogleAnalytics measurementId={directGaMeasurementId} />
           <AnalyticsEvents enabled />
         </>
       ) : null}

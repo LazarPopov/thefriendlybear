@@ -7,7 +7,7 @@ declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown> | IArguments>;
     friendlyBearAnalyticsEnabled?: boolean;
-    gtag?: (command: "event", eventName: string, params: Record<string, unknown>) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 

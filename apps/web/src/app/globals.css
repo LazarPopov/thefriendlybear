@@ -595,7 +595,7 @@ a {
 
 .cookie-consent-panel {
   position: fixed;
-  right: clamp(16px, 2.4vw, 34px);
+  left: clamp(16px, 2.4vw, 34px);
   bottom: clamp(16px, 2.4vw, 34px);
   z-index: 90;
   display: grid;

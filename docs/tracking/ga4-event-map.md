@@ -1,12 +1,12 @@
 # GA4 Event Map
 
-This document describes the consent-gated Google Analytics tracking layer for The Friendly Bear website.
+This document describes the consent-aware Google Analytics tracking layer for The Friendly Bear website.
 
 ## Consent Boundary
 
-- Analytics scripts load only after the visitor accepts analytics cookies.
-- Rejecting or ignoring the cookie banner keeps GA disabled.
-- GA cannot report on visitors who reject or never answer the cookie prompt under this GDPR-safe setup.
+- The Google tag loads on every page with consent defaults set to `denied`.
+- Rejecting or ignoring the cookie banner keeps analytics storage denied.
+- Custom GA4 page views and interaction events from the app stay off until the visitor accepts analytics cookies.
 - The accepted-cookie population can be analyzed by page, locale, CTA location, and interaction type.
 
 ## Shared Parameters
