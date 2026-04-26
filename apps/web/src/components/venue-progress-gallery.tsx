@@ -6,7 +6,7 @@ import { trackAnalyticsEvent } from "@/components/analytics-events";
 import type { SiteLocale } from "@/lib/site";
 import { buildActionTracking } from "@/lib/tracking";
 
-type GalleryLocale = SiteLocale | "it" | "es" | "el";
+type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb";
 
 export type VenueGalleryImage = {
   src: string;
@@ -30,10 +30,11 @@ type VenueProgressGalleryProps = {
   groups: VenueGalleryGroup[];
   directionsHref: string;
   callHref: string | null;
+  maxImagesBeforeCta?: number;
 };
 
 const clickDelayMs = 720;
-const maxImagesBeforeCta = 4;
+const defaultMaxImagesBeforeCta = 4;
 const bearReactionEmoji = "\uD83D\uDC3B";
 const galleryReactionEmojis = ["\u2764\uFE0F", "\uD83D\uDE0D", "\uD83D\uDC4D", "\u2728"];
 
@@ -105,6 +106,36 @@ const galleryUiCopy: Record<
     finalText: "Τα υπόλοιπα αξίζουν περισσότερο από κοντά. Περάστε, χαλαρώστε και απολαύστε το.",
     directions: "Οδηγίες",
     callToReserve: "Καλέστε για κράτηση"
+  },
+  de: {
+    previousAria: "Vorheriges Bild",
+    nextAria: "Nächstes Bild",
+    restartAria: "Galerie neu starten",
+    finalEyebrow: "Ein bisschen Vorfreude bleibt",
+    finalTitle: "Kommen Sie in die Höhle des guten Geschmacks",
+    finalText: "Den Rest erlebt man am besten vor Ort. Kommen Sie herein, entspannen Sie sich und genießen Sie.",
+    directions: "Route",
+    callToReserve: "Anrufen"
+  },
+  ro: {
+    previousAria: "Imaginea anterioară",
+    nextAria: "Imaginea următoare",
+    restartAria: "Repornește galeria",
+    finalEyebrow: "Mai lăsăm ceva pentru momentul vizitei",
+    finalTitle: "Intră în bârlogul gustului bun",
+    finalText: "Restul se simte mai bine la fața locului. Intră, relaxează-te și bucură-te.",
+    directions: "Indicații",
+    callToReserve: "Sună pentru rezervare"
+  },
+  "en-gb": {
+    previousAria: "Previous image",
+    nextAria: "Next image",
+    restartAria: "Restart gallery",
+    finalEyebrow: "Let's leave something to the imagination",
+    finalTitle: "Come to the den of the good taste",
+    finalText: "The rest is better experienced in person. Come in, relax and enjoy.",
+    directions: "Directions",
+    callToReserve: "Call to reserve"
   }
 };
 
@@ -148,6 +179,30 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Σε μια ζεστή αίθουσα",
     "Μια μεγάλη κουβέντα",
     "Η ζεστασιά έχει διεύθυνση"
+  ],
+  de: [
+    "Abend im versteckten Garten",
+    "Kühles Bier unter den Lichtern",
+    "Ein ruhiger Ort im Herzen Sofias",
+    "Im warmen Retro-Raum",
+    "Ein langes Gespräch",
+    "Gemütlichkeit hat eine Adresse"
+  ],
+  ro: [
+    "Seară în grădina ascunsă",
+    "Bere rece sub lumini",
+    "Un loc liniștit în inima Sofiei",
+    "Într-o sală caldă și retro",
+    "O conversație lungă",
+    "Confortul are o adresă"
+  ],
+  "en-gb": [
+    "Evening in the hidden courtyard",
+    "Cold beer under the lights",
+    "A quiet spot in the heart of Sofia",
+    "In a cosy dining room after work",
+    "A long talk in the den",
+    "Cosy has an address"
   ]
 };
 
@@ -183,6 +238,18 @@ const galleryReviewCopy: Record<
   el: [
     { eyebrow: "Κριτική από Google", quote: "Τέλειο μέρος με εξαιρετική εξυπηρέτηση και πολύ καλό φαγητό.", author: "Viltė Čepulytė", meta: "5/5 · πριν από 2 μήνες" },
     { eyebrow: "Κριτική από Google", quote: "Ήρθαμε χωρίς κράτηση και ο σερβιτόρος μας βοήθησε να βρούμε ένα πολύ καλό τραπέζι.", author: "Alice T", meta: "5/5 · πριν από 2 μήνες" }
+  ],
+  de: [
+    { eyebrow: "Bewertung auf Google", quote: "Perfekter Ort mit großartigem Service und sehr gutem Essen.", author: "Viltė Čepulytė", meta: "5/5 · vor 2 Monaten" },
+    { eyebrow: "Bewertung auf Google", quote: "Wir kamen ohne Reservierung und der Kellner half uns zu einem tollen Tisch.", author: "Alice T", meta: "5/5 · vor 2 Monaten" }
+  ],
+  ro: [
+    { eyebrow: "Recenzie pe Google", quote: "Loc perfect, cu servicii excelente și mâncare foarte bună.", author: "Viltė Čepulytė", meta: "5/5 · acum 2 luni" },
+    { eyebrow: "Recenzie pe Google", quote: "Am venit fără rezervare, iar chelnerul ne-a ajutat să găsim o masă foarte bună.", author: "Alice T", meta: "5/5 · acum 2 luni" }
+  ],
+  "en-gb": [
+    { eyebrow: "Review from Google", quote: "Perfect place with amazing service and great food.", author: "Viltė Čepulytė", meta: "5/5 · 2 months ago" },
+    { eyebrow: "Review from Google", quote: "We came in without a reservation, the waiter helped us to a great table.", author: "Alice T", meta: "5/5 · 2 months ago" }
   ]
 };
 
@@ -191,6 +258,7 @@ function VenueGalleryCard({
   group,
   directionsHref,
   callHref,
+  maxImagesBeforeCta,
   activeIndex,
   onActiveIndexChange
 }: {
@@ -198,6 +266,7 @@ function VenueGalleryCard({
   group: VenueGalleryGroup;
   directionsHref: string;
   callHref: string | null;
+  maxImagesBeforeCta: number;
   activeIndex: number;
   onActiveIndexChange: (index: number) => void;
 }) {
@@ -492,12 +561,14 @@ function VenueGalleryFeature({
   locale,
   group,
   directionsHref,
-  callHref
+  callHref,
+  maxImagesBeforeCta
 }: {
   locale: GalleryLocale;
   group: VenueGalleryGroup;
   directionsHref: string;
   callHref: string | null;
+  maxImagesBeforeCta: number;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const isFinalSlide = activeIndex === Math.min(group.images.length, maxImagesBeforeCta);
@@ -509,6 +580,7 @@ function VenueGalleryFeature({
         group={group}
         directionsHref={directionsHref}
         callHref={callHref}
+        maxImagesBeforeCta={maxImagesBeforeCta}
         activeIndex={activeIndex}
         onActiveIndexChange={setActiveIndex}
       />
@@ -524,7 +596,8 @@ export function VenueProgressGallery({
   intro,
   groups,
   directionsHref,
-  callHref
+  callHref,
+  maxImagesBeforeCta = defaultMaxImagesBeforeCta
 }: VenueProgressGalleryProps) {
   const hasCopy = Boolean(eyebrow || title || intro);
 
@@ -551,6 +624,7 @@ export function VenueProgressGallery({
               group={group}
               directionsHref={directionsHref}
               callHref={callHref}
+              maxImagesBeforeCta={maxImagesBeforeCta}
             />
           </div>
         ))}

@@ -1,10 +1,12 @@
 import type { SiteLocale } from "@/lib/site";
 
-export type TouristAudience = "italian" | "spanish" | "greek";
-export type TouristMarketLocale = "it" | "es" | "el";
+export type TouristAudience = "italian" | "spanish" | "greek" | "german" | "romanian" | "uk";
+export type TouristMarketLocale = "it" | "es" | "el" | "de" | "ro" | "en-gb";
 
 type SiteLocalizedText = Partial<Record<SiteLocale, string>>;
-type MarketLocalizedText = Partial<Record<TouristMarketLocale, string>>;
+type MarketLocalizedText = Partial<Record<TouristMarketLocale, string>> & {
+  enGb?: string;
+};
 
 export type CmsTouristLandingPageEntry = {
   audience: TouristAudience;
@@ -41,7 +43,13 @@ function getLocalizedValue<T extends string>(
   fallback: string
 ) {
   const localizedValue = value?.[locale];
-  return typeof localizedValue === "string" && localizedValue.trim() ? localizedValue.trim() : fallback;
+  const aliasValue = locale === "en-gb" ? (value as { enGb?: string } | undefined)?.enGb : undefined;
+
+  if (typeof localizedValue === "string" && localizedValue.trim()) {
+    return localizedValue.trim();
+  }
+
+  return typeof aliasValue === "string" && aliasValue.trim() ? aliasValue.trim() : fallback;
 }
 
 export function getTouristLocalizedSlug(entry: CmsTouristLandingPageEntry, locale: SiteLocale) {

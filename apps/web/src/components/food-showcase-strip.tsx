@@ -1,44 +1,14 @@
 import Image from "next/image";
 import type { SiteLocale } from "@/lib/site";
+import { foodGalleryImages } from "@/lib/venue-gallery-images";
 
-type FoodShowcaseLocale = SiteLocale | "it" | "es" | "el";
+type FoodShowcaseLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb";
 
 type FoodShowcaseStripProps = {
   locale: FoodShowcaseLocale;
 };
 
-const foodImages = [
-  {
-    src: "/images/food_1.jpg",
-    alt: "Signature slow-roasted lamb with baby potatoes at The Friendly Bear Sofia"
-  },
-  {
-    src: "/images/food_2.jpg",
-    alt: "Fresh seasonal salad from The Friendly Bear Sofia weekly menu"
-  },
-  {
-    src: "/images/food_3.jpg",
-    alt: "Crispy onion rings with sauce at The Friendly Bear Sofia"
-  },
-  {
-    src: "/images/food_4.jpg",
-    alt: "Bulgarian seasonal dish served at The Friendly Bear Sofia"
-  },
-  {
-    src: "/images/food_5.jpg",
-    alt: "Vegetarian-friendly plate at The Friendly Bear Sofia"
-  },
-  {
-    src: "/images/food_6.jpg",
-    alt: "Craft beer and food pairing at The Friendly Bear Sofia"
-  },
-  {
-    src: "/images/food_7.jpg",
-    alt: "Seasonal dessert or house plate at The Friendly Bear Sofia"
-  }
-];
-
-const marqueeImages = [...foodImages, ...foodImages];
+const marqueeImages = [...foodGalleryImages, ...foodGalleryImages];
 
 const showcaseCopy: Record<
   FoodShowcaseLocale,
@@ -72,6 +42,21 @@ const showcaseCopy: Record<
     eyebrow: "Πιάτα",
     title: "Μια γρήγορη ματιά στην κουζίνα",
     intro: "Πριν ανοίξει το πλήρες μενού, ο επισκέπτης καταλαβαίνει αμέσως τον χαρακτήρα του φαγητού."
+  },
+  de: {
+    eyebrow: "Essen",
+    title: "Ein kurzer Blick in die Küche",
+    intro: "Noch vor der ganzen Speisekarte wird klar, welche Art von Essen und Stimmung Sie erwartet."
+  },
+  ro: {
+    eyebrow: "Mâncare",
+    title: "O privire rapidă în bucătărie",
+    intro: "Înainte de meniul complet, vizitatorii înțeleg rapid stilul preparatelor și atmosfera locului."
+  },
+  "en-gb": {
+    eyebrow: "Food",
+    title: "A quick look at the kitchen",
+    intro: "Visitors can understand the food mood early, before opening the full menu."
   }
 };
 
@@ -89,10 +74,10 @@ export function FoodShowcaseStrip({ locale }: FoodShowcaseStripProps) {
       <div className="brand-marquee">
         <div className="brand-marquee-track">
           {marqueeImages.map((image, index) => (
-            <article key={`${image.src}-${index}`} className="food-card" aria-hidden={index >= foodImages.length}>
+            <article key={`${image.src}-${index}`} className="food-card" aria-hidden={index >= foodGalleryImages.length}>
               <Image
                 src={image.src}
-                alt={index < foodImages.length ? image.alt : ""}
+                alt={index < foodGalleryImages.length ? image.alt : ""}
                 width={420}
                 height={315}
                 className="food-card-image"

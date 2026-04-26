@@ -6,17 +6,19 @@ import {
   getPhoneHref
 } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
-import {
-  getTouristActionKind,
-  type TouristAudience
-} from "@/lib/tourist-landing-page-module";
+import type { TouristAudience } from "@/lib/tourist-landing-page-module";
 import { buildActionTracking, type BusinessActionKind } from "@/lib/tracking";
 import {
   getTouristMarketConfig,
   getTouristMarketPageData,
   type TouristMarketLocale
 } from "@/lib/tourist-market";
-import { gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
+import {
+  touristBrandMotto,
+  touristMarketPageCopy,
+  type TouristMarketPageCopy
+} from "@/lib/tourist-market-copy";
+import { foodGalleryImages, gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
 
 type TouristMarketPageProps = {
   marketLocale: TouristMarketLocale;
@@ -178,52 +180,36 @@ function getLocalizedMarketPageCopy(marketLocale: TouristMarketLocale) {
   return null;
 }
 
-function createVenueImages(marketLocale: TouristMarketLocale, venueCopy: (typeof venueMomentsCopy)[TouristMarketLocale]) {
-  const useSingleCarousel = marketLocale === "it" || marketLocale === "es" || marketLocale === "el";
-
-  if (!useSingleCarousel) {
-    return [
-      ...gardenGalleryImages.map((image) => ({
-        ...image,
-        label: venueCopy.gardenLabel
-      })),
-      ...interiorGalleryImages.map((image) => ({
-        ...image,
-        label: venueCopy.interiorLabel
-      }))
-    ];
-  }
-
-  const maxLength = Math.max(gardenGalleryImages.length, interiorGalleryImages.length);
+function createVenueImages(_marketLocale: TouristMarketLocale, venueCopy: TouristMarketPageCopy["venue"]) {
+  const maxLength = Math.max(gardenGalleryImages.length, interiorGalleryImages.length, foodGalleryImages.length);
   const images = [];
+  const label = `${venueCopy.gardenLabel} + ${venueCopy.interiorLabel}`;
 
   for (let index = 0; index < maxLength; index += 1) {
     const gardenImage = gardenGalleryImages[index];
     const interiorImage = interiorGalleryImages[index];
+    const foodImage = foodGalleryImages[index];
 
     if (gardenImage) {
       images.push({
         ...gardenImage,
-        alt:
-          marketLocale === "es"
-            ? "Jardín tranquilo del restaurante The Friendly Bear en Sofía"
-            : marketLocale === "el"
-              ? "Ο πανέμορφος κήπος του εστιατορίου The Friendly Bear στη Σόφια"
-              : "Giardino segreto del ristorante The Friendly Bear a Sofia",
-        label: venueCopy.gardenLabel
+        alt: venueCopy.gardenAlt,
+        label
       });
     }
 
     if (interiorImage) {
       images.push({
         ...interiorImage,
-        alt:
-          marketLocale === "es"
-            ? "Interior acogedor del restaurante The Friendly Bear en Sofía"
-            : marketLocale === "el"
-              ? "Το ζεστό εσωτερικό του εστιατορίου The Friendly Bear στη Σόφια"
-              : "Interno accogliente del ristorante The Friendly Bear a Sofia",
-        label: venueCopy.interiorLabel
+        alt: venueCopy.interiorAlt,
+        label
+      });
+    }
+
+    if (foodImage) {
+      images.push({
+        ...foodImage,
+        label
       });
     }
   }
@@ -276,8 +262,8 @@ function buildMarketActions(
 
   actions.push({
     href: `/en/tourists/${audience}`,
-    label: "🇬🇧 English",
-    kind: "contact"
+    label: "English guide",
+    kind: "language"
   });
 
   return actions;
@@ -285,10 +271,8 @@ function buildMarketActions(
 
 export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps) {
   const config = getTouristMarketConfig(marketLocale);
-  const venueCopy = venueMomentsCopy[marketLocale];
-  const isSpanish = marketLocale === "es";
-  const isGreek = marketLocale === "el";
-  const localizedCopy = getLocalizedMarketPageCopy(marketLocale);
+  const localizedCopy = touristMarketPageCopy[marketLocale];
+  const venueCopy = localizedCopy.venue;
   const [businessProfile, toggles, touristPage] = await Promise.all([
     getBusinessProfileData(),
     getModuleTogglesData(),
@@ -299,17 +283,15 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
     return null;
   }
 
-  const renderedTouristPage = localizedCopy
-    ? {
-        ...touristPage,
-        title: localizedCopy.title,
-        intro: localizedCopy.intro,
-        vegetarianMessage: localizedCopy.vegetarian,
-        serviceMessage: localizedCopy.service,
-        primaryCtaLabel: localizedCopy.primaryCtaLabel,
-        primaryCtaUrl: "/en/menu"
-      }
-    : touristPage;
+  const renderedTouristPage = {
+    ...touristPage,
+    title: localizedCopy.title,
+    intro: localizedCopy.intro,
+    vegetarianMessage: localizedCopy.vegetarian,
+    serviceMessage: localizedCopy.service,
+    primaryCtaLabel: localizedCopy.primaryCtaLabel,
+    primaryCtaUrl: "/en/menu"
+  };
   const phoneHref = getPhoneHref(businessProfile);
 
   const marketActions = filterActionsByModuleToggles(
@@ -324,49 +306,22 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
     toggles
   );
 
-  const primaryCtaExternal = /^https?:\/\//.test(renderedTouristPage.primaryCtaUrl);
-  const heroActions: MarketAction[] = localizedCopy
-    ? [
-        {
-          href: "/en/menu",
-          label: localizedCopy.primaryCtaLabel,
-          kind: "menu"
-        },
-        ...(phoneHref
-          ? [
-              {
-                href: phoneHref,
-                label: localizedCopy.callLabel,
-                kind: "phone" as const
-              }
-            ]
-          : [])
-      ]
-    : [
-        {
-          href: renderedTouristPage.primaryCtaUrl,
-          label: renderedTouristPage.primaryCtaLabel,
-          kind: getTouristActionKind(renderedTouristPage.primaryCtaUrl, primaryCtaExternal),
-          external: primaryCtaExternal
-        },
-        toggles.reservationsEnabled
-          ? {
-              href: "/en/reservations",
-              label: config.nav.reservations,
-              kind: "reservations"
-            }
-          : {
-              href: "/en/contact",
-              label: config.nav.contact,
-              kind: "contact"
-            },
-        {
-          href: businessProfile.mapUrl,
-          label: config.nav.directions,
-          kind: "directions",
-          external: true
-        }
-      ];
+  const heroActions: MarketAction[] = [
+    {
+      href: "/en/menu",
+      label: localizedCopy.primaryCtaLabel,
+      kind: "menu"
+    },
+    ...(phoneHref
+      ? [
+          {
+            href: phoneHref,
+            label: localizedCopy.callLabel,
+            kind: "phone" as const
+          }
+        ]
+      : [])
+  ];
 
   return (
     <main className="page-shell">
@@ -374,6 +329,7 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
         <p className="eyebrow">{config.ui.pageLabel}</p>
         <h1>{renderedTouristPage.title}</h1>
         <p className="page-lead">{renderedTouristPage.intro}</p>
+        <p className="tourist-brand-motto">{touristBrandMotto}</p>
 
         <div className="page-tags" aria-label={config.ui.highlights}>
           <span>{businessProfile.address.en}</span>
@@ -391,7 +347,7 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
               external={Boolean(action.external)}
               tracking={buildActionTracking({
                 kind: action.kind,
-                locale: "en",
+                locale: marketLocale,
                 location: `${marketLocale}_market_hero`,
                 label: action.label,
                 target: action.href,
@@ -408,48 +364,54 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
         title={venueCopy.title}
         intro={venueCopy.intro}
         images={createVenueImages(marketLocale, venueCopy)}
+        maxImagesBeforeCta={6}
       />
 
-      <section className="page-grid page-grid-three">
-        {localizedCopy
-          ? localizedCopy.cards.map((card) => (
-              <article key={card.title} className="page-card">
-                <p className="page-card-label">{card.label}</p>
-                <h2>{card.title}</h2>
-                <p>{card.text}</p>
-              </article>
-            ))
-          : (
-              <>
-                <article className="page-card">
-                  <p className="page-card-label">{config.ui.highlights}</p>
-                  <p>{renderedTouristPage.intro}</p>
-                </article>
-
-                <article className="page-card">
-                  <p className="page-card-label">{config.ui.vegetarian}</p>
-                  <p>{renderedTouristPage.vegetarianMessage}</p>
-                </article>
-
-                <article className="page-card">
-                  <p className="page-card-label">{config.ui.service}</p>
-                  <p>{renderedTouristPage.serviceMessage}</p>
-                </article>
-              </>
-            )}
+      <section
+        className="page-grid page-grid-three"
+        data-track-section={`${marketLocale}_market_positioning`}
+        data-track-section-label={config.ui.whyThisWorks}
+      >
+        {localizedCopy.cards.map((card) => (
+          <article key={card.title} className="page-card">
+            <p className="page-card-label">{card.label}</p>
+            <h2>{card.title}</h2>
+            <p>{card.text}</p>
+          </article>
+        ))}
       </section>
 
-      {isSpanish ? (
-        <aside className="page-card tourist-late-dinner-note" aria-label="Abierto hasta las 23:00">
-          <p className="page-card-label">Cena tarde</p>
-          <p>{spanishPageCopy.lateDinnerNote}</p>
-        </aside>
-      ) : null}
+      <section
+        className="page-grid page-grid-two"
+        data-track-section={`${marketLocale}_market_signature_dishes`}
+        data-track-section-label={localizedCopy.signature.title}
+      >
+        <article className="page-card">
+          <p className="page-card-label">{localizedCopy.signature.label}</p>
+          <h2>{localizedCopy.signature.title}</h2>
+          <ul className="page-list">
+            {localizedCopy.signature.dishes.map((dish) => (
+              <li key={dish}>{dish}</li>
+            ))}
+          </ul>
+        </article>
 
-      {isGreek ? (
-        <aside className="page-card tourist-late-dinner-note" aria-label="Σας περιμένουμε">
-          <p className="page-card-label">Φιλοξενία</p>
-          <p>{greekPageCopy.welcomeNote}</p>
+        <article className="page-card">
+          <p className="page-card-label">{localizedCopy.atmosphere.label}</p>
+          <h2>{localizedCopy.atmosphere.title}</h2>
+          <p>{localizedCopy.atmosphere.text}</p>
+        </article>
+      </section>
+
+      {localizedCopy.specialNote ? (
+        <aside
+          className="page-card tourist-late-dinner-note"
+          aria-label={localizedCopy.specialNote.ariaLabel}
+          data-track-section={`${marketLocale}_market_note`}
+          data-track-section-label={localizedCopy.specialNote.label}
+        >
+          <p className="page-card-label">{localizedCopy.specialNote.label}</p>
+          <p>{localizedCopy.specialNote.text}</p>
         </aside>
       ) : null}
 
@@ -463,7 +425,7 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
             external={Boolean(action.external)}
             tracking={buildActionTracking({
               kind: action.kind,
-              locale: "en",
+              locale: marketLocale,
               location: `${marketLocale}_market_quickbar`,
               label: action.label,
               target: action.href,

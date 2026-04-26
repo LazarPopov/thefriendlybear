@@ -54,18 +54,26 @@ function getPageContext() {
 function getRouteContext(pathname: string) {
   const segments = pathname.split("/").filter(Boolean);
   const firstSegment = segments[0] ?? "";
-  const locale = ["bg", "en", "it", "es", "el"].includes(firstSegment) ? firstSegment : "bg";
-  const routeKey = locale === "it" || locale === "es" || locale === "el" ? "tourist_market" : segments[1] ?? "home";
-  const touristAudience =
-    locale === "it"
-      ? "italian"
-      : locale === "es"
-        ? "spanish"
-        : locale === "el"
-          ? "greek"
-          : segments[1] === "tourists"
-            ? segments[2] ?? "index"
-            : "";
+  const touristAudienceByMarketLocale: Record<string, string> = {
+    it: "italian",
+    es: "spanish",
+    el: "greek",
+    de: "german",
+    ro: "romanian",
+    "en-gb": "uk"
+  };
+  const supportedLocales = ["bg", "en", ...Object.keys(touristAudienceByMarketLocale)];
+  const locale = supportedLocales.includes(firstSegment) ? firstSegment : "bg";
+  const isMarketRoute = Boolean(touristAudienceByMarketLocale[locale]);
+  const isHiddenGemRoute = pathname === "/en/hidden-gem-restaurant-sofia";
+  const routeKey = isMarketRoute || isHiddenGemRoute ? "tourist_market" : segments[1] ?? "home";
+  const touristAudience = isMarketRoute
+    ? touristAudienceByMarketLocale[locale]
+    : isHiddenGemRoute
+      ? "hidden_gem"
+      : segments[1] === "tourists"
+        ? segments[2] ?? "index"
+        : "";
 
   return {
     locale,

@@ -34,6 +34,34 @@ const languageGuides = [
     title: "Για τους Έλληνες επισκέπτες μας",
     text:
       "Ένα κεντρικό εστιατόριο στη Σόφια με υπέροχο κήπο, παραδοσιακές γεύσεις και φιλικό προσωπικό που μιλάει αγγλικά."
+  },
+  {
+    id: "german",
+    href: "/de/restaurant-sofia-zentrum",
+    title: "Für deutsche Gäste",
+    text:
+      "Authentisch essen im Zentrum Sofias: ruhiger Hof, Retro-Interieur, langsam gegartes Lamm und frische Salate."
+  },
+  {
+    id: "romanian",
+    href: "/ro/restaurante-centru-sofia",
+    title: "Pentru vizitatorii români",
+    text:
+      "O oprire sățioasă în centrul Sofiei, cu porții generoase, grădină ascunsă și meniu ușor de deschis în engleză."
+  },
+  {
+    id: "uk",
+    href: "/en-gb/traditional-restaurant-sofia",
+    title: "For UK visitors",
+    text:
+      "Proper comfort food, English-speaking staff and a friendly central Sofia welcome before a night out or ski transfer."
+  },
+  {
+    id: "hidden-gem",
+    href: "/en/hidden-gem-restaurant-sofia",
+    title: "Hidden gem restaurant Sofia",
+    text:
+      "A 1923 house with a hidden courtyard, slightly underground retro rooms, soft carpet on the wall and memorable food."
   }
 ] as const;
 

@@ -40,3 +40,34 @@ export const interiorGalleryImages: StaticVenueGalleryImage[] = [
     alt: "Уютна вечер at The Friendly Bear Sofia"
   }
 ];
+
+export const foodGalleryImages: StaticVenueGalleryImage[] = [
+  {
+    src: "/images/food_1.jpg",
+    alt: "Signature slow-roasted lamb with baby potatoes at The Friendly Bear Sofia"
+  },
+  {
+    src: "/images/food_2.jpg",
+    alt: "Fresh seasonal salad from The Friendly Bear Sofia weekly menu"
+  },
+  {
+    src: "/images/food_3.jpg",
+    alt: "Crispy onion rings with sauce at The Friendly Bear Sofia"
+  },
+  {
+    src: "/images/food_4.jpg",
+    alt: "Bulgarian seasonal dish served at The Friendly Bear Sofia"
+  },
+  {
+    src: "/images/food_5.jpg",
+    alt: "Vegetarian-friendly plate at The Friendly Bear Sofia"
+  },
+  {
+    src: "/images/food_6.jpg",
+    alt: "Craft beer and food pairing at The Friendly Bear Sofia"
+  },
+  {
+    src: "/images/food_7.jpg",
+    alt: "Seasonal dessert or house plate at The Friendly Bear Sofia"
+  }
+];

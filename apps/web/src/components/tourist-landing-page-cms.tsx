@@ -1,5 +1,4 @@
 import { ActionLink } from "@/components/action-link";
-import { FoodShowcaseStrip } from "@/components/food-showcase-strip";
 import { TouristReviewSnippets } from "@/components/tourist-review-snippets";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
@@ -18,7 +17,7 @@ import {
   type TouristAudience
 } from "@/lib/tourist-landing-page-module";
 import { buildActionTracking, type BusinessActionKind } from "@/lib/tracking";
-import { gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
+import { foodGalleryImages, gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
 
 type TouristLandingPageCmsProps = {
   locale: SiteLocale;
@@ -32,6 +31,40 @@ type HeroAction = {
   kind: BusinessActionKind;
   external?: boolean;
 };
+
+function buildCombinedTouristGalleryImages(label: string) {
+  const maxLength = Math.max(gardenGalleryImages.length, interiorGalleryImages.length, foodGalleryImages.length);
+  const images = [];
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const gardenImage = gardenGalleryImages[index];
+    const interiorImage = interiorGalleryImages[index];
+    const foodImage = foodGalleryImages[index];
+
+    if (gardenImage) {
+      images.push({
+        ...gardenImage,
+        label
+      });
+    }
+
+    if (interiorImage) {
+      images.push({
+        ...interiorImage,
+        label
+      });
+    }
+
+    if (foodImage) {
+      images.push({
+        ...foodImage,
+        label
+      });
+    }
+  }
+
+  return images;
+}
 
 export async function TouristLandingPageCms({
   locale,
@@ -115,19 +148,17 @@ export async function TouristLandingPageCms({
   const venueSection = isBg
     ? {
         eyebrow: "Атмосфера",
-        title: "Градина и уютен интериор без една огромна галерия",
+        title: "Градина, уютен интериор и кухня в една галерия",
         intro:
-          "Визуалните сигнали за мястото са разпределени през сайта, така че туристическата страница да остане по-лека и по-фокусирана.",
-        gardenLabel: "Градина",
-        interiorLabel: "Интериор"
+          "Една обща визуална секция показва градината, ретро интериора и част от храната, за да няма повече от една галерия на страницата.",
+        galleryLabel: "Място и кухня"
       }
     : {
         eyebrow: "Atmosphere",
-        title: "Garden setting and warm interior without one oversized gallery",
+        title: "Garden, warm interior and food in one gallery",
         intro:
-          "The venue photos are spread through the site so the tourist page stays lighter and more focused.",
-        gardenLabel: "Garden",
-        interiorLabel: "Interior"
+          "One combined visual section shows the garden, retro rooms and food highlights, keeping the page to a single gallery.",
+        galleryLabel: "Venue and food"
       };
 
   return (
@@ -169,16 +200,8 @@ export async function TouristLandingPageCms({
         eyebrow={venueSection.eyebrow}
         title={venueSection.title}
         intro={venueSection.intro}
-        images={[
-          ...gardenGalleryImages.map((image) => ({
-            ...image,
-            label: venueSection.gardenLabel
-          })),
-          ...interiorGalleryImages.map((image) => ({
-            ...image,
-            label: venueSection.interiorLabel
-          }))
-        ]}
+        images={buildCombinedTouristGalleryImages(venueSection.galleryLabel)}
+        maxImagesBeforeCta={6}
       />
 
       <section className="page-grid page-grid-three">
@@ -197,8 +220,6 @@ export async function TouristLandingPageCms({
           <p>{touristPage.serviceMessage}</p>
         </article>
       </section>
-
-      <FoodShowcaseStrip locale={locale} />
 
       <TouristReviewSnippets
         eyebrow={isBg ? "Отзиви от близък тип посетители" : "Relevant visitor reviews"}

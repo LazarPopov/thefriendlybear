@@ -316,6 +316,126 @@ export const touristLandingPageSeeds = [
       bg: "/bg/menu",
       en: "/en/menu"
     }
+  },
+  {
+    audience: "german",
+    slug: {
+      bg: "german",
+      en: "german"
+    },
+    marketSlug: {
+      de: "restaurant-sofia-zentrum"
+    },
+    title: {
+      bg: "Автентичен ресторант в София за германски посетители",
+      en: "An authentic Sofia restaurant for German visitors"
+    },
+    marketTitle: {
+      de: "Gute Restaurants Sofia: Authentisch essen im Zentrum"
+    },
+    intro: {
+      bg: "Централно място за гости от Германия, които търсят качество, спокойна атмосфера и автентична кухня без усещане за туристически капан.",
+      en: "A central Sofia restaurant for German visitors looking for quality food, calm atmosphere, and an authentic experience without a tourist-trap feel."
+    },
+    marketIntro: {
+      de: "The Friendly Bear liegt in einer Stadtvilla von 1923 an der Slavyanska 23. Das leicht unterirdische Retro-Interieur, die Teppichwand und der ruhige Hof wirken echt, lokal und ungekünstelt."
+    },
+    vegetarianMessage: {
+      bg: "Свежите салати и зеленчуковите ястия дават по-лека опция към бавно готвените специалитети.",
+      en: "Fresh salads and vegetable-led plates provide lighter options alongside the slow-cooked specialties."
+    },
+    serviceMessage: {
+      bg: "Екипът говори английски и може да помогне с менюто, упътванията и резервацията.",
+      en: "The team speaks English and can help with the menu, directions, or reservation."
+    },
+    primaryCtaLabel: {
+      bg: "Виж менюто",
+      en: "See the menu"
+    },
+    primaryCtaUrl: {
+      bg: "/bg/menu",
+      en: "/en/menu"
+    }
+  },
+  {
+    audience: "romanian",
+    slug: {
+      bg: "romanian",
+      en: "romanian"
+    },
+    marketSlug: {
+      ro: "restaurante-centru-sofia"
+    },
+    title: {
+      bg: "Сърдечен ресторант в София за румънски посетители",
+      en: "A hearty Sofia restaurant for Romanian visitors"
+    },
+    marketTitle: {
+      ro: "Unde mâncăm în Sofia: comfort food în centru"
+    },
+    intro: {
+      bg: "Удобна спирка в центъра на София за уикенд пътуване или транзит, с щедри порции, бавно готвени меса и топло обслужване.",
+      en: "A convenient central Sofia stop for weekend breaks or transit, with generous comfort food, slow-cooked meats, and warm service."
+    },
+    marketIntro: {
+      ro: "The Friendly Bear este o oprire sățioasă chiar în centrul Sofiei, pe Slavyanska 23, cu grădină ascunsă, interior retro și mâncare consistentă după drum."
+    },
+    vegetarianMessage: {
+      bg: "Има свежи салати и по-леки избори, но страницата извежда напред богатите и засищащи специалитети.",
+      en: "Fresh salads and lighter choices are available, while the page foregrounds generous, filling house specialties."
+    },
+    serviceMessage: {
+      bg: "Английското обслужване и ясните упътвания правят посещението лесно за кратък престой.",
+      en: "English-speaking service and clear directions make the visit easy during a short stay."
+    },
+    primaryCtaLabel: {
+      bg: "Отвори менюто",
+      en: "Open the menu"
+    },
+    primaryCtaUrl: {
+      bg: "/bg/menu",
+      en: "/en/menu"
+    }
+  },
+  {
+    audience: "uk",
+    slug: {
+      bg: "uk",
+      en: "uk"
+    },
+    marketSlug: {
+      enGb: "traditional-restaurant-sofia"
+    },
+    title: {
+      bg: "Традиционен ресторант в София за гости от Великобритания",
+      en: "A traditional Sofia restaurant for UK visitors"
+    },
+    marketTitle: {
+      enGb: "Traditional Bulgarian food in Sofia with a proper welcome"
+    },
+    intro: {
+      bg: "Приветлив ресторант в центъра на София за уикенд пътувания, ски преходи и групови вечери, с ясна комуникация на английски.",
+      en: "A welcoming central Sofia restaurant for weekend breaks, ski stopovers, and group dinners, with clear English-speaking service."
+    },
+    marketIntro: {
+      enGb: "The Friendly Bear is a cosy central Sofia restaurant for proper comfort food, good drinks and a friendly attitude before a night out, a ski transfer or a relaxed group dinner."
+    },
+    vegetarianMessage: {
+      bg: "Менюто включва свежи салати и вегетариански варианти, но за британски гости водещи са богатите comfort food предложения.",
+      en: "The menu includes fresh salads and vegetarian options, while the UK page leads with hearty comfort food."
+    },
+    serviceMessage: {
+      bg: "Екипът говори английски, което намалява напрежението за групи и кратки градски престои.",
+      en: "English-speaking staff reduce friction for groups, weekend visitors, and travellers passing through Sofia."
+    },
+    primaryCtaLabel: {
+      bg: "Виж менюто",
+      en: "See the menu"
+    },
+    primaryCtaUrl: {
+      bg: "/bg/menu",
+      en: "/en/menu"
+    }
   }
 ] as const;
 

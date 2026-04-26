@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
-import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
+import { HomeVenueGallery } from "@/components/home-venue-gallery";
 import { getBusinessProfileData, getEnPrimaryActions } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
 import { buildActionTracking } from "@/lib/tracking";
@@ -73,34 +73,7 @@ export async function EnglishAboutPageCms() {
         </figure>
       </section>
 
-      <VenueSnapshotSection
-        locale="en"
-        eyebrow="Atmosphere"
-        title="A Hidden Garden and the Comfort of a Forest Lodge"
-        intro="Our garden is an urban escape on summer evenings, the heated enclosed part of it is a good winter option for smokers, and our indoor rooms carry the comfort of a forest lodge."
-        images={[
-          {
-            src: "/images/garden_1.jpg",
-            alt: "The Bear Garden at The Friendly Bear Sofia",
-            label: "The Bear Garden"
-          },
-          {
-            src: "/images/interior_1.jpg",
-            alt: "Cozy Den at The Friendly Bear Sofia",
-            label: "Cozy Den"
-          },
-          {
-            src: "/images/garden_3.jpg",
-            alt: "View from the Den at The Friendly Bear Sofia",
-            label: "View from the Den"
-          },
-          {
-            src: "/images/interior_4.jpg",
-            alt: "Bear Buddy at The Friendly Bear Sofia",
-            label: "Bear Buddy"
-          }
-        ]}
-      />
+      <HomeVenueGallery locale="en" maxImagesBeforeCta={9} />
 
       <section className="page-grid page-grid-two">
         <article className="page-card">

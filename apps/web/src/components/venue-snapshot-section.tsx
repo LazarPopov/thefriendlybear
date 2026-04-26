@@ -5,7 +5,7 @@ import {
 import type { SiteLocale } from "@/lib/site";
 import { VenueProgressGallery, type VenueGalleryGroup, type VenueGalleryImage } from "@/components/venue-progress-gallery";
 
-type GalleryLocale = SiteLocale | "it" | "es" | "el";
+type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb";
 
 type VenueSnapshotImage = VenueGalleryImage & {
   label: string;
@@ -17,6 +17,7 @@ type VenueSnapshotSectionProps = {
   title: string;
   intro: string;
   images: VenueSnapshotImage[];
+  maxImagesBeforeCta?: number;
 };
 
 export async function VenueSnapshotSection({
@@ -24,7 +25,8 @@ export async function VenueSnapshotSection({
   eyebrow,
   title,
   intro,
-  images
+  images,
+  maxImagesBeforeCta
 }: VenueSnapshotSectionProps) {
   const businessProfile = await getBusinessProfileData();
   const groups = images.reduce<VenueGalleryGroup[]>((allGroups, image) => {
@@ -53,6 +55,7 @@ export async function VenueSnapshotSection({
       groups={groups}
       directionsHref={businessProfile.mapUrl}
       callHref={getPhoneHref(businessProfile)}
+      maxImagesBeforeCta={maxImagesBeforeCta}
     />
   );
 }

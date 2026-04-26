@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   }
 };
 
-const supportedHtmlLanguages = new Set(["bg", "en", "it", "es", "el"]);
+const supportedHtmlLanguages = new Set(["bg", "en", "it", "es", "el", "de", "ro", "en-GB"]);
 
 async function getHtmlLanguage() {
   const requestHeaders = await headers();

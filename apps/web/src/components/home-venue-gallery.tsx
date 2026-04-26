@@ -7,6 +7,7 @@ import type { SiteLocale } from "@/lib/site";
 
 type HomeVenueGalleryProps = {
   locale: SiteLocale;
+  maxImagesBeforeCta?: number;
 };
 
 type HomeGalleryImageSource = {
@@ -123,7 +124,7 @@ function getLocalizedImages(locale: SiteLocale): VenueGalleryImage[] {
   }));
 }
 
-export async function HomeVenueGallery({ locale }: HomeVenueGalleryProps) {
+export async function HomeVenueGallery({ locale, maxImagesBeforeCta }: HomeVenueGalleryProps) {
   const copy = galleryCopy[locale];
   const businessProfile = await getBusinessProfileData();
   const groups: VenueGalleryGroup[] = [
@@ -143,6 +144,7 @@ export async function HomeVenueGallery({ locale }: HomeVenueGalleryProps) {
       groups={groups}
       directionsHref={businessProfile.mapUrl}
       callHref={getPhoneHref(businessProfile)}
+      maxImagesBeforeCta={maxImagesBeforeCta}
     />
   );
 }

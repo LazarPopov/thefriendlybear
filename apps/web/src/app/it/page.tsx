@@ -1,6 +1,6 @@
 import { permanentRedirect } from "next/navigation";
-import { getTouristMarketSlug } from "@/lib/tourist-market";
+import { getTouristMarketRoutePath } from "@/lib/tourist-market-route";
 
-export default async function Page() {
-  permanentRedirect(`/it/${await getTouristMarketSlug("it")}`);
+export default function Page() {
+  permanentRedirect(getTouristMarketRoutePath("it"));
 }

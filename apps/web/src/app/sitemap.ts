@@ -1,8 +1,14 @@
 import type { MetadataRoute } from "next";
 import { getLanguageAlternates, routeMap, type SiteRouteKey } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
-import { getTouristMarketSlug } from "@/lib/tourist-market";
+import { getTouristMarketConfig } from "@/lib/tourist-market";
 import { getTouristLandingPagePathPairs } from "@/lib/tourist-landing-page-module";
+import {
+  getTouristMarketLanguageAlternates,
+  getTouristMarketRoutePath,
+  touristMarketRouteDefinitions
+} from "@/lib/tourist-market-route";
+import type { TouristMarketLocale } from "@/lib/cms/tourist-landing-page-adapter";
 
 const indexableRouteKeys: SiteRouteKey[] = ["home", "menu", "about", "contact", "reviews", "tourists"];
 
@@ -29,25 +35,19 @@ function getRoutePriority(routeKey: SiteRouteKey) {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const touristRoutes = await getTouristLandingPagePathPairs();
-  const [itSlug, esSlug, elSlug] = await Promise.all([
-    getTouristMarketSlug("it"),
-    getTouristMarketSlug("es"),
-    getTouristMarketSlug("el")
-  ]);
-  const marketAlternatesByAudience = {
-    italian: {
-      it: absoluteUrl(`/it/${itSlug}`),
-      "it-IT": absoluteUrl(`/it/${itSlug}`)
-    },
-    spanish: {
-      es: absoluteUrl(`/es/${esSlug}`),
-      "es-ES": absoluteUrl(`/es/${esSlug}`)
-    },
-    greek: {
-      el: absoluteUrl(`/el/${elSlug}`),
-      "el-GR": absoluteUrl(`/el/${elSlug}`)
-    }
-  } as const;
+  const marketLocales = Object.keys(touristMarketRouteDefinitions) as TouristMarketLocale[];
+  const marketAlternatesByAudience = Object.fromEntries(
+    marketLocales.map((marketLocale) => {
+      const {
+        en: _marketEn,
+        "en-GB": _marketEnGb,
+        "x-default": _marketDefault,
+        ...regionalAlternates
+      } = getTouristMarketLanguageAlternates(marketLocale);
+
+      return [getTouristMarketConfig(marketLocale).audience, regionalAlternates];
+    })
+  );
 
   const localizedRoutes: MetadataRoute.Sitemap = indexableRouteKeys.flatMap((routeKey) =>
     Object.values(routeMap[routeKey]).map((path) => ({
@@ -73,57 +73,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           en: absoluteUrl(entry.paths.en),
           "bg-BG": absoluteUrl(entry.paths.bg),
           "en-GB": absoluteUrl(entry.paths.en),
-          ...marketAlternatesByAudience[entry.audience],
+          ...(marketAlternatesByAudience[entry.audience] ?? {}),
           "x-default": absoluteUrl(entry.paths.en)
         }
       }
     }))
   );
 
-  const touristMarketRoutes: MetadataRoute.Sitemap = [
-    {
-      path: `/it/${itSlug}`,
-      languages: {
-        it: absoluteUrl(`/it/${itSlug}`),
-        "it-IT": absoluteUrl(`/it/${itSlug}`),
-        en: absoluteUrl("/en/tourists/italian"),
-        "en-GB": absoluteUrl("/en/tourists/italian"),
-        "x-default": absoluteUrl("/en/tourists/italian")
-      }
-    },
-    {
-      path: `/es/${esSlug}`,
-      languages: {
-        es: absoluteUrl(`/es/${esSlug}`),
-        "es-ES": absoluteUrl(`/es/${esSlug}`),
-        en: absoluteUrl("/en/tourists/spanish"),
-        "en-GB": absoluteUrl("/en/tourists/spanish"),
-        "x-default": absoluteUrl("/en/tourists/spanish")
-      }
-    },
-    {
-      path: `/el/${elSlug}`,
-      languages: {
-        el: absoluteUrl(`/el/${elSlug}`),
-        "el-GR": absoluteUrl(`/el/${elSlug}`),
-        en: absoluteUrl("/en/tourists/greek"),
-        "en-GB": absoluteUrl("/en/tourists/greek"),
-        "x-default": absoluteUrl("/en/tourists/greek")
-      }
-    }
-  ].map(({ path, languages }) => ({
+  const touristMarketRoutes: MetadataRoute.Sitemap = marketLocales.map((marketLocale) => {
+    const path = getTouristMarketRoutePath(marketLocale);
+
+    return {
       url: absoluteUrl(path),
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.75,
       alternates: {
-        languages
+        languages: getTouristMarketLanguageAlternates(marketLocale)
       }
-  }));
+    };
+  });
+
+  const hiddenGemRoute: MetadataRoute.Sitemap[number] = {
+    url: absoluteUrl("/en/hidden-gem-restaurant-sofia"),
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.75,
+    alternates: {
+      languages: {
+        en: absoluteUrl("/en/hidden-gem-restaurant-sofia"),
+        "en-GB": absoluteUrl("/en/hidden-gem-restaurant-sofia"),
+        "x-default": absoluteUrl("/en/hidden-gem-restaurant-sofia")
+      }
+    }
+  };
 
   return [
     ...localizedRoutes,
     ...touristDetailRoutes,
-    ...touristMarketRoutes
+    ...touristMarketRoutes,
+    hiddenGemRoute
   ];
 }

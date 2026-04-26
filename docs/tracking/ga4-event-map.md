@@ -83,6 +83,16 @@ Observer-based events may also include:
 - `tourist_language_page_engagement`: Fired on tourist/language landing page view and at scroll milestones.
 - `dead_end_404`: Fired when a consented visitor reaches the custom 404 page.
 
+Tourist market route context now covers:
+
+- `/it/ristorante-sofia-centro` with `tourist_audience=italian`
+- `/es/restaurante-centro-sofia` with `tourist_audience=spanish`
+- `/el/estiatorio-sofia-kentro` with `tourist_audience=greek`
+- `/de/restaurant-sofia-zentrum` with `tourist_audience=german`
+- `/ro/restaurante-centru-sofia` with `tourist_audience=romanian`
+- `/en-gb/traditional-restaurant-sofia` with `tourist_audience=uk`
+- `/en/hidden-gem-restaurant-sofia` with `tourist_audience=hidden_gem`
+
 ## Venue Gallery Events
 
 - `venue_gallery_stage_click`: Fired when a visitor advances the venue gallery.
@@ -127,6 +137,9 @@ Gallery-specific parameters:
 - `page_load`
 - `reviews_page`
 - `review_section`
+- `{market_locale}_market_hero`
+- `{market_locale}_market_quickbar`
+- `hidden_gem_hero`
 - `not_found_page`
 
 ## Suggested GA4 Key Events

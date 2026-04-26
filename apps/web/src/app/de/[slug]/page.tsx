@@ -17,7 +17,7 @@ type MarketRouteProps = {
   }>;
 };
 
-const marketLocale = "el";
+const marketLocale = "de";
 
 export async function generateMetadata({ params }: MarketRouteProps): Promise<Metadata> {
   const { slug } = await params;

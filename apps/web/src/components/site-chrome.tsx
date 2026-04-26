@@ -86,6 +86,18 @@ function getTouristMarketAudienceFromPath(pathname: string) {
     return "greek";
   }
 
+  if (pathname === "/de" || pathname.startsWith("/de/")) {
+    return "german";
+  }
+
+  if (pathname === "/ro" || pathname.startsWith("/ro/")) {
+    return "romanian";
+  }
+
+  if (pathname === "/en-gb" || pathname.startsWith("/en-gb/")) {
+    return "uk";
+  }
+
   return null;
 }
 

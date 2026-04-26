@@ -5,7 +5,10 @@ const htmlLanguageByRoutePrefix: Record<string, string> = {
   en: "en",
   it: "it",
   es: "es",
-  el: "el"
+  el: "el",
+  de: "de",
+  ro: "ro",
+  "en-gb": "en-GB"
 };
 
 function getHtmlLanguage(pathname: string) {

@@ -393,6 +393,30 @@ export function getTouristsHubSchema(locale: SiteLocale): JsonLd {
             position: 3,
             name: "Οδηγός για Έλληνες επισκέπτες",
             url: absoluteUrl("/el/estiatorio-sofia-kentro")
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "Guide für deutsche Gäste",
+            url: absoluteUrl("/de/restaurant-sofia-zentrum")
+          },
+          {
+            "@type": "ListItem",
+            position: 5,
+            name: "Ghid pentru vizitatori români",
+            url: absoluteUrl("/ro/restaurante-centru-sofia")
+          },
+          {
+            "@type": "ListItem",
+            position: 6,
+            name: "UK visitor guide",
+            url: absoluteUrl("/en-gb/traditional-restaurant-sofia")
+          },
+          {
+            "@type": "ListItem",
+            position: 7,
+            name: "Hidden gem restaurant Sofia",
+            url: absoluteUrl("/en/hidden-gem-restaurant-sofia")
           }
         ]
       }

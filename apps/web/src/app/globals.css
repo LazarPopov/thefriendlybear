@@ -715,6 +715,17 @@ a {
   font-size: 1.05rem;
 }
 
+.tourist-brand-motto {
+  max-width: 64ch;
+  margin: 18px 0 0;
+  padding: 4px 0 4px 14px;
+  border-left: 3px solid rgba(107, 35, 42, 0.42);
+  color: var(--accent);
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .page-tags {
   display: flex;
   flex-wrap: wrap;

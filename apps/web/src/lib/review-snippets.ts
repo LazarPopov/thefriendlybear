@@ -5,9 +5,9 @@ import {
   type ReviewSnippetSeed
 } from "@/lib/cms/review-snippet-adapter";
 import { fetchStrapiCollection } from "@/lib/cms/strapi";
+import type { TouristAudience } from "@/lib/cms/tourist-landing-page-adapter";
 
 type LocalizedText = Record<SiteLocale, string>;
-type TouristReviewAudience = "italian" | "spanish" | "greek";
 
 export type ReviewSnippet = {
   id: string;
@@ -96,8 +96,9 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
 
 const reviewSnippetEntries = createReviewSnippetFallbackEntries(reviewSnippetSeeds);
 
-const touristReviewAudienceMap: Record<string, TouristReviewAudience[]> = {
-  "j-moreno-google": ["spanish"]
+const touristReviewAudienceMap: Record<string, TouristAudience[]> = {
+  "j-moreno-google": ["spanish", "german", "romanian", "uk"],
+  "alice-t-google": ["italian", "greek", "german", "romanian", "uk"]
 };
 
 export function getReviewSnippets(locale: SiteLocale) {
@@ -112,7 +113,7 @@ export async function getReviewSnippetsData(locale: SiteLocale) {
   return normalizeReviewSnippetEntries(entries.length > 0 ? entries : reviewSnippetEntries, locale);
 }
 
-export async function getTouristReviewSnippetsData(locale: SiteLocale, audience: TouristReviewAudience) {
+export async function getTouristReviewSnippetsData(locale: SiteLocale, audience: TouristAudience) {
   const reviews = await getReviewSnippetsData(locale);
 
   return reviews.filter((review) => touristReviewAudienceMap[review.id]?.includes(audience)).slice(0, 2);

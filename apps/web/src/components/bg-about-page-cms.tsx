@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
-import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
+import { HomeVenueGallery } from "@/components/home-venue-gallery";
 import { getBgPrimaryActions, getBusinessProfileData } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
 import { buildActionTracking } from "@/lib/tracking";
@@ -73,34 +73,7 @@ export async function BulgarianAboutPageCms() {
         </figure>
       </section>
 
-      <VenueSnapshotSection
-        locale="bg"
-        eyebrow="Атмосфера"
-        title="Скрита градина и уют като в горска хижа"
-        intro="Нашата градина е градско бягство в летните вечери, отопляемата ни закрита част от нея е чудесен вариант за пушачите през зимата, а вътрешните ни зали носят уюта на горска хижа."
-        images={[
-          {
-            src: "/images/garden_1.jpg",
-            alt: "мечата градина в The Friendly Bear София",
-            label: "мечата градина"
-          },
-          {
-            src: "/images/interior_1.jpg",
-            alt: "cozy бърлога в The Friendly Bear София",
-            label: "cozy бърлога"
-          },
-          {
-            src: "/images/garden_3.jpg",
-            alt: "гледка от бърлогата в The Friendly Bear София",
-            label: "гледка от бърлогата"
-          },
-          {
-            src: "/images/interior_4.jpg",
-            alt: "мечо в The Friendly Bear София",
-            label: "мечо"
-          }
-        ]}
-      />
+      <HomeVenueGallery locale="bg" maxImagesBeforeCta={9} />
 
       <section className="page-grid page-grid-two">
         <article className="page-card">
