@@ -7,8 +7,9 @@ import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
-const defaultGaMeasurementId = "G-4EBJBB4BND";
-const gaMeasurementId = process.env.NEXT_PUBLIC_GA_ID?.trim() || defaultGaMeasurementId;
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_ID?.trim() || undefined;
+const gaDebugMode =
+  process.env.NEXT_PUBLIC_GA_DEBUG_MODE?.trim().toLowerCase() === "true" || process.env.NODE_ENV === "development";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -58,6 +59,10 @@ export default async function RootLayout({
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim() || undefined;
   const directGaMeasurementId = gtmId ? undefined : gaMeasurementId;
+  const directGaConfig = JSON.stringify({
+    send_page_view: false,
+    ...(gaDebugMode ? { debug_mode: true } : {})
+  });
   const htmlLanguage = await getHtmlLanguage();
 
   return (
@@ -85,7 +90,7 @@ gtag('consent', 'default', {
   analytics_storage: 'denied'
 });
 gtag('js', new Date());
-gtag('config', '${directGaMeasurementId}', { send_page_view: false });
+gtag('config', '${directGaMeasurementId}', ${directGaConfig});
 `
               }}
             />
