@@ -8,9 +8,9 @@ import { getMenuPageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "en",
   routeKey: "menu",
-  title: "Seasonal Menu | Slow-Roasted Lamb & Craft Beer | The Friendly Bear",
+  title: "Special Weekly Menu | A Taste of the Season | The Friendly Bear",
   description:
-    "Explore our seasonal menu featuring signature slow-roasted lamb, fresh spring salads, and craft beers. Vegetarian-friendly options clearly marked. Dine in our Sofia garden."
+    "Curated by Jana (Mish-Mash Recipes) and the Friendly Bear team, our weekly menu brings slow-cooked meats, vegetarian dishes, fresh salads, and classic desserts."
 });
 
 export default async function Page() {

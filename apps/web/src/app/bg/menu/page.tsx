@@ -8,9 +8,9 @@ import { getMenuPageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "menu",
-  title: "Сезонно меню | Бавно печено агнешко и крафт бира | The Friendly Bear",
+  title: "Специално седмично меню | Вкусът на сезона | The Friendly Bear",
   description:
-    "Разгледайте нашето сезонно меню: бавно печено агнешко, свежи пролетни салати и авторски коктейли. Вегетариански опции и уютна градина в центъра на София."
+    "Подбрано от Жана (Mish-Mash Recipes) и екипът на Friendly Bear, седмичното ни меню съчетава бавно печени меса, вегетариански предложения, свежи салати и класически десерти."
 });
 
 export default async function Page() {

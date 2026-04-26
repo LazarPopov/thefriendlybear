@@ -5,7 +5,6 @@ type MenuItem = {
   description?: string[];
   allergens?: string;
   serving?: string;
-  calories?: string;
   priceEuro?: string;
   priceBgn?: string;
   isVegetarian?: boolean;
@@ -25,10 +24,10 @@ type SpringMenuContent = {
 
 export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
   bg: {
-    eyebrow: "Специално пролетно меню",
+    eyebrow: "Специално седмично меню",
     title: "Вкусът на сезона",
     intro:
-      "Подбрано от Жана (Mish-Mash Recipes), нашето пролетно меню съчетава традиционни български вкусове с модерен почерк. От запазената ни марка - бавно печено агнешко, до свежи вегетариански предложения.",
+      "Подбрано от Жана (Mish-Mash Recipes) и екипът на Friendly Bear, нашето седмично меню съчетава традиционни български вкусове с модерен почерк. От запазената ни марка - бавно печени меса, до вегетариански предложения, свежи салати и класически десерти.",
     sections: [
       {
         title: "Напитки",
@@ -40,7 +39,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
               "Със силен вкус на червени плодове и леки нотки на шоколад"
             ],
             serving: "150 мл",
-            calories: "около 125 kcal",
             priceEuro: "4,20 EUR",
             priceBgn: "8,21 лв"
           }
@@ -54,7 +52,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["С варено яйце, краставици, репички и пресен лук"],
             allergens: "Алергени: яйца",
             serving: "350 г",
-            calories: "около 260 kcal",
             priceEuro: "7,65 EUR",
             priceBgn: "14,96 лв",
             isVegetarian: true
@@ -63,7 +60,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             name: "Салата с киноа, бейби спанак, чери домати, мус от сирена и мариновани орехи",
             allergens: "Алергени: млечни продукти, ядки, соев сос",
             serving: "300 г",
-            calories: "около 520 kcal",
             priceEuro: "8,90 EUR",
             priceBgn: "17,41 лв",
             isVegetarian: true
@@ -73,7 +69,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["С млечен сос"],
             allergens: "Алергени: глутен, яйца, млечни продукти",
             serving: "300 г",
-            calories: "около 620 kcal",
             priceEuro: "7,10 EUR",
             priceBgn: "13,89 лв",
             isVegetarian: true
@@ -87,7 +82,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             name: "Бавно печено агнешко с бейби картофки",
             description: ["Зелена салата, люта чушка и стрък пресен лук"],
             serving: "450 г",
-            calories: "около 980 kcal",
             priceEuro: "19,75 EUR",
             priceBgn: "38,63 лв"
           },
@@ -96,7 +90,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["С млечна заливка"],
             allergens: "Алергени: яйца, млечни продукти",
             serving: "350 г",
-            calories: "около 720 kcal",
             priceEuro: "10,90 EUR",
             priceBgn: "21,32 лв"
           },
@@ -108,7 +101,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             ],
             allergens: "Алергени: яйца, млечни продукти",
             serving: "350 г",
-            calories: "около 560 kcal",
             priceEuro: "9,70 EUR",
             priceBgn: "18,97 лв",
             isVegetarian: true
@@ -126,10 +118,10 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
     ]
   },
   en: {
-    eyebrow: "Special Spring Menu",
+    eyebrow: "Special Weekly Menu",
     title: "A Taste of the Season",
     intro:
-      "Curated by Jana (Mish-Mash Recipes), our spring menu celebrates traditional Bulgarian flavors with a modern twist. From our signature slow-roasted BBQ to garden-fresh vegetarian plates.",
+      "Curated by Jana (Mish-Mash Recipes) and the Friendly Bear team, our weekly menu brings traditional Bulgarian flavors together with a modern touch. From our signature slow-cooked meats to vegetarian dishes, fresh salads, and classic desserts.",
     sections: [
       {
         title: "Drinks",
@@ -141,7 +133,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
               "With a strong taste of red fruits and light notes of chocolate"
             ],
             serving: "150 ml",
-            calories: "about 125 kcal",
             priceEuro: "EUR 4.20",
             priceBgn: "8.21 BGN"
           }
@@ -155,7 +146,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["With boiled egg, cucumbers, radishes, and fresh spring onion"],
             allergens: "Allergens: eggs",
             serving: "350 g",
-            calories: "about 260 kcal",
             priceEuro: "EUR 7.65",
             priceBgn: "14.96 BGN",
             isVegetarian: true
@@ -164,7 +154,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             name: "Salad with quinoa, baby spinach, cherry tomatoes, cheese mousse, and marinated walnuts",
             allergens: "Allergens: dairy products, nuts, soy sauce",
             serving: "300 g",
-            calories: "about 520 kcal",
             priceEuro: "EUR 8.90",
             priceBgn: "17.41 BGN",
             isVegetarian: true
@@ -174,7 +163,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["With milk based sauce"],
             allergens: "Allergens: gluten, eggs, dairy products",
             serving: "300 g",
-            calories: "about 620 kcal",
             priceEuro: "EUR 7.10",
             priceBgn: "13.89 BGN",
             isVegetarian: true
@@ -188,7 +176,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             name: "Slow roasted lamb with baby potatoes",
             description: ["Green salad, hot pepper, and a stalk of fresh spring onion"],
             serving: "450 g",
-            calories: "about 980 kcal",
             priceEuro: "EUR 19.75",
             priceBgn: "38.63 BGN"
           },
@@ -197,7 +184,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             description: ["With milk topping"],
             allergens: "Allergens: eggs, dairy products",
             serving: "350 g",
-            calories: "about 720 kcal",
             priceEuro: "EUR 10.90",
             priceBgn: "21.32 BGN"
           },
@@ -209,7 +195,6 @@ export const springMenuContent: Record<SiteLocale, SpringMenuContent> = {
             ],
             allergens: "Allergens: eggs, dairy products",
             serving: "350 g",
-            calories: "about 560 kcal",
             priceEuro: "EUR 9.70",
             priceBgn: "18.97 BGN",
             isVegetarian: true

@@ -99,7 +99,7 @@ export function SeasonalMenu({ locale, menu }: SeasonalMenuProps) {
 
             <ul className="menu-item-list">
               {section.items.map((item) => {
-                const details = [item.serving, item.calories].filter(Boolean).join(" / ");
+                const details = [item.serving].filter(Boolean).join(" / ");
                 const signature = getSignatureNote(locale, item.name);
 
                 return (

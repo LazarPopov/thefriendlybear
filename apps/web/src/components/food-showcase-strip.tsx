@@ -14,7 +14,7 @@ const foodImages = [
   },
   {
     src: "/images/food_2.jpg",
-    alt: "Fresh seasonal salad from The Friendly Bear Sofia spring menu"
+    alt: "Fresh seasonal salad from The Friendly Bear Sofia weekly menu"
   },
   {
     src: "/images/food_3.jpg",

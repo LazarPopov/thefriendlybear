@@ -6,7 +6,7 @@ import { buildActionTracking } from "@/lib/tracking";
 const aboutHighlights = [
   {
     title: "История на Славянска 23",
-    text: "Къщата от 1923 г. пази усещането за стара София, но посреща гостите с градина, камина и топла бърложна атмосфера."
+    text: "Къщата от 1923 г. пази усещането за стара София, но посреща гостите с градина, топли вътрешни зали и уют като в горска хижа."
   },
   {
     title: "Сезонно меню",
@@ -20,7 +20,7 @@ const aboutHighlights = [
 
 const storyPoints = [
   "Градината е спокойна за дълги вечери през топлите месеци.",
-  "Камината и интериорът правят мястото уютно и през зимата.",
+  "Отопляемата закрита част на градината е удобна за пушачите през зимата.",
   "Екипът помага с препоръки за ястия, упътвания и резервации."
 ] as const;
 
@@ -38,10 +38,10 @@ export async function BulgarianAboutPageLive() {
     <main className="page-shell">
       <section className="page-hero">
         <p className="eyebrow">За нас</p>
-        <h1>За The Friendly Bear Sofia</h1>
+        <h1>Градски уют в 100-годишна къща на ул. „Славянска“ 23</h1>
         <p className="page-lead">
-          Спасена от събаряне и възстановена на ръка, нашата къща от 1923 г. е място за градина, камина,
-          бавно печена храна и спокойни срещи в центъра на София.
+          Спасен от събаряне и възстановен на ръка, нашият дом от 1923 г. е проект, създаден с много любов и внимание
+          към детайла. The Friendly Bear е мястото, където историята на стара София среща уюта на горската хижа.
         </p>
 
         <div className="page-tags" aria-label="Основни акценти">
@@ -83,7 +83,7 @@ export async function BulgarianAboutPageLive() {
       <section className="page-grid page-grid-two">
         <article className="page-card">
           <p className="page-card-label">Защо хората се връщат</p>
-          <h2>Уют, сезонна кухня и лесно посрещане</h2>
+          <h2>Скрита градина и уют като в горска хижа</h2>
           <ul className="page-list">
             {storyPoints.map((point) => (
               <li key={point}>{point}</li>
@@ -95,8 +95,8 @@ export async function BulgarianAboutPageLive() {
           <p className="page-card-label">Контекст на локацията</p>
           <h2>{businessProfile.address.bg}</h2>
           <p>
-            Намираме се на Славянска 23, близо до Народния театър, но достатъчно скрити, за да усетите спокойствие
-            още щом прекрачите прага.
+            Ще ни откриете в центъра на София, близо до хотел „Радисън“ и Народния театър. Ние сме част от градския
+            ритъм, но достатъчно скрити, за да усетите спокойствие още щом прекрачите прага на мечешката ни бърлога.
           </p>
           <ActionLink
             href={businessProfile.mapUrl}
@@ -117,7 +117,7 @@ export async function BulgarianAboutPageLive() {
 
       <section className="page-grid page-grid-three">
         {featuredItems.map(({ section, item }) => {
-          const meta = [item.serving, item.calories, item.priceEuro, item.priceBgn].filter(Boolean).join(" / ");
+          const meta = [item.serving, item.priceEuro, item.priceBgn].filter(Boolean).join(" / ");
 
           return (
             <article key={`${section}-${item.name}`} className="page-card">

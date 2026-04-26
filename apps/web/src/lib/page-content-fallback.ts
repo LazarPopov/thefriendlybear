@@ -8,16 +8,16 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: ""
     },
     title: {
-      bg: "Уютна градска бърлога на Славянска 23",
-      en: "A cozy urban cabin on Slavyanska 23"
+      bg: "Уютна градска бърлога в къща от 1923 г.",
+      en: "A cozy urban den in a 1923 house"
     },
     intro: {
-      bg: "Скрито до Народния театър, ви посрещаме с тайна градина, камина, бавно печени меса, крафт бира и атмосфера, която се усеща като у дома.",
-      en: "Tucked away near the National Theatre, we welcome you with a secret garden, a fireplace, slow-roasted meats, craft beer, and an atmosphere that feels like home."
+      bg: "Скрит зад хотел „Радисън“, ресторант „The Friendly Bear“ е кътче, направено почти изцяло на ръка.",
+      en: "Hidden behind the Radisson hotel, The Friendly Bear is a place made almost entirely by hand."
     },
     body: {
-      bg: "<p>Елате за спокойна вечер в центъра на София: сезонно меню, тиха градина, уют до камината и бавно печени специалитети на Славянска 23.</p>",
-      en: "<p>Come for a relaxed evening in central Sofia: seasonal dishes, a quiet garden, a cozy fireplace room, and slow-roasted specialties on Slavyanska 23.</p>"
+      bg: "<p>Близо 7 месеца създавахме нашите места за хранене, лампи, бар, декорации... Дадохме живот на стари предмети, за да ги превърнем в място, което се усеща като дом.</p>",
+      en: "<p>For nearly seven months we built our dining areas, lamps, bar, decorations, and details, giving old objects a new life and turning them into a place that feels like home.</p>"
     }
   },
   {
@@ -32,11 +32,11 @@ export const pageContentFallback: CmsPageEntry[] = [
     },
     intro: {
       bg: "Открийте историята на нашата градска бърлога от 1923 г., създадена с любов в центъра на София.",
-      en: "Discover the story of our 1923 urban cabin, restored with love in the heart of Sofia."
+      en: "Discover our 1923 house on Slavyanska 23, restored by hand with love and attention to detail."
     },
     body: {
-      bg: "<p>Спасена от събаряне и възстановена на ръка, къщата ни събира тайна градина, камина, сезонна кухня и приветливо обслужване.</p><p>Искахме място, което се усеща като дом за съседи, пътешественици и техните домашни любимци.</p>",
-      en: "<p>Saved from demolition and restored by hand, our house brings together a secret garden, fireplace, seasonal food, and warm service.</p><p>We wanted a place that feels like home for locals, travelers, and their pets.</p>"
+      bg: "<p>Спасен от събаряне и възстановен на ръка, нашият дом от 1923 г. е проект, създаден с много любов и внимание към детайла.</p><p>Искахме място, което се усеща като дом за съседи, пътешественици и техните домашни любимци.</p>",
+      en: "<p>Saved from demolition and restored by hand, our 1923 home is where old Sofia history meets the comfort of a forest lodge.</p><p>We wanted a place that feels like home for neighbors, travelers, and their pets.</p>"
     }
   },
   {
@@ -69,8 +69,8 @@ export const pageContentFallback: CmsPageEntry[] = [
       en: "Guest reviews for The Friendly Bear Sofia"
     },
     intro: {
-      bg: "Вижте реални впечатления от гости, които се връщат за бавно печеното BBQ, крафт бирата и уютната атмосфера.",
-      en: "Read real impressions from guests who come back for slow-roasted BBQ, craft beer, and the cozy atmosphere."
+      bg: "Вижте реални впечатления от гости, които се връщат за бавно готвените меса, крафт бирата и уютната атмосфера.",
+      en: "Read real impressions from guests who come back for slow-cooked meats, craft beer, and the cozy atmosphere."
     },
     body: {
       bg: "<p>Гостите често споменават добрата енергия, внимателното обслужване и спокойствието на нашата бърлога на Славянска 23.</p>",

@@ -13,7 +13,7 @@ type MarketRouteProps = {
 const greekSlug = "estiatorio-sofia-kentro";
 const greekTitle = "Εστιατόριο με Κήπο στο Κέντρο της Σόφιας | The Friendly Bear";
 const greekDescription =
-  "Ψάχνετε εστιατόριο στο κέντρο της Σόφιας; Το The Friendly Bear προσφέρει αυθεντική κουζίνα, κρυφό κήπο και χορτοφαγικές επιλογές. Το προσωπικό μιλάει αγγλικά. Κάντε κράτηση!";
+  "Ψάχνετε εστιατόριο στο κέντρο της Σόφιας; Το The Friendly Bear προσφέρει αυθεντική κουζίνα, κήπο, πιάτα αργού μαγειρέματος και χορτοφαγικές επιλογές.";
 const productionSiteUrl = "https://friendlybear.bg";
 
 function absoluteUrl(path: string) {
@@ -30,8 +30,8 @@ function getGreekRestaurantSchema() {
     logo: absoluteUrl("/icons/friendly_bear_logo.jpg"),
     telephone: "+359876122114",
     priceRange: "$$",
-    description: "Ένα ζεστό εστιατόριο στην καρδιά της Σόφιας με κρυφό κήπο και παραδοσιακή κουζίνα.",
-    servesCuisine: ["Bulgarian", "BBQ", "European"],
+    description: "Ένα ζεστό εστιατόριο στην καρδιά της Σόφιας με κήπο, πιάτα αργού μαγειρέματος και παραδοσιακή κουζίνα.",
+    servesCuisine: ["Bulgarian", "European"],
     knowsLanguage: ["en", "bg", "el"],
     url: absoluteUrl(`/el/${greekSlug}`),
     address: {

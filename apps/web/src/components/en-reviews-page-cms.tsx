@@ -5,7 +5,7 @@ import { getBusinessProfileData, getEnPrimaryActions } from "@/lib/business-prof
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
 import { buildActionTracking } from "@/lib/tracking";
 
-const keywordThemes = ["best rated", "slow-roasted BBQ", "craft beer", "cozy cabin", "Sofia Center"] as const;
+const keywordThemes = ["best rated", "slow-cooked meats", "craft beer", "cozy cabin", "Sofia Center"] as const;
 const writeReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJ1_FHY3SFqkAR2aUhguBOwqQ";
 
 export async function EnglishReviewsPageCms() {
@@ -23,7 +23,7 @@ export async function EnglishReviewsPageCms() {
         <h1>What Our Guests Say</h1>
         <p className="page-lead">
           At the heart of everything we do is the experience of our guests. From the warmth of the
-          fireplace to the first bite of our slow-roasted BBQ, here are real stories from the people
+          garden to the first bite of our slow-cooked meats, here are real stories from the people
           who visit our 1923 cabin.
         </p>
 
@@ -73,7 +73,7 @@ export async function EnglishReviewsPageCms() {
           <p className="page-card-label">Atmosphere</p>
           <h2>A Place for Stories</h2>
           <p>
-            Whether it's a first date in the garden or a family dinner by the fireplace, our guests
+            Whether it's a first date in the garden or a family dinner in one of the dining rooms, our guests
             often mention the good energy that makes The Friendly Bear unique.
           </p>
           <Link className="page-inline-link" href="/en/contact">
@@ -89,7 +89,7 @@ export async function EnglishReviewsPageCms() {
           <p className="page-card-label">Help the next guest</p>
           <h2>Share your Friendly Bear moment</h2>
           <p>
-            If the garden, the fireplace, or the slow-roasted BBQ made your evening better, a short
+            If the garden, the cozy atmosphere, or the slow-cooked meats made your evening better, a short
             Google review helps more people find us.
           </p>
           <a className="page-inline-link" href={writeReviewUrl} target="_blank" rel="noreferrer">

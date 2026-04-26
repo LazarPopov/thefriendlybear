@@ -6,7 +6,7 @@ import { buildActionTracking } from "@/lib/tracking";
 const aboutHighlights = [
   {
     title: "A Slavyanska 23 story",
-    text: "The 1923 house keeps a piece of old Sofia alive while welcoming guests with a garden, fireplace, and warm cabin atmosphere."
+    text: "The 1923 house keeps a piece of old Sofia alive while welcoming guests with a garden, warm dining rooms, and the comfort of a forest lodge."
   },
   {
     title: "Seasonal menu",
@@ -20,7 +20,7 @@ const aboutHighlights = [
 
 const storyPoints = [
   "The garden is calm and easy for long warm-weather evenings.",
-  "The fireplace and interior keep the cabin cozy in winter.",
+  "The heated enclosed part of the garden is a comfortable winter option for smokers.",
   "The team can help with dish recommendations, directions, and reservations."
 ] as const;
 
@@ -38,10 +38,10 @@ export async function EnglishAboutPageLive() {
     <main className="page-shell">
       <section className="page-hero">
         <p className="eyebrow">About</p>
-        <h1>About The Friendly Bear Sofia</h1>
+        <h1>Urban Comfort in a 100-Year-Old House on Slavyanska 23</h1>
         <p className="page-lead">
-          Saved from demolition and restored by hand, our 1923 house is a place for garden evenings, fireplace warmth,
-          slow-roasted food, and easy gatherings in central Sofia.
+          Saved from demolition and restored by hand, our 1923 home is a project created with love and attention to
+          detail. The Friendly Bear is where old Sofia history meets the comfort of a forest lodge.
         </p>
 
         <div className="page-tags" aria-label="About highlights">
@@ -83,7 +83,7 @@ export async function EnglishAboutPageLive() {
       <section className="page-grid page-grid-two">
         <article className="page-card">
           <p className="page-card-label">Why guests return</p>
-          <h2>Warmth, seasonal food, and an easy welcome</h2>
+          <h2>A hidden garden and the comfort of a forest lodge</h2>
           <ul className="page-list">
             {storyPoints.map((point) => (
               <li key={point}>{point}</li>
@@ -95,8 +95,8 @@ export async function EnglishAboutPageLive() {
           <p className="page-card-label">Location context</p>
           <h2>{businessProfile.address.en}</h2>
           <p>
-            Find us on Slavyanska 23, close to the National Theatre, but tucked away enough to feel calm as soon as
-            you step inside.
+            Find us in central Sofia, close to the Radisson hotel and the National Theatre. We are part of the city
+            rhythm, but tucked away enough for you to feel calm as soon as you step into our den.
           </p>
           <ActionLink
             href={businessProfile.mapUrl}
@@ -117,7 +117,7 @@ export async function EnglishAboutPageLive() {
 
       <section className="page-grid page-grid-three">
         {featuredItems.map(({ section, item }) => {
-          const meta = [item.serving, item.calories, item.priceEuro, item.priceBgn].filter(Boolean).join(" / ");
+          const meta = [item.serving, item.priceEuro, item.priceBgn].filter(Boolean).join(" / ");
 
           return (
             <article key={`${section}-${item.name}`} className="page-card">

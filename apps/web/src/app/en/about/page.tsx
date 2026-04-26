@@ -9,7 +9,7 @@ export const metadata: Metadata = buildPageMetadata({
   routeKey: "about",
   title: "The Story of The Friendly Bear | 1923 Heritage Restaurant Sofia",
   description:
-    "Discover the heritage of our 1923 urban cabin. Built by hand by the founders of Mish-Mash Recipes and Ainterior. A cozy escape in central Sofia."
+    "Discover The Friendly Bear: a 1923 house on Slavyanska 23 restored by hand, where old Sofia history meets the comfort of a forest lodge."
 });
 
 export default function Page() {

@@ -29,17 +29,19 @@ export async function BulgarianHomePageLive() {
     <main className="home-page">
       <section className="home-hero-panel">
         <div className="home-copy">
-          <h1>Уютна градска бърлога от 1923 г. на Славянска 23</h1>
+          <h1>Уютна градска бърлога в къща от 1923 г.</h1>
           <BrandShowcasePanel locale="bg" />
           <p className="home-lead">
-            Влезте в тайната ни градина или седнете до камината за бавно печени меса, крафт бира
-            и атмосфера, която се усеща като у дома.
+            Скрит зад хотел „Радисън“, ресторант „The Friendly Bear“ е кътче, направено почти изцяло на ръка. Близо 7
+            месеца създавахме нашите места за хранене, лампи, бар, декорации... Дадохме живот на стари предмети, за да
+            ги превърнем в място, което се усеща като дом.
           </p>
 
           <div className="home-tags" aria-label="Основни акценти">
             <span>{businessProfile.address.bg}</span>
             <span>{businessProfile.area.bg}</span>
-            <span>Пролетно меню</span>
+            <span>Бавно готвени меса</span>
+            <span>Отопляема зона за пушачи</span>
             <span>Вегетариански опции</span>
             <span>Pet friendly</span>
           </div>

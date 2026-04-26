@@ -21,7 +21,7 @@ function normalizeActionLabel(locale: SiteLocale, action: ReturnType<typeof getR
     return action.label;
   }
 
-  return locale === "bg" ? "Обади се за резервация" : "Call to reserve";
+  return locale === "bg" ? "Звъннете ни за резервация" : "Call to reserve";
 }
 
 function buildPopupAction(

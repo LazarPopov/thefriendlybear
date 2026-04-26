@@ -13,11 +13,11 @@ import { buildActionTracking } from "@/lib/tracking";
 const contactHighlights = [
   {
     title: "A Heritage Spot in the Center",
-    text: "We are located just behind the InterContinental (former Radisson), a 2-minute walk from the National Theatre."
+    text: "We are located close to the Radisson hotel, a 2-minute walk from the National Theatre."
   },
   {
     title: "Call to reserve",
-    text: "Reservations are currently handled by phone, so we can help you choose the garden, the fireplace room, or the best table available."
+    text: "Reservations are currently handled by phone, so we can help you choose a place in the garden, in the heated smoking area, or inside one of the dining rooms."
   },
   {
     title: "Easy visit",

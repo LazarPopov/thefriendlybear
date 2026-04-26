@@ -5,7 +5,7 @@ import { getBgPrimaryActions, getBusinessProfileData } from "@/lib/business-prof
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
 import { buildActionTracking } from "@/lib/tracking";
 
-const keywordThemes = ["висока оценка", "бавно печено BBQ", "крафт бира", "уютна бърлога", "център на София"] as const;
+const keywordThemes = ["висока оценка", "бавно готвени меса", "крафт бира", "уютна бърлога", "център на София"] as const;
 const writeReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJ1_FHY3SFqkAR2aUhguBOwqQ";
 
 export async function BulgarianReviewsPageCms() {
@@ -23,7 +23,7 @@ export async function BulgarianReviewsPageCms() {
         <h1>Какво казват нашите гости</h1>
         <p className="page-lead">
           В основата на всичко, което правим, е преживяването на нашите гости. От топлината на
-          камината до първата хапка от нашето BBQ - ето реалните истории на хората, които посещават
+          градината до първата хапка от нашите бавно готвени меса - ето реалните истории на хората, които посещават
           нашата бърлога.
         </p>
 
@@ -73,7 +73,7 @@ export async function BulgarianReviewsPageCms() {
           <p className="page-card-label">Атмосфера</p>
           <h2>Място за истории</h2>
           <p>
-            Независимо дали е първа среща в градината или семейна вечеря до камината, гостите често
+            Независимо дали е първа среща в градината или семейна вечеря в някоя от залите, гостите често
             споменават добрата енергия, която прави The Friendly Bear различен.
           </p>
           <Link className="page-inline-link" href="/bg/contact">
@@ -89,7 +89,7 @@ export async function BulgarianReviewsPageCms() {
           <p className="page-card-label">Помогнете на следващия гост</p>
           <h2>Споделете своя Friendly Bear момент</h2>
           <p>
-            Ако градината, камината или бавно печеното BBQ са направили вечерта ви по-хубава,
+            Ако градината, уютът или бавно готвените меса са направили вечерта ви по-хубава,
             кратък Google отзив помага повече хора да ни открият.
           </p>
           <a className="page-inline-link" href={writeReviewUrl} target="_blank" rel="noreferrer">

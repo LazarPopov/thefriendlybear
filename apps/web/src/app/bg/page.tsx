@@ -9,7 +9,7 @@ export const metadata: Metadata = buildPageMetadata({
   routeKey: "home",
   title: "Уютен ресторант и градина в центъра на София | The Friendly Bear",
   description:
-    "Заповядайте в The Friendly Bear на ул. Славянска 23. Градска бърлога от 1923 г. с тайна градина, камина, бавно печено BBQ и крафт бира. Приветливо обслужване и вкусна храна."
+    "The Friendly Bear Sofia е уютен ресторант в центъра на София, на ул. „Славянска“ 23 - с градина, отопляема зона за пушачи, сезонно меню, бавно готвени меса и вегетариански опции."
 });
 
 export default async function Page() {

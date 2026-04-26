@@ -394,10 +394,6 @@ export const menuItemSeeds = [
       bg: "150 мл",
       en: "150 ml"
     },
-    caloriesLabel: {
-      bg: "около 125 kcal",
-      en: "about 125 kcal"
-    },
     price: 8.21,
     currency: "BGN",
     priceDisplayBgn: "8,21 лв",
@@ -427,10 +423,6 @@ export const menuItemSeeds = [
       bg: "350 г",
       en: "350 g"
     },
-    caloriesLabel: {
-      bg: "около 260 kcal",
-      en: "about 260 kcal"
-    },
     price: 14.96,
     currency: "BGN",
     priceDisplayBgn: "14,96 лв",
@@ -455,10 +447,6 @@ export const menuItemSeeds = [
     servingLabel: {
       bg: "300 г",
       en: "300 g"
-    },
-    caloriesLabel: {
-      bg: "около 520 kcal",
-      en: "about 520 kcal"
     },
     price: 17.41,
     currency: "BGN",
@@ -489,10 +477,6 @@ export const menuItemSeeds = [
       bg: "300 г",
       en: "300 g"
     },
-    caloriesLabel: {
-      bg: "около 620 kcal",
-      en: "about 620 kcal"
-    },
     price: 13.89,
     currency: "BGN",
     priceDisplayBgn: "13,89 лв",
@@ -517,10 +501,6 @@ export const menuItemSeeds = [
     servingLabel: {
       bg: "450 г",
       en: "450 g"
-    },
-    caloriesLabel: {
-      bg: "около 980 kcal",
-      en: "about 980 kcal"
     },
     price: 38.63,
     currency: "BGN",
@@ -551,10 +531,6 @@ export const menuItemSeeds = [
       bg: "350 г",
       en: "350 g"
     },
-    caloriesLabel: {
-      bg: "около 720 kcal",
-      en: "about 720 kcal"
-    },
     price: 21.32,
     currency: "BGN",
     priceDisplayBgn: "21,32 лв",
@@ -583,10 +559,6 @@ export const menuItemSeeds = [
     servingLabel: {
       bg: "350 г",
       en: "350 g"
-    },
-    caloriesLabel: {
-      bg: "около 560 kcal",
-      en: "about 560 kcal"
     },
     price: 18.97,
     currency: "BGN",

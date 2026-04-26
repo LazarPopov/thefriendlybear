@@ -14,7 +14,7 @@ const contactHighlights = [
   },
   {
     title: "Service options",
-    text: "Outdoor seating, a fireplace, and great cocktails help visitors understand the venue faster."
+    text: "Outdoor seating, a heated smoking area, and great cocktails help visitors understand the venue faster."
   },
   {
     title: "Conversion ready",

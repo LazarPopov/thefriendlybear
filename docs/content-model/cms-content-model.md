@@ -111,8 +111,6 @@
 - `allergens.en`
 - `servingLabel.bg`
 - `servingLabel.en`
-- `caloriesLabel.bg`
-- `caloriesLabel.en`
 - `price`
 - `currency`
 - `priceDisplayBgn`

@@ -19,7 +19,6 @@ export type CmsMenuItemEntry = {
   description?: LocalizedText;
   allergens?: LocalizedText;
   servingLabel?: LocalizedText;
-  caloriesLabel?: LocalizedText;
   price: number;
   currency: "BGN" | "EUR";
   priceDisplayBgn?: string;
@@ -35,7 +34,6 @@ export type FrontendMenuItem = {
   description?: string[];
   allergens?: string;
   serving?: string;
-  calories?: string;
   priceEuro?: string;
   priceBgn?: string;
   isVegetarian?: boolean;
@@ -83,37 +81,6 @@ function splitLines(value?: string) {
   return lines.length > 0 ? lines : undefined;
 }
 
-const calorieFallbackByKey: Record<string, LocalizedText> = {
-  "glass-syrah-merlot-wine": {
-    bg: "около 125 kcal",
-    en: "about 125 kcal"
-  },
-  "classic-green-salad": {
-    bg: "около 260 kcal",
-    en: "about 260 kcal"
-  },
-  "quinoa-salad": {
-    bg: "около 520 kcal",
-    en: "about 520 kcal"
-  },
-  "crispy-onion-rings": {
-    bg: "около 620 kcal",
-    en: "about 620 kcal"
-  },
-  "slow-roasted-lamb": {
-    bg: "около 980 kcal",
-    en: "about 980 kcal"
-  },
-  "lamb-drob-sarma": {
-    bg: "около 720 kcal",
-    en: "about 720 kcal"
-  },
-  "vegetarian-drob-sarma": {
-    bg: "около 560 kcal",
-    en: "about 560 kcal"
-  }
-};
-
 export function normalizeMenuSections(
   locale: SiteLocale,
   categories: CmsMenuCategoryEntry[],
@@ -142,15 +109,12 @@ export function normalizeMenuSections(
           const description = getLocalizedValue(item.description, locale);
           const allergens = getLocalizedValue(item.allergens, locale);
           const serving = getLocalizedValue(item.servingLabel, locale);
-          const calories =
-            getLocalizedValue(item.caloriesLabel, locale) || calorieFallbackByKey[item.key]?.[locale] || "";
 
           return [{
             name,
             description: splitLines(description),
             allergens: allergens || undefined,
             serving: serving || undefined,
-            calories: calories || undefined,
             priceEuro: item.priceDisplayEur,
             priceBgn: item.priceDisplayBgn,
             isVegetarian: item.isVegetarian ?? false

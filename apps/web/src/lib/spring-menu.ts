@@ -24,10 +24,10 @@ type SpringMenuContent = {
 
 export const springMenu: Record<SiteLocale, SpringMenuContent> = {
   bg: {
-    eyebrow: "Специално пролетно меню",
-    title: "Пролетни предложения в The Friendly Bear Sofia",
+    eyebrow: "Специално седмично меню",
+    title: "Вкусът на сезона",
     intro:
-      "Сезонна селекция с агнешко, свежи салати, хрупкави предястия и чаша вино Find Me.",
+      "Подбрано от Жана (Mish-Mash Recipes) и екипът на Friendly Bear, нашето седмично меню съчетава традиционни български вкусове с модерен почерк. От запазената ни марка - бавно печени меса, до вегетариански предложения, свежи салати и класически десерти.",
     actions: [
       { href: "/bg/reservations", label: "Резервации" },
       { href: "/bg/contact", label: "Контакти" }
@@ -118,10 +118,10 @@ export const springMenu: Record<SiteLocale, SpringMenuContent> = {
     ]
   },
   en: {
-    eyebrow: "Special Spring Menu",
-    title: "Spring specials at The Friendly Bear Sofia",
+    eyebrow: "Special Weekly Menu",
+    title: "A Taste of the Season",
     intro:
-      "A seasonal selection with slow roasted lamb, fresh salads, crispy starters, and a glass of Find Me wine.",
+      "Curated by Jana (Mish-Mash Recipes) and the Friendly Bear team, our weekly menu brings traditional Bulgarian flavors together with a modern touch. From our signature slow-cooked meats to vegetarian dishes, fresh salads, and classic desserts.",
     actions: [
       { href: "/en/reservations", label: "Reservations" },
       { href: "/en/contact", label: "Contact" }

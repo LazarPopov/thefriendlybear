@@ -61,7 +61,6 @@ Observer-based events may also include:
 ## Consent Events
 
 - `cookie_consent_click`: Sent when a visitor accepts analytics cookies.
-- `cookie_settings_click`: Sent when a consented visitor opens cookie settings again.
 
 ## Reservation Popup Events
 

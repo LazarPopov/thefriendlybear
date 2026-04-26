@@ -59,10 +59,8 @@ export default async function RootLayout({
 
   return (
     <html lang={htmlLanguage}>
-      <head>
-        <GoogleAnalytics measurementId={directGaMeasurementId} />
-      </head>
       <body>
+        <GoogleAnalytics measurementId={directGaMeasurementId} />
         <AnalyticsConsent gtmId={gtmId} gaMeasurementId={directGaMeasurementId} />
         <SiteChrome>
           {children}

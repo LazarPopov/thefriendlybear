@@ -96,14 +96,14 @@ const reviewSchemaItems: Record<
 
 const bgFaqs = [
   {
-    question: "Къде има бавно печено агнешко и BBQ в центъра на София?",
+    question: "Къде има бавно печено агнешко и свински уши в центъра на София?",
     answer:
-      "The Friendly Bear предлага бавно печено агнешко, BBQ ястия, крафт бира и сезонно меню на ул. Славянска 23 в центъра на София."
+      "The Friendly Bear предлага бавно печени меса от български качествени производители, 20 вида ракии, богато меню с напитки с 0% алкохол и сезонни предложения на ул. Славянска 23 в центъра на София."
   },
   {
     question: "Къде има тихо място за вечеря близо до Славянска 23?",
     answer:
-      "Тайната градина и уютният интериор с камина правят The Friendly Bear спокойно място за разговори близо до Народния театър."
+      "Градината и уютните вътрешни зали правят The Friendly Bear спокойно място за разговори близо до Народния театър."
   },
   {
     question: "Има ли вегетариански опции и свежи салати?",
@@ -114,14 +114,14 @@ const bgFaqs = [
 
 const enFaqs = [
   {
-    question: "Where can I find slow-roasted lamb and BBQ in Sofia Center?",
+    question: "Where can I find slow-roasted lamb, pork ears, and slow-cooked meats in Sofia Center?",
     answer:
-      "The Friendly Bear serves slow-roasted lamb, BBQ plates, craft beer, and a seasonal menu on Slavyanska 23 in central Sofia."
+      "The Friendly Bear serves slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and weekly seasonal specials on Slavyanska 23 in central Sofia."
   },
   {
     question: "Where can I find a quiet place for dinner near Slavyanska 23?",
     answer:
-      "The secret garden and fireplace interior make The Friendly Bear a calm place for long conversations near the National Theatre."
+      "The garden and cozy dining rooms make The Friendly Bear a calm place for long conversations near the National Theatre."
   },
   {
     question: "Are there vegetarian options and fresh salads?",
@@ -158,7 +158,7 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     sameAs: restaurantSameAs,
     founder: restaurantFounder,
     priceRange: "$$",
-    servesCuisine: ["Bulgarian", "BBQ", "European"],
+    servesCuisine: ["Bulgarian", "European"],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.5",
@@ -168,8 +168,8 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     },
     description:
       locale === "bg"
-        ? "Уютен ресторант в центъра на София с тайна градина, камина, бавно печено BBQ, сезонно меню и приветливо обслужване."
-        : "A cozy central Sofia restaurant with a secret garden, fireplace, slow-roasted BBQ, seasonal menu, and warm hospitality.",
+        ? "Уютен ресторант в центъра на София с градина, отопляема зона за пушачи, бавно готвени меса, сезонно меню и приветливо обслужване."
+        : "A cozy central Sofia restaurant with a garden, heated smoking area, slow-cooked meats, weekly menu, and warm hospitality.",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.streetAddress,
@@ -255,8 +255,8 @@ export function getHomePageSchema(locale: SiteLocale, profile: FrontendBusinessP
           : "Cozy Restaurant & Garden in Sofia Center | The Friendly Bear",
       description:
         locale === "bg"
-          ? "Градска бърлога от 1923 г. на ул. Славянска 23 с тайна градина, камина, бавно печено BBQ, крафт бира и pet-friendly атмосфера."
-          : "A 1923 urban cabin on Slavyanska 23 with a secret garden, indoor fireplace, slow-roasted BBQ, craft beer, and pet-friendly hospitality.",
+          ? "The Friendly Bear Sofia е уютен ресторант в центъра на София, на ул. „Славянска“ 23 - с градина, отопляема зона за пушачи, сезонно меню, бавно готвени меса и вегетариански опции."
+          : "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23, with a garden, heated smoking area, weekly menu, slow-cooked meats, and vegetarian options.",
       inLanguage: localeMeta[locale].language,
       isPartOf: {
         "@id": websiteId

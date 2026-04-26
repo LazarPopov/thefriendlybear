@@ -33,11 +33,11 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       it: "Un'atmosfera magica a Sofia: Giardino e Tradizione"
     },
     intro: {
-      bg: "Уютно място в центъра на София за италиански гости, с тайна градина, крафт бира и меню на английски.",
-      en: "A cozy place in central Sofia for Italian visitors, with a secret garden, craft beer, and an English menu."
+      bg: "Уютно място в центъра на София за италиански гости, със скрита градина, бавно готвени меса, вегетариански предложения и меню на английски.",
+      en: "A cozy place in central Sofia for Italian visitors, with a hidden garden, slow-cooked meats, vegetarian dishes, and an English menu."
     },
     marketIntro: {
-      it: "Nascosto dietro l'hotel InterContinental (ex Radisson) nel cuore di Sofia, The Friendly Bear e una baita urbana del 1923 restaurata a mano. Un rifugio perfetto per chi cerca cibo autentico, birra artigianale e calore umano."
+      it: "Nascosto dietro l'hotel Radisson, nel cuore di Sofia, The Friendly Bear e una casa urbana del 1923 restaurata a mano. Un rifugio perfetto per chi cerca cibo autentico, carni cotte lentamente, opzioni vegetariane e calore umano."
     },
     vegetarianMessage: {
       bg: "Вегетарианските опции вече се виждат ясно в менюто, така че човек не трябва да се чуди дали ще има подходящ избор.",
@@ -70,11 +70,11 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       es: "Un refugio con historia en el corazón de Sofía"
     },
     intro: {
-      bg: "Уютен ресторант в къща от 1923 г. на ул. Славянска 23, с градина, топъл интериор и спокойна атмосфера за вечеря след разходка в центъра.",
-      en: "A warm restaurant in a 1923 house on Slavyanska 23, with a secret garden, cozy interior, and an easy place to relax after exploring central Sofia."
+      bg: "Уютен ресторант в къща от 1923 г. на ул. Славянска 23, с градина, топъл интериор, бавно готвени меса и спокойна атмосфера за вечеря след разходка в центъра.",
+      en: "A warm restaurant in a 1923 house on Slavyanska 23, with a garden, cozy interior, slow-cooked meats, and an easy place to relax after exploring central Sofia."
     },
     marketIntro: {
-      es: "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse sin caer en una trampa turística cara. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea si buscas algo barato frente a muchas zonas turísticas del centro."
+      es: "Ubicado en una casa urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse. Disfruta de nuestro jardín, nuestras carnes cocinadas lentamente, opciones vegetarianas y un ambiente acogedor en el centro."
     },
     vegetarianMessage: {
       bg: "В менюто има свежи салати и топли вегетариански ястия, ясно описани за гостите, които търсят по-леки опции.",
@@ -107,11 +107,11 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
       el: "Μια ζεστή γωνιά με ιστορία στην καρδιά της Σόφιας"
     },
     intro: {
-      bg: "Уютно място в къща от 1923 г. на Славянска 23, с градина, камина, автентична храна и спокоен път към менюто и резервацията.",
-      en: "A cozy place in a 1923 house on Slavyanska 23, with a garden, fireplace, authentic food, and an easy path to the menu and reservation."
+      bg: "Уютно място в къща от 1923 г. на Славянска 23, с градина, топли вътрешни зали, автентична храна и спокоен път към менюто и резервацията.",
+      en: "A cozy place in a 1923 house on Slavyanska 23, with a garden, warm dining rooms, authentic food, and an easy path to the menu and reservation."
     },
     marketIntro: {
-      el: "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία από το 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες."
+      el: "Κρυμμένο πίσω από το ξενοδοχείο Radisson στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία του 1923. Απολαύστε τον κήπο μας, ζεστές εσωτερικές αίθουσες, αυθεντικό φαγητό και πιάτα αργού μαγειρέματος."
     },
     vegetarianMessage: {
       bg: "Вегетарианските предложения вече са част от менюто и могат да се видят без излишно търсене от мобилен телефон.",

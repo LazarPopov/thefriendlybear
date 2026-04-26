@@ -15,19 +15,19 @@ type HomeAction = {
 
 const localStories = [
   {
-    title: "Best slow-roasted lamb and BBQ in Sofia Center",
+    title: "Slow-roasted lamb, pork ears, and slow-cooked meats in Sofia Center",
     text:
-      "Come for slow-roasted lamb, BBQ plates, craft beer, and seasonal dishes made for relaxed evenings in the center."
+      "Come for slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and weekly seasonal specials."
   },
   {
-    title: "A quiet pause near Slavyanska 23 for conversations",
+    title: "A quiet pause in the heart of Sofia for long conversations",
     text:
-      "The garden and fireplace give you space to slow down after a walk, meet friends, and stay longer than planned."
+      "Whether you sit in the garden or one of the dining rooms, every corner gives you space to slow down after a long day, meet friends, and stay a little longer."
   },
   {
-    title: "Clear vegetarian options and fresh salads for everyone",
+    title: "A clearly structured menu for every taste",
     text:
-      "Vegetarian-friendly dishes and fresh salads are easy to find, so everyone at the table can choose with confidence."
+      "Our menu is organized by category, so everyone at the table can calmly choose what they love."
   }
 ] as const;
 
@@ -65,18 +65,19 @@ export async function EnglishHomePageCms() {
     <main className="home-page">
       <section className="home-hero-panel">
         <div className="home-copy">
-          <h1>A Cozy 1923 Urban Cabin in the Heart of Sofia</h1>
+          <h1>A Cozy Urban Den in a 1923 House</h1>
           <BrandShowcasePanel locale="en" />
           <p className="home-lead">
-            Tucked away near the National Theatre, The Friendly Bear is a labor of love built by hand. Step into our
-            secret garden for slow-roasted meats and craft beer, or warm up by the fireplace in an atmosphere that
-            feels like home.
+            Hidden behind the Radisson hotel, The Friendly Bear is a place made almost entirely by hand. For nearly
+            seven months we built our dining areas, lamps, bar, decorations, and details, giving old objects a new life
+            and turning them into a place that feels like home.
           </p>
 
           <div className="home-tags" aria-label="Key highlights">
             <span>📍 Slavyanska St 23, Sofia</span>
-            <span>Garden & Fireplace</span>
-            <span>Slow-Roasted BBQ</span>
+            <span>Garden</span>
+            <span>Heated Smoking Area</span>
+            <span>Slow-Cooked Meats</span>
             <span>Vegetarian Friendly</span>
             <span>Pet Friendly</span>
           </div>

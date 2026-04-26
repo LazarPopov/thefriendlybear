@@ -70,7 +70,7 @@ const galleryUiCopy: Record<
     finalText: "Ела в бърлогата на добрия вкус",
     
     directions: "Как да стигнете",
-    callToReserve: "Обади се за резервация"
+    callToReserve: "Звъннете ни за резервация"
   },
   en: {
     previousAria: "Previous image",
@@ -119,7 +119,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Вечер в тайната градина",
     "Студена бира под лампичките",
     "Тихо място в сърцето на София",
-    "До камината след работа",
+    "В уютна зала след работа",
     "Дълъг разговор в бърлогата",
     "Уютът си има адрес"
   ],
@@ -127,7 +127,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Evening in the secret garden",
     "Cold beer under the lights",
     "A quiet spot in the heart of Sofia",
-    "By the fireplace after work",
+    "In a cozy dining room after work",
     "A long talk in the den",
     "Cozy has an address"
   ],
@@ -143,7 +143,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Noche en el jardín secreto",
     "Cerveza fría bajo las luces",
     "Un rincón tranquilo en el centro de Sofía",
-    "Junto a la chimenea",
+    "En una sala acogedora",
     "Una larga conversación",
     "Lo acogedor tiene dirección"
   ],
@@ -151,7 +151,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "Βράδυ στον κρυφό κήπο",
     "Κρύα μπίρα κάτω από τα φώτα",
     "Μια ήσυχη γωνιά στο κέντρο της Σόφιας",
-    "Δίπλα στο τζάκι",
+    "Σε μια ζεστή αίθουσα",
     "Μια μεγάλη κουβέντα",
     "Η ζεστασιά έχει διεύθυνση"
   ]

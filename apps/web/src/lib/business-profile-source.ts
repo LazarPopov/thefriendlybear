@@ -125,12 +125,12 @@ export const businessProfileSource: BusinessProfileSource = {
     visitNotes: {
       bg: [
         "Локацията е подходяща за хора, които търсят място за вечеря в центъра на София.",
-        "Местата на открито, камината и коктейлите правят профила на ресторанта по-ясен още от първия екран.",
+        "Местата на открито, отопляемата зона за пушачи и коктейлите правят профила на ресторанта по-ясен още от първия екран.",
         "Телефонът и работното време са публикувани, за да планирате посещението си спокойно."
       ],
       en: [
         "The location is a good fit for visitors looking for dinner in central Sofia.",
-        "Outdoor seating, a fireplace, and craft drinks make the venue easy to understand at a glance.",
+        "Outdoor seating, a heated smoking area, and craft drinks make the venue easy to understand at a glance.",
         "Phone and opening hours are published so you can plan your visit with confidence."
       ]
     },

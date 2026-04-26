@@ -27,7 +27,7 @@ export const reservationSettingsFallback: FrontendReservationSettings = {
   externalBookingProvider: null,
   externalBookingDomain: null,
   ctaLabel: {
-    bg: "Обади се за резервация",
+    bg: "Звъннете ни за резервация",
     en: "Call for reservation"
   },
   confirmationMessage: {

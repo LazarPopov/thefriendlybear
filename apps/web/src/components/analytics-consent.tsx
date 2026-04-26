@@ -33,10 +33,7 @@ function getCopy(locale: "bg" | "en") {
       body:
         "\u0417\u0430\u0440\u0435\u0436\u0434\u0430\u043c\u0435 Google Analytics \u0441 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0437\u0430 \u043f\u043e\u0432\u0435\u0440\u0438\u0442\u0435\u043b\u043d\u043e\u0441\u0442 \u043f\u043e \u043f\u043e\u0434\u0440\u0430\u0437\u0431\u0438\u0440\u0430\u043d\u0435 \u0438 \u0432\u043a\u043b\u044e\u0447\u0432\u0430\u043c\u0435 \u0430\u043d\u0430\u043b\u0438\u0442\u0438\u0447\u043d\u0438\u0442\u0435 \u0431\u0438\u0441\u043a\u0432\u0438\u0442\u043a\u0438 \u0441\u0430\u043c\u043e \u0430\u043a\u043e \u043d\u0438 \u0440\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u0435, \u0437\u0430 \u0434\u0430 \u0440\u0430\u0437\u0431\u0435\u0440\u0435\u043c \u043a\u043e\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0438 \u0438 \u0431\u0443\u0442\u043e\u043d\u0438 \u043f\u043e\u043c\u0430\u0433\u0430\u0442 \u043d\u0430 \u0433\u043e\u0441\u0442\u0438\u0442\u0435 \u0434\u0430 \u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u0430\u0442 \u043f\u043e-\u043b\u0435\u0441\u043d\u043e.",
       accept: "\u041f\u0440\u0438\u0435\u043c\u0430\u043c",
-      reject: "\u041e\u0442\u043a\u0430\u0437\u0432\u0430\u043c",
-      settings: "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0437\u0430 \u0431\u0438\u0441\u043a\u0432\u0438\u0442\u043a\u0438",
-      statusGranted: "\u0410\u043d\u0430\u043b\u0438\u0442\u0438\u043a\u0430\u0442\u0430 \u0435 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0430.",
-      statusDenied: "\u0410\u043d\u0430\u043b\u0438\u0442\u0438\u043a\u0430\u0442\u0430 \u0435 \u0438\u0437\u043a\u043b\u044e\u0447\u0435\u043d\u0430."
+      reject: "\u041e\u0442\u043a\u0430\u0437\u0432\u0430\u043c"
     };
   }
 
@@ -45,10 +42,7 @@ function getCopy(locale: "bg" | "en") {
     body:
       "We load Google Analytics with privacy-safe defaults and turn on analytics cookies only if you allow it, so we can understand which pages and actions help guests reserve more easily.",
     accept: "Accept",
-    reject: "Reject",
-    settings: "Cookie settings",
-    statusGranted: "Analytics is on.",
-    statusDenied: "Analytics is off."
+    reject: "Reject"
   };
 }
 
@@ -245,11 +239,6 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
           <div>
             <p className="cookie-consent-title">{copy.title}</p>
             <p className="cookie-consent-body">{copy.body}</p>
-            {consentStatus !== "unknown" ? (
-              <p className="cookie-consent-status">
-                {consentStatus === "granted" ? copy.statusGranted : copy.statusDenied}
-              </p>
-            ) : null}
           </div>
           <div className="cookie-consent-actions">
             <button type="button" className="cookie-consent-secondary" onClick={rejectAnalytics}>
@@ -260,23 +249,6 @@ export function AnalyticsConsent({ gtmId, gaMeasurementId }: AnalyticsConsentPro
             </button>
           </div>
         </section>
-      ) : null}
-
-      {consentStatus !== "unknown" ? (
-        <button
-          type="button"
-          className="cookie-consent-settings"
-          data-track-event="cookie_settings_click"
-          data-track-action-type="cookies"
-          data-track-location="cookie_settings_button"
-          data-track-label={copy.settings}
-          data-track-locale={locale}
-          data-track-target="analytics_consent"
-          data-track-external="false"
-          onClick={() => setShowPanel(true)}
-        >
-          {copy.settings}
-        </button>
       ) : null}
     </>
   );

@@ -31,7 +31,7 @@ const touristConfigs: Record<
       },
       {
         title: "Comfort and friendliness",
-        text: "The garden and fireplace make the restaurant feel easy, warm, and relaxed after exploring Sofia."
+        text: "The garden and warm dining rooms make the restaurant feel easy and relaxed after exploring Sofia."
       }
     ],
     checklist: [
@@ -49,7 +49,7 @@ const touristConfigs: Record<
     eyebrow: "Spanish visitors",
     title: "A welcoming Sofia restaurant for Spanish visitors",
     lead:
-      "A welcoming restaurant near Sofia's center with a secret garden, slow-roasted BBQ, vegetarian dishes, and English-speaking staff.",
+      "A welcoming restaurant near Sofia's center with a hidden garden, slow-cooked meats, vegetarian dishes, and English-speaking staff.",
     highlights: [
       {
         title: "Easy central stop",

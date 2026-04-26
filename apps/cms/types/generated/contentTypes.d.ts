@@ -556,7 +556,6 @@ export interface ApiMenuItemMenuItem extends Struct.CollectionTypeSchema {
   };
   attributes: {
     allergens: Schema.Attribute.Component<'shared.localized-text', false>;
-    caloriesLabel: Schema.Attribute.Component<'shared.localized-string', false>;
     categoryKey: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

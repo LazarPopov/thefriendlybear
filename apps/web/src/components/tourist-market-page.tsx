@@ -32,9 +32,9 @@ type MarketAction = {
 const venueMomentsCopy = {
   it: {
     eyebrow: "Atmosfera",
-    title: "Giardino segreto e calore da baita urbana",
+    title: "Giardino nascosto e calore da baita urbana",
     intro:
-      "Una piccola galleria per sentire il luogo prima di arrivare: luci in giardino, dettagli in legno e il calore degli interni.",
+      "Una piccola galleria per sentire il luogo prima di arrivare: luci in giardino, dettagli in legno e sale interne accoglienti.",
     gardenLabel: "Atmosfera",
     interiorLabel: "Atmosfera"
   },
@@ -59,7 +59,7 @@ const venueMomentsCopy = {
 const italianPageCopy = {
   title: "Un'atmosfera magica a Sofia: Giardino e Tradizione",
   intro:
-    "Nascosto dietro l'hotel InterContinental (ex Radisson) nel cuore di Sofia, The Friendly Bear e una baita urbana del 1923 restaurata a mano. Un rifugio perfetto per chi cerca cibo autentico, birra artigianale e calore umano.",
+    "Nascosto dietro l'hotel Radisson nel cuore di Sofia, The Friendly Bear e una casa urbana del 1923 restaurata a mano. Un rifugio perfetto per chi cerca cibo autentico, carni cotte lentamente, opzioni vegetariane e calore umano.",
   vegetarian:
     "La cucina bulgara offre splendide alternative vegetariane. Nel nostro menu troverai insalate fresche e piatti caldi chiaramente segnalati.",
   service:
@@ -89,13 +89,13 @@ const italianPageCopy = {
 const spanishPageCopy = {
   title: "Un refugio con historia en el corazón de Sofía",
   intro:
-    "Ubicado en una cabaña urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse. Disfruta de nuestro jardín secreto o de la calidez de nuestra chimenea mientras pruebas lo mejor de la cocina local.",
+    "Ubicado en una casa urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es el lugar ideal para cenar, comer buena comida búlgara y relajarse. Disfruta de nuestro jardín, carnes cocinadas lentamente, opciones vegetarianas y el ambiente acogedor de nuestras salas.",
   vegetarian:
     "No todo es carne. Tenemos una variada selección de ensaladas frescas y platos vegetarianos calientes claramente indicados en nuestra carta.",
   service:
     "Queremos que te sientas como en casa. Nuestro equipo habla inglés con fluidez y nuestro menú digital está disponible en inglés para tu comodidad.",
   lateDinnerNote:
-    "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía, con comida auténtica si buscas algo barato frente a muchas trampas turísticas del centro.",
+    "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía, con comida auténtica, carnes cocinadas lentamente, ensaladas frescas y opciones vegetarianas.",
   cards: [
     {
       label: "Ubicación",
@@ -121,7 +121,7 @@ const spanishPageCopy = {
 const greekPageCopy = {
   title: "Μια ζεστή γωνιά με ιστορία στην καρδιά της Σόφιας",
   intro:
-    "Κρυμμένο πίσω από το ξενοδοχείο InterContinental στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία από το 1923. Απολαύστε τον κρυφό μας κήπο ή τη ζεστασιά του τζακιού μας με αυθεντικό φαγητό και εξαιρετικές μπύρες.",
+    "Κρυμμένο πίσω από το ξενοδοχείο Radisson στο κέντρο της Σόφιας (Slavyanska 23), το The Friendly Bear στεγάζεται σε μια παραδοσιακή οικία του 1923. Απολαύστε τον κήπο μας, ζεστές εσωτερικές αίθουσες, αυθεντικό φαγητό και πιάτα αργού μαγειρέματος.",
   vegetarian:
     "Διαθέτουμε μεγάλη ποικιλία από φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα, όλα ξεκάθαρα σημειωμένα στο μενού μας.",
   service:

@@ -110,13 +110,13 @@ export function getReservationHeroContent(
       ? {
           title: "Резервациите са по телефона",
           description:
-            "Обадете ни се директно и ще помогнем с маса в градината, до камината или за вечеря с приятели.",
+            "Звъннете ни директно и ще ви помогнем с избора на мястото, което предпочитате - в градината, в отопляемата зона за пушачи или вътре в някоя от залите.",
           statusTag: "Обадете се за маса"
         }
       : {
           title: "Reservations are by phone",
           description:
-            "Call us directly and we will help with a garden seat, a fireplace table, or dinner with friends.",
+            "Call us directly and we will help you choose the place you prefer: in the garden, in the heated smoking area, or inside one of the dining rooms.",
           statusTag: "Call for a table"
         };
   }
@@ -156,7 +156,7 @@ export function getReservationHeroContent(
   const localizedContent = {
     call_only: {
       bg: {
-        title: "Обади се за резервация",
+        title: "Звъннете ни за резервация",
         description:
           "В момента най-бързият начин за резервация е телефонът. Обадете се и ще ви помогнем с най-подходящата маса.",
         statusTag: "Резервации по телефона"

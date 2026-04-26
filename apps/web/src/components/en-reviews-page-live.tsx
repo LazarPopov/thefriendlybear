@@ -5,7 +5,7 @@ import { buildActionTracking } from "@/lib/tracking";
 const decisionSignals = [
   {
     title: "Cozy atmosphere",
-    text: "Guests often remember the calm atmosphere, the fireplace, and the feeling of a place where you can stay longer."
+    text: "Guests often remember the calm atmosphere, the garden, and the feeling of a place where you can stay longer."
   },
   {
     title: "Craft beer and drinks",
@@ -28,7 +28,7 @@ export function EnglishReviewsPageLive() {
         <p className="eyebrow">Guest reviews</p>
         <h1>What guests say about The Friendly Bear Sofia</h1>
         <p className="page-lead">
-          Guests often remember the fireplace warmth, the relaxed garden, the craft beer, and the feeling that they
+          Guests often remember the relaxed garden, the cozy dining rooms, the craft beer, and the feeling that they
           found a friendly place in the middle of Sofia.
         </p>
 

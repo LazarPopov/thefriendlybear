@@ -5,9 +5,9 @@ import { buildActionTracking } from "@/lib/tracking";
 
 const localAnswers = [
   {
-    question: "Where can I eat lamb in central Sofia?",
+    question: "Where can I find slow-roasted lamb and slow-cooked meats in central Sofia?",
     answer:
-      "The Friendly Bear Sofia already highlights slow roasted lamb on the spring menu and gives visitors a direct path to the full menu and reservations."
+      "The Friendly Bear Sofia serves slow-cooked meats from quality Bulgarian producers, weekly seasonal specials, and a direct path to the full menu and reservations."
   },
   {
     question: "Where is a cozy restaurant near Slavyanska 23?",
@@ -15,9 +15,9 @@ const localAnswers = [
       "The homepage leads with the exact address, the central Sofia context, and quick directions so visitors understand the location immediately."
   },
   {
-    question: "Where can I find vegetarian options in central Sofia?",
+    question: "Where can I find a clearly structured menu in central Sofia?",
     answer:
-      "We surface vegetarian-friendly dishes such as the vegetarian drob sarma and the quinoa salad directly from the homepage."
+      "Our menu is organized by category, with vegetarian dishes, fresh salads, slow-cooked meats, and classic desserts easy to find."
   }
 ] as const;
 
@@ -29,17 +29,18 @@ export async function EnglishHomePageLive() {
     <main className="home-page">
       <section className="home-hero-panel">
         <div className="home-copy">
-          <h1>A cozy 1923 urban cabin on Slavyanska 23</h1>
+          <h1>A Cozy Urban Den in a 1923 House</h1>
           <BrandShowcasePanel locale="en" />
           <p className="home-lead">
-            Step into our secret garden or sit by the fireplace for slow-roasted meats, craft beer, and an atmosphere
-            that feels like home.
+            Hidden behind the Radisson hotel, The Friendly Bear is a place made almost entirely by hand. For nearly
+            seven months we built our dining areas, lamps, bar, decorations, and details, giving old objects a new life.
           </p>
 
           <div className="home-tags" aria-label="Key highlights">
             <span>{businessProfile.address.en}</span>
             <span>{businessProfile.area.en}</span>
-            <span>Spring menu</span>
+            <span>Slow-Cooked Meats</span>
+            <span>Heated Smoking Area</span>
             <span>Vegetarian options</span>
             <span>Pet Friendly</span>
           </div>

@@ -27,20 +27,20 @@ const copy = {
   bg: {
     aria: "Резервации",
     kicker: "Резервации",
-    title: "Обади се за резервация",
+    title: "Звъннете ни за резервация",
     body:
-      "Запазете маса в The Friendly Bear Sofia на ул. Славянска 23. Обадете се и ще ви помогнем с място в градината, до камината или за вечеря с приятели.",
+      "Запазете маса в The Friendly Bear Sofia на ул. Славянска 23! Обадете се и ще ви помогнем с избора на мястото, което предпочитате - в градината, в отопляемата зона за пушачи или вътре в някоя от залите.",
     phoneLabel: "Телефон",
     minimize: "Минимизирай",
     expand: "Резервация",
-    phoneActionLabel: "Обади се за резервация"
+    phoneActionLabel: "Звъннете ни за резервация"
   },
   en: {
     aria: "Reservations",
     kicker: "Reservations",
     title: "Call to reserve",
     body:
-      "Reserve a table at The Friendly Bear Sofia on Slavyanska 23. Call us and we will help with garden seats, fireplace tables, or dinner with friends.",
+      "Reserve a table at The Friendly Bear Sofia on Slavyanska 23. Call us and we will help you choose the place you prefer: in the garden, in the heated smoking area, or inside one of the dining rooms.",
     phoneLabel: "Phone",
     minimize: "Minimize",
     expand: "Reserve",
@@ -62,7 +62,7 @@ const copy = {
     kicker: "Reservas",
     title: "Llama para reservar",
     body:
-      "Para reservar una mesa y cenar en The Friendly Bear Sofia, llámanos y te ayudaremos con una mesa en el jardín, junto a la chimenea o para comer con amigos. Hablamos inglés.",
+      "Para reservar una mesa y cenar en The Friendly Bear Sofia, llámanos y te ayudaremos a elegir sitio en el jardín, en la zona climatizada para fumadores o dentro de una de las salas. Hablamos inglés.",
     phoneLabel: "Teléfono",
     minimize: "Minimizar",
     expand: "Reservar",
@@ -73,7 +73,7 @@ const copy = {
     kicker: "Κρατήσεις",
     title: "Καλέστε για κράτηση",
     body:
-      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας και θα σας βοηθήσουμε με τραπέζι στον κήπο, κοντά στο τζάκι ή για δείπνο με φίλους. Μιλάμε Αγγλικά.",
+      "Για κράτηση στο The Friendly Bear Sofia, καλέστε μας και θα σας βοηθήσουμε να επιλέξετε θέση στον κήπο, στη θερμαινόμενη ζώνη καπνιστών ή σε μία από τις εσωτερικές αίθουσες. Μιλάμε Αγγλικά.",
     phoneLabel: "Τηλέφωνο",
     minimize: "Ελαχιστοποίηση",
     expand: "Κράτηση",
@@ -104,11 +104,21 @@ function isTouristReservationPath(pathname: string) {
 function getReservationText(locale: Locale, pathname: string) {
   const text = copy[locale];
 
+  if (locale === "bg") {
+    return {
+      ...text,
+      title: "Звъннете ни за резервация",
+      body:
+        "Запазете маса в The Friendly Bear Sofia на ул. Славянска 23! Обадете се и ще ви помогнем с избора на мястото, което предпочитате - в градината, в отопляемата зона за пушачи или вътре в някоя от залите.",
+      phoneActionLabel: "Звъннете ни за резервация"
+    };
+  }
+
   if (locale === "en" && isTouristReservationPath(pathname)) {
     return {
       ...text,
       body:
-        "Visiting Sofia? Call us to reserve a table at The Friendly Bear Sofia on Slavyanska 23. We will help with garden seats, fireplace tables, or dinner with friends. English-speaking staff are available.",
+        "Visiting Sofia? Call us to reserve a table at The Friendly Bear Sofia on Slavyanska 23. We will help you choose a seat in the garden, in the heated smoking area, or inside one of the dining rooms. English-speaking staff are available.",
       phoneActionLabel: "Call to reserve"
     };
   }
@@ -120,11 +130,7 @@ function getActionLocale(locale: Locale): ActionLocale {
   return locale === "bg" ? "bg" : "en";
 }
 
-function getInitialPopupState(): PopupState {
-  if (typeof window === "undefined") {
-    return "pending";
-  }
-
+function getClientPopupState(): PopupState {
   return getRemainingMinimizedMs() > 0 ? "minimized" : "expanded";
 }
 
@@ -172,7 +178,7 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
   const locale = getLocaleFromPath(pathname);
   const text = getReservationText(locale, pathname);
   const action = actions[getActionLocale(locale)] ?? actions.bg ?? actions.en;
-  const [popupState, setPopupState] = useState<PopupState>(getInitialPopupState);
+  const [popupState, setPopupState] = useState<PopupState>("pending");
   const isExpanded = popupState === "expanded";
   const phoneTarget = phoneHref ?? action?.href ?? "";
   const phoneTracking = getActionTrackingAttributes(
@@ -186,7 +192,7 @@ export function ReservationPopup({ actions, phoneDisplay, phoneHref }: Reservati
   );
 
   useEffect(() => {
-    setPopupState(getInitialPopupState());
+    setPopupState(getClientPopupState());
   }, [pathname]);
 
   useEffect(() => {

@@ -17,16 +17,16 @@ export async function EnglishAboutPageCms() {
     <main className="page-shell">
       <section className="page-hero">
         <p className="eyebrow">About</p>
-        <h1>A 100-Year-Old Story on Slavyanska 23</h1>
+        <h1>Urban Comfort in a 100-Year-Old House on Slavyanska 23</h1>
         <p className="page-lead">
-          Saved from demolition and restored by hand, our 1923 urban cabin is a labor of love. The Friendly Bear is
-          where Sofia's history meets the warmth of a mountain lodge.
+          Saved from demolition and restored by hand, our 1923 home is a project created with love and attention to
+          detail. The Friendly Bear is where old Sofia history meets the comfort of a forest lodge.
         </p>
 
         <div className="page-tags" aria-label="About highlights">
           <span>{businessProfile.address.en}</span>
           <span>Secret garden</span>
-          <span>Indoor fireplace</span>
+          <span>Heated smoking area</span>
           <span>Pet friendly</span>
         </div>
 
@@ -56,8 +56,8 @@ export async function EnglishAboutPageCms() {
           <h2>The Hearts Behind the Bear</h2>
           <p>
             Jana, the culinary mind behind the Mish-Mash Recipes blog, and Georgi, the interior designer from
-            Ainterior, spent months uncovering the beauty of this house. We wanted to create a place that feels like
-            home for everyone, locals, travelers, and their pets.
+            Ainterior, spent months uncovering the beauty of this house. "We wanted to create a place that feels like
+            home for everyone - neighbors, travelers, and their pets," they say.
           </p>
         </article>
 
@@ -76,8 +76,8 @@ export async function EnglishAboutPageCms() {
       <VenueSnapshotSection
         locale="en"
         eyebrow="Atmosphere"
-        title="A Secret Garden & A Winter Fireplace"
-        intro="Our hidden garden is an urban escape for summer nights, while our indoor fireplace offers a warm sanctuary during the Sofia winter. Whatever the season, our English-speaking staff is here to make your visit easy."
+        title="A Hidden Garden and the Comfort of a Forest Lodge"
+        intro="Our garden is an urban escape on summer evenings, the heated enclosed part of it is a good winter option for smokers, and our indoor rooms carry the comfort of a forest lodge."
         images={[
           {
             src: "/images/garden_1.jpg",
@@ -107,8 +107,8 @@ export async function EnglishAboutPageCms() {
           <p className="page-card-label">Visit</p>
           <h2>{businessProfile.address.en}</h2>
           <p>
-            Find us in Sofia Center, close to the National Theatre and the city rhythm, but tucked away enough to feel
-            calm once you step inside.
+            Find us in central Sofia, close to the Radisson hotel and the National Theatre. We are part of the city
+            rhythm, but tucked away enough for you to feel calm as soon as you step into our den.
           </p>
           <ActionLink
             href={businessProfile.mapUrl}
@@ -130,8 +130,8 @@ export async function EnglishAboutPageCms() {
           <p className="page-card-label">Welcome</p>
           <h2>Built for locals, travelers, and pets</h2>
           <p>
-            Come for the garden, stay for the fireplace, and ask the team if you need help choosing dishes, directions,
-            or a table for the evening.
+            Come for an escape from the city noise, stay for the comfort and good food. You can always count on us if
+            you need directions, a table reservation, or help choosing dishes.
           </p>
         </article>
       </section>

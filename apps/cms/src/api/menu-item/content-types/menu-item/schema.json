@@ -46,11 +46,6 @@
       "repeatable": false,
       "component": "shared.localized-string"
     },
-    "caloriesLabel": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.localized-string"
-    },
     "price": {
       "type": "decimal",
       "required": true

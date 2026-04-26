@@ -90,12 +90,12 @@ export const businessProfile = {
   visitNotes: {
     bg: [
       "Локацията е подходяща за хора, които търсят място за вечеря в центъра на София.",
-      "Има открити места, камина и крафт напитки за спокойна вечер.",
+      "Има открити места, отопляема зона за пушачи и крафт напитки за спокойна вечер.",
       "Телефонът и работното време са активни, за да планирате посещението си спокойно."
     ],
     en: [
       "The location is a good fit for visitors looking for dinner in central Sofia.",
-      "Outdoor seating, a fireplace, and craft drinks make the venue easy to understand at a glance.",
+      "Outdoor seating, a heated smoking area, and craft drinks make the venue easy to understand at a glance.",
       "Phone and opening hours are published so you can plan your visit with confidence."
     ]
   } satisfies Record<SiteLocale, string[]>,

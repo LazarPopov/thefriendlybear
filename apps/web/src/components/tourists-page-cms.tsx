@@ -26,7 +26,7 @@ const languageGuides = [
     href: "/es/restaurante-centro-sofia",
     title: "Para nuestros visitantes españoles",
     text:
-      "Un restaurante acogedor en el centro de Sofía. Disfruta de nuestra barbacoa de cocción lenta y opciones vegetarianas frescas."
+      "Un restaurante acogedor en el centro de Sofía, con carnes cocinadas lentamente, ensaladas frescas y opciones vegetarianas."
   },
   {
     id: "greek",
@@ -123,14 +123,14 @@ export async function TouristsPageCms({ locale }: TouristsPageCmsProps) {
           </h1>
           <p className="page-lead">
             {isBg
-              ? "Посещението на нов град може да бъде объркващо. В The Friendly Bear го правим лесно. Намираме се в историческа къща от 1923 г. близо до Народния театър, с топло посрещане, екип с английски език и меню, което празнува най-доброто от България."
-              : "Visiting a new city can be overwhelming. At The Friendly Bear, we make it easy. Located in a historic 1923 house near the National Theatre, we offer a warm welcome, English-speaking staff, and a menu that celebrates the best of Bulgaria."}
+              ? "Посещението на нов град може да бъде объркващо. В The Friendly Bear го правим лесно. Намираме се в историческа къща от 1923 г. близо до хотел „Радисън“ и Народния театър, с топло посрещане, екип с английски език и меню с бавно готвени меса, вегетариански предложения и свежи салати."
+              : "Visiting a new city can be overwhelming. At The Friendly Bear, we make it easy. Located in a historic 1923 house near the Radisson hotel and the National Theatre, we offer a warm welcome, English-speaking staff, and a menu with slow-cooked meats, vegetarian dishes, and fresh salads."}
           </p>
 
           <div className="page-tags" aria-label={isBg ? "Полезни сигнали за гости" : "Helpful visitor signals"}>
             <span>{isBg ? businessProfile.address.bg : businessProfile.address.en}</span>
             <span>{isBg ? "Екип с английски език" : "English-speaking staff"}</span>
-            <span>{isBg ? "Тайна градина" : "Secret garden"}</span>
+            <span>{isBg ? "Скрита градина" : "Hidden garden"}</span>
             <span>Pet friendly</span>
           </div>
 
