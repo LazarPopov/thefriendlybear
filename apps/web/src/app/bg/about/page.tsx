@@ -7,9 +7,9 @@ import { getAboutPageSchema } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "about",
-  title: "Историята на The Friendly Bear | Ресторант с история от 1923 г.",
+  title: "За The Friendly Bear | Уютен ресторант в София с история от 1923 г.",
   description:
-    "Открийте историята на нашата градска бърлога от 1923 г. Създадена с любов от основателите на Mish-Mash Recipes и Ainterior в центъра на София."
+    "Запознайте се с историята на нашата бърлога в центъра на София. Традиция, уют и кулинарна страст от 1923 г., вдъхновени от Mish-Mash Recipes."
 });
 
 export default function Page() {

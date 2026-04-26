@@ -1,6 +1,7 @@
 ﻿import { ActionLink } from "@/components/action-link";
 import { getBusinessProfileData } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
+import { NewsletterForm } from "@/components/newsletter-form";
 import {
   getReservationConfirmationMessage,
   getReservationDisplayedActions,
@@ -119,6 +120,8 @@ export async function EnglishReservationsPageCms() {
                 ))}
               </ol>
             </article>
+
+            <NewsletterForm locale="en" source="reservations_page_en" />
           </section>
         </>
       ) : (

@@ -49,13 +49,13 @@ export const touristBrandMotto =
 
 export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPageCopy> = {
   it: {
-    title: "Dove mangiare bene a Sofia prima della serata",
+    title: "Dove mangiare bene a Sofia: The Cozy Culinary Escape",
     intro:
-      "Nascosto dietro l'hotel Radisson nel cuore di Sofia, The Friendly Bear e una casa urbana del 1923 con giardino, sale retro leggermente sotterranee e un'atmosfera perfetta per cena, drink, sport in TV e nightlife.",
+      "Nascosto in una via tranquilla del centro, The Friendly Bear è una casa urbana del 1923 con giardino, sale retro leggermente sotterranee e un'atmosfera perfetta per cena, drink e nightlife. Altamente raccomandato su Reddit da altri viaggiatori italiani.",
     vegetarian:
-      "Oltre alle insalate fresche, il menu mette in evidenza piatti memorabili come il panino con lingua di vitello e cipolle caramellate e l'agnello cotto lentamente con funghi.",
+      "Il nostro menu celebra sapori autentici: dal famoso panino con lingua di vitello e cipolle caramellate all'agnello cotto lentamente con funghi, fino a fresche opzioni vegetariane.",
     service:
-      "Altamente consigliato da viaggiatori italiani a Sofia: staff che parla inglese, menu facile da consultare e un'atmosfera calda prima di uscire nel centro.",
+      "Un'accoglienza calorosa e autentica: staff che parla inglese, menu digitale facile e un'atmosfera rilassata che ti farà sentire subito a casa nel cuore di Sofia.",
     primaryCtaLabel: "Vedi il Menu (English)",
     callLabel: "Chiama per Prenotare",
     cards: [
@@ -63,42 +63,42 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
         label: "Social proof",
         title: "Consigliato da italiani a Sofia",
         text:
-          "The Friendly Bear e gia segnalato da viaggiatori italiani che cercano un posto centrale, autentico e rilassato."
+          "The Friendly Bear è già un punto di riferimento su Reddit per i viaggiatori italiani che cercano un posto centrale, autentico e con carattere."
       },
       {
-        label: "Prima della serata",
-        title: "Cena, drink e partita",
+        label: "Atmosfera",
+        title: "Retro, intimo e vibrante",
         text:
-          "Una base atmosferica per mangiare bene, bere qualcosa e guardare una partita prima di scoprire la nightlife di Sofia."
+          "Una base perfetta per mangiare bene, bere qualcosa e godersi il design unico con le pareti in tappeto prima di scoprire la nightlife di Sofia."
       },
       {
         label: "Posizione",
-        title: "Centro citta, facile da trovare",
+        title: "Centro città, via Slavyanska 23",
         text:
-          "Ci trovi in via Slavyanska 23, a pochi passi dal Teatro Nazionale e dalle strade piu vive del centro."
+          "Ci trovi a pochi passi dal Teatro Nazionale, in una delle zone più affascinanti e vive della capitale bulgara."
       }
     ],
     signature: {
-      label: "Piatti da provare",
-      title: "Sapori concreti, non generici",
+      label: "Piatti firma",
+      title: "Sapori che non dimenticherai",
       dishes: [
         "Panino con lingua di vitello e cipolle caramellate",
         "Agnello cotto lentamente con funghi",
-        "Zuppa di pesce",
+        "Zuppa di pesce della casa",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
-      label: "Atmosfera",
-      title: "Retro, leggermente sotterraneo, memorabile",
+      label: "L'Ambiente",
+      title: "Design unico, spirito retro",
       text:
-        "La sala interna con parete rivestita in morbido tappeto crea un dettaglio curioso e fotografabile, mentre il giardino nascosto porta calma nelle serate calde."
+        "La sala interna con la sua iconica parete in morbido tappeto crea un'atmosfera 'hidden gem' perfetta per chi cerca qualcosa di diverso dai soliti posti turistici."
     },
     venue: {
       eyebrow: "Atmosfera",
-      title: "Giardino nascosto e calore da baita urbana",
+      title: "Giardino nascosto e calore urbano",
       intro:
-        "Una piccola galleria per sentire il luogo prima di arrivare: luci in giardino, dettagli in legno e sale interne accoglienti.",
+        "Scopri il nostro spazio: dalle luci soffuse del giardino ai dettagli in legno delle sale interne, ogni angolo racconta la storia di una casa del 1923.",
       gardenLabel: "Giardino",
       interiorLabel: "Interno retro",
       gardenAlt: "Giardino segreto del ristorante The Friendly Bear a Sofia",
@@ -106,56 +106,56 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
     }
   },
   es: {
-    title: "Dónde comer en Sofía: un refugio con encanto",
+    title: "Dónde comer en Sofía: Un refugio con encanto y sabor",
     intro:
-      "Ubicado en una casa urbana de 1923 en la calle Slavyanska 23, The Friendly Bear es un refugio acogedor, ligeramente subterráneo y retro para socializar después de un día largo por Sofía.",
+      "Ubicado en una casa histórica de 1923, The Friendly Bear es ese 'hidden gem' que buscas en el centro de Sofía. Un ambiente retro, ligeramente subterráneo y acogedor para socializar sin prisas.",
     vegetarian:
-      "No todo es carne. Hay ensaladas frescas, platos vegetarianos calientes y especialidades como el cordero cocinado lentamente con setas.",
+      "Nuestra cocina se centra en la calidad: desde el cordero cocinado lentamente con setas hasta ensaladas frescas y platos vegetarianos que sorprenden.",
     service:
-      "Abierto hasta las 23:00, con equipo que habla inglés y el Baileys Crème Brûlée como final perfecto para una cena tarde en el centro.",
+      "Abierto hasta las 23:00, con un equipo que habla inglés y una hospitalidad genuina que te hará sentir como un local desde el primer momento.",
     primaryCtaLabel: "Ver el Menú (English)",
     callLabel: "Llamar para Reservar",
     cards: [
       {
         label: "Refugio",
-        title: "Una cena con calma",
+        title: "Cena con calma en el centro",
         text:
-          "El ambiente retro y ligeramente subterráneo funciona como un refugio íntimo después de caminar por el centro."
+          "El ambiente retro y sus salas íntimas ofrecen el refugio perfecto tras un día explorando las calles de la capital."
       },
       {
-        label: "Cena tarde",
+        label: "Horario",
         title: "Abierto hasta las 23:00",
         text:
-          "Un horario cómodo para visitantes españoles que prefieren cenar sin prisa después de turismo, teatro o paseo."
+          "Sabemos que el tiempo es diferente para nosotros. Disfruta de una cena tarde sin prisas antes de seguir tu ruta por Sofía."
       },
       {
-        label: "Dulce final",
-        title: "Baileys Crème Brûlée",
+        label: "Especialidad",
+        title: "Cordero y Baileys Crème Brûlée",
         text:
-          "Un postre reconocible y especial para cerrar una cena larga antes de volver al hotel o salir por Sofía."
+          "Platos con identidad que combinan la tradición búlgara con un toque contemporáneo y acogedor."
       }
     ],
     signature: {
       label: "Platos destacados",
-      title: "Una mesa con ganchos claros",
+      title: "Sabores con carácter",
       dishes: [
         "Sándwich de lengua de ternera con cebolla caramelizada",
         "Cordero cocinado lentamente con setas",
-        "Sopa de pescado",
+        "Sopa de pescado casera",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
       label: "Ambiente",
-      title: "Casa de 1923 con interior retro",
+      title: "Casa de 1923 e interior retro",
       text:
-        "El jardín escondido funciona en los meses cálidos, mientras las salas interiores conservan un encanto cálido, curioso y local."
+        "Nuestro jardín escondido es un oasis en verano, mientras que las paredes con alfombras suaves crean un interior curioso y fotografiable en invierno."
     },
     venue: {
       eyebrow: "Ambiente",
       title: "Jardín secreto y calidez interior",
       intro:
-        "Una pequeña galería para sentir el lugar antes de llegar: terraza tranquila, detalles acogedores y el encanto de una casa de 1923.",
+        "Echa un vistazo a nuestro refugio urbano: una mezcla de historia, madera y luces tenues que crean una atmósfera inolvidable.",
       gardenLabel: "Jardín",
       interiorLabel: "Interior",
       gardenAlt: "Jardín tranquilo del restaurante The Friendly Bear en Sofía",
@@ -165,60 +165,60 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
       ariaLabel: "Abierto hasta las 23:00",
       label: "Cena tarde",
       text:
-        "Abierto hasta las 23:00. Perfecto para una cena tranquila después de pasear por el centro de Sofía, con comida auténtica, carnes cocinadas lentamente, ensaladas frescas y opciones vegetarianas."
+        "Perfecto para una cena tranquila después de pasear por el centro de Sofía, con carnes cocinadas lentamente y opciones frescas."
     }
   },
   el: {
-    title: "Καλύτερα εστιατόρια Σόφια για ένα χαλαρό Σαββατοκύριακο",
+    title: "Καλύτερα εστιατόρια Σόφια: Your Weekend Culinary Home",
     intro:
-      "Κρυμμένο πίσω από το Radisson στο κέντρο της Σόφιας, το The Friendly Bear είναι ιδανικό για μεγάλο, χαλαρό γεύμα ή δείπνο στον κήπο σε ένα weekend getaway.",
+      "Κρυμμένο στην καρδιά της Σόφιας, το The Friendly Bear είναι ο ιδανικός προορισμός για το weekend getaway σας. Μια ιστορική κατοικία του 1923 που προσφέρει ζεστασιά, αυθεντικές γεύσεις και έναν υπέροχο κρυφό κήπο.",
     vegetarian:
-      "Στο μενού θα βρείτε ψαρόσουπα, αργοψημένο αρνί με μανιτάρια, φρέσκες σαλάτες και ζεστά χορτοφαγικά πιάτα.",
+      "Ανακαλύψτε το αργοψημένο αρνί με μανιτάρια, το διάσημο σάντουιτς με γλώσσα μοσχαριού και φρέσκιες επιλογές για κάθε γούστο.",
     service:
-      "Θέλουμε να νιώθετε άνετα: αγγλόφωνο προσωπικό, εύκολο ψηφιακό μενού και ζεστή φιλοξενία για παρέες από τη Θεσσαλονίκη, τη Βόρεια Ελλάδα και όλη την Ελλάδα.",
+      "Εδώ η φιλοξενία είναι προσωπική: αγγλόφωνο προσωπικό, φιλική ατμόσφαιρα (χωρίς 'αρκούδες' και απότομους τρόπους) και ζεστό καλωσόρισμα.",
     primaryCtaLabel: "Δείτε το Μενού (English)",
     callLabel: "Κλήση για Κράτηση",
     cards: [
       {
         label: "Weekend",
-        title: "Μακρύ γεύμα στον κήπο",
+        title: "Το σπίτι σας στη Σόφια",
         text:
-          "Ο κρυφός κήπος είναι το πιο χαλαρό σημείο για μεσημεριανό ή δείπνο σε σύντομη απόδραση στη Σόφια."
+          "Ιδανικό για ένα χαλαρό μεσημεριανό ή δείπνο κατά τη διάρκεια της απόδρασής σας στην πόλη."
       },
       {
         label: "Γεύση",
-        title: "Ψαρόσουπα και αρνί",
+        title: "Αυθεντικότητα και ποιότητα",
         text:
-          "Η ψαρόσουπα και το αργοψημένο αρνί με μανιτάρια δίνουν οικεία, μεσογειακή αίσθηση σε βουλγαρικό τραπέζι."
+          "Από την ψαρόσουπα μέχρι το Baileys Crème Brûlée, κάθε πιάτο είναι φτιαγμένο με μεράκι και προσοχή στη λεπτομέρεια."
       },
       {
         label: "Φιλοξενία",
-        title: "Άνετα στα αγγλικά",
+        title: "Άνεση στα αγγλικά",
         text:
-          "Η ομάδα βοηθάει με μενού, οδηγίες και κράτηση, ώστε η επίσκεψη να ξεκινήσει χωρίς άγχος."
+          "Η ομάδα μας είναι εδώ για να σας βοηθήσει με το μενού και να κάνει την επίσκεψή σας αξέχαστη."
       }
     ],
     signature: {
-      label: "Πιάτα που αξίζει να δοκιμάσετε",
-      title: "Ζεστό, χορταστικό και φιλόξενο",
+      label: "Πιάτα που πρέπει να δοκιμάσετε",
+      title: "Γεύσεις με ταυτότητα",
       dishes: [
         "Σάντουιτς με γλώσσα μοσχαριού και καραμελωμένα κρεμμύδια",
         "Αργοψημένο αρνί με μανιτάρια",
-        "Ψαρόσουπα",
+        "Σπιτική ψαρόσουπα",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
       label: "Ατμόσφαιρα",
-      title: "Κήπος για το καλοκαίρι, ζεστό εσωτερικό για τον χειμώνα",
+      title: "Ρετρό γοητεία και κρυφός κήπος",
       text:
-        "Η ιστορική κατοικία του 1923, το ρετρό εσωτερικό και η μαλακή ταπετσαρία στον τοίχο κάνουν το μέρος εύκολο να το θυμάσαι."
+        "Το μοναδικό εσωτερικό με τη μαλακή ταπετσαρία στον τοίχο και ο ήσυχος κήπος δημιουργούν την αίσθηση ενός κρυμμένου θησαυρού."
     },
     venue: {
       eyebrow: "Ατμόσφαιρα",
-      title: "Κρυφός κήπος και ζεστό εσωτερικό",
+      title: "Κρυφός κήπος και ζεστή φιλοξενία",
       intro:
-        "Μια μικρή gallery για να πάρετε μια πρώτη αίσθηση του χώρου πριν φτάσετε: κήπος, ζεστασιά, ξύλινες λεπτομέρειες και αληθινή φιλοξενία.",
+        "Πάρτε μια γεύση από τον χώρο μας: ξύλινες λεπτομέρειες, ατμοσφαιρικός φωτισμός και η ιστορία μιας άλλης εποχής.",
       gardenLabel: "Κήπος",
       interiorLabel: "Εσωτερικό",
       gardenAlt: "Ο κήπος του εστιατορίου The Friendly Bear στη Σόφια",
@@ -228,60 +228,60 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
       ariaLabel: "Σας περιμένουμε",
       label: "Φιλοξενία",
       text:
-        "Σας περιμένουμε με ζεστή φιλοξενία, κρυφό κήπο και φαγητό στο κέντρο της Σόφιας."
+        "Σας περιμένουμε με ζεστή φιλοξενία και αυθεντικές γεύσεις στο κέντρο της Σόφιας."
     }
   },
   de: {
-    title: "Gute Restaurants Sofia: Authentisch essen im Zentrum",
+    title: "Gute Restaurants Sofia: Authentic Flavors & Quality",
     intro:
-      "The Friendly Bear liegt in einer Stadtvilla von 1923 an der Slavyanska 23. Das leicht unterirdische Retro-Interieur, die Teppichwand und der ruhige Hof wirken echt, lokal und ungekünstelt.",
+      "The Friendly Bear ist kein gewöhnlicher Touristenort. In einer Stadtvilla von 1923 an der Slavyanska 23 finden Sie ehrliche Küche, ein leicht unterirdisches Retro-Interieur und eine entspannte, echte Atmosphäre.",
     vegetarian:
-      "Frische Salate, sorgfältig zubereitete Beilagen und saisonale Zutaten ergänzen das langsam gegarte Lamm mit Pilzen.",
+      "Wir setzen auf Qualität und langsame Zubereitung: Probieren Sie unser langsam gegartes Lamm mit Pilzen, das Kalbszungensandwich oder unsere frischen saisonalen Salate.",
     service:
-      "Unser Team spricht Englisch, das Menü ist leicht vom Smartphone aus zu öffnen, und der Hof bleibt ein ruhiger Ort zum Ankommen und Entspannen.",
+      "Unser Team spricht fließend Englisch und sorgt für eine gastfreundliche, unaufgeregte Stimmung – ideal für Business-Gäste und Städtereisende.",
     primaryCtaLabel: "Speisekarte öffnen (English)",
     callLabel: "Anrufen",
     cards: [
       {
         label: "Authentisch",
-        title: "Kein generischer Touristenspot",
+        title: "Ein echtes Stück Sofia",
         text:
-          "Das Retro-Interieur, die Teppichwand und die historische Villa fühlen sich lokal an, nicht wie eine inszenierte Kulisse."
+          "Das Retro-Design mit der markanten Teppichwand und die historische Villa bieten ein Erlebnis abseits der Massen."
       },
       {
         label: "Qualität",
-        title: "Langsam gegart, klar vorbereitet",
+        title: "Slow-roasted Tradition",
         text:
-          "Das Lamm mit Pilzen steht für einfache, gute Zutaten und ruhige Zubereitung statt schneller Massenküche."
+          "Unsere Spezialitäten wie das langsam gegarte Lamm stehen für Zeit, Sorgfalt und exzellente Zutaten."
       },
       {
         label: "Innenhof",
-        title: "Ruhig mitten in Sofia",
+        title: "Ruheoase im Zentrum",
         text:
-          "Der Hof ist ein angenehmer Ort zum Entspannen nach Business-Terminen, Stadtrundgang oder Ausflug in die Berge."
+          "Der ruhige Garten ist der perfekte Ort, um nach einem langen Tag in der Stadt oder einem Meeting zu entspannen."
       }
     ],
     signature: {
       label: "Empfehlungen",
       title: "Gerichte mit Charakter",
       dishes: [
-        "Kalbszungensandwich mit karamellisierten Zwiebeln",
+        "Kalbszungensandwich with karamellisierten Zwiebeln",
         "Langsam gegartes Lamm mit Pilzen",
-        "Fischsuppe",
+        "Hausgemachte Fischsuppe",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
       label: "Atmosphäre",
-      title: "Shabby-chic, ruhig und echt",
+      title: "Retro, gemütlich und unverkennbar",
       text:
-        "Der leicht unterirdische Raum mit weicher Teppichwand macht The Friendly Bear zu einer guten Wahl für Gäste, die Sofia abseits austauschbarer Restaurants erleben möchten."
+        "Der leicht unterirdische Gastraum und das Shabby-Chic-Ambiente machen uns zu einem 'Hidden Gem' für Kenner und Entdecker."
     },
     venue: {
       eyebrow: "Atmosphäre",
-      title: "Ruhiger Hof und warmes Retro-Interieur",
+      title: "Ruhiger Hof und warmes Interieur",
       intro:
-        "Ein erster Blick auf den Ort: Gartenlicht, Holzdetails, historische Räume und die ruhige Stimmung einer Stadtvilla von 1923.",
+        "Ein Blick in unsere Welt: Historische Räume, warme Holzdetails und die entspannte Stimmung einer vergangenen Ära.",
       gardenLabel: "Hof",
       interiorLabel: "Interieur",
       gardenAlt: "Ruhiger Hof des Restaurants The Friendly Bear in Sofia",
@@ -289,56 +289,56 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
     }
   },
   ro: {
-    title: "Unde mâncăm în Sofia: comfort food în centru",
+    title: "Unde mâncăm în Sofia: Hearty Comfort Food in Sofia",
     intro:
-      "The Friendly Bear este o oprire sățioasă chiar în centrul Sofiei, pe Slavyanska 23, cu grădină ascunsă, interior retro și mâncare consistentă după drum.",
+      "The Friendly Bear este locul unde mâncarea bună întâlnește ospitalitatea caldă. O casă istorică din 1923, un interior retro plin de caracter și cele mai bune preparate gătite lent din centrul Sofiei.",
     vegetarian:
-      "Caută sandvișul cu limbă de vițel și ceapă caramelizată, mielul copt lent cu ciuperci, supele calde și salatele proaspete.",
+      "De la celebrul sandviș cu limbă de vițel și ceapă caramelizată la mielul copt lent cu ciuperci, meniul nostru este despre gust autentic și porții sățioase.",
     service:
-      "Echipa vorbește engleză, meniul se deschide ușor pe telefon, iar atmosfera este primitoare pentru prânz, cină sau o oprire de tranzit.",
+      "Echipa vorbește engleză și te întâmpină cu un zâmbet, fără atitudini rigide, într-o atmosferă relaxată ideală pentru un city break sau un popas de tranzit.",
     primaryCtaLabel: "Deschide meniul (English)",
     callLabel: "Sună pentru Rezervare",
     cards: [
       {
         label: "City break",
-        title: "Oprire rapidă în centru",
+        title: "Gustul autentic al Sofiei",
         text:
-          "Locația de pe Slavyanska 23 funcționează bine pentru weekenduri scurte, drumuri prin Bulgaria sau o seară în Sofia."
+          "Situat pe Slavyanska 23, suntem oprirea perfectă pentru cei care vor să descopere centrul orașului la pas."
       },
       {
         label: "Porții",
-        title: "Mâncare bogată și sățioasă",
+        title: "Mâncare bogată, gătite lent",
         text:
-          "Meniul scoate în față preparate pline de gust, potrivite după condus, plimbare sau cumpărături."
+          "Mielul nostru cu ciuperci și supele calde sunt exact ce ai nevoie după un drum lung sau o plimbare prin oraș."
       },
       {
-        label: "Valoare",
-        title: "Calitate fără complicații",
+        label: "Atmosferă",
+        title: "Un loc de ținut minte",
         text:
-          "O atmosferă caldă, servire în engleză și preparate consistente fac alegerea ușoară pentru vizitatori români."
+          "Designul retro cu peretele acoperit de covor și grădina ascunsă fac din The Friendly Bear o experiență unică."
       }
     ],
     signature: {
       label: "Ce să încerci",
-      title: "Comfort food cu identitate locală",
+      title: "Comfort food cu identitate",
       dishes: [
         "Sandviș cu limbă de vițel și ceapă caramelizată",
         "Miel copt lent cu ciuperci",
-        "Supă de pește",
+        "Supă de pește a casei",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
       label: "Atmosferă",
-      title: "Retro, cald, ușor de ținut minte",
+      title: "Retro, cald și primitor",
       text:
-        "Interiorul ușor subteran și peretele cu covor moale creează un detaliu neobișnuit, iar grădina ascunsă aduce liniște vara."
+        "Interiorul ușor subteran și grădina liniștită oferă un refugiu perfect, departe de agitația turistică obișnuită."
     },
     venue: {
       eyebrow: "Atmosferă",
       title: "Grădină ascunsă și interior cald",
       intro:
-        "O privire rapidă asupra locului înainte să ajungi: lumini în grădină, lemn, camere retro și o casă istorică din 1923.",
+        "Descoperă universul nostru înainte de vizită: camere retro, detalii din lemn și farmecul unei case de la 1923.",
       gardenLabel: "Grădină",
       interiorLabel: "Interior",
       gardenAlt: "Grădina ascunsă a restaurantului The Friendly Bear din Sofia",
@@ -346,56 +346,56 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
     }
   },
   "en-gb": {
-    title: "Traditional Bulgarian food in Sofia with a proper welcome",
+    title: "Sofia's Best Kept Secret: Traditional Food & A Proper Welcome",
     intro:
-      "The Friendly Bear is a cosy central Sofia restaurant for proper comfort food, good drinks and a friendly attitude before a night out, a ski transfer or a relaxed group dinner.",
+      "Tucked away in a 1923 town house, The Friendly Bear is a proper hidden gem in central Sofia. Expect hearty comfort food, a unique retro interior and a genuinely friendly attitude.",
     vegetarian:
-      "Go for slow-roasted lamb with mushrooms, the veal tongue sandwich with caramelised onions, fish soup, and Baileys Crème Brûlée when you want something memorable.",
+      "Our menu is all about character: from our signature veal tongue sandwich with caramelised onions to slow-roasted lamb with mushrooms and fresh seasonal greens.",
     service:
-      "Our team speaks English and keeps the atmosphere friendly, relaxed and danger-free for couples, groups and solo travellers.",
+      "Our team speaks fluent English and keeps things relaxed and 'danger-free' – a warm, tavern-style welcome for couples, groups and solo travellers.",
     primaryCtaLabel: "See the Menu",
     callLabel: "Call to Reserve",
     cards: [
       {
-        label: "Comfort food",
-        title: "Hearty food before the next plan",
+        label: "Hidden Gem",
+        title: "Beyond the tourist spots",
         text:
-          "A strong choice before a night out, after landing in Sofia, or on the way to Bansko or Borovets."
+          "The slightly underground rooms and soft carpet on the wall give the place a quirky, memorable character you won't find elsewhere."
       },
       {
-        label: "Groups",
-        title: "Welcoming for small groups",
+        label: "Comfort Food",
+        title: "Proper food, slowly prepared",
         text:
-          "Clear English communication, filling dishes and good drinks make group dinners easier to settle."
+          "Whether it's the slow-roasted lamb or the fish soup, our kitchen focuses on authentic flavors and satisfying portions."
       },
       {
-        label: "Value",
-        title: "Central Sofia without fuss",
+        label: "Location",
+        title: "Heart of Sofia, Slavyanska 23",
         text:
-          "A warm tavern-style welcome, generous dishes and easy directions from the city centre."
+          "Just a short walk from the National Theatre, we're the perfect base before a night out or after a day of exploring."
       }
     ],
     signature: {
       label: "What to order",
-      title: "Proper comfort food",
+      title: "Signature Comfort Food",
       dishes: [
         "Veal tongue sandwich with caramelised onions",
         "Slow-roasted lamb with mushrooms",
-        "Fish soup",
+        "Homemade fish soup",
         "Baileys Crème Brûlée"
       ]
     },
     atmosphere: {
       label: "Atmosphere",
-      title: "Cosy, retro and a little hidden",
+      title: "Cosy, retro and full of soul",
       text:
-        "The slightly underground dining room, soft carpet on the wall and hidden courtyard give the place the kind of character travellers remember."
+        "The historic 1923 setting and hidden courtyard offer a peaceful retreat with a unique, slightly underground retro vibe."
     },
     venue: {
       eyebrow: "Atmosphere",
       title: "Hidden courtyard and cosy retro rooms",
       intro:
-        "A quick look before you arrive: courtyard lights, warm rooms, wooden details and a 1923 house in central Sofia.",
+        "A quick look inside: warm wooden details, courtyard lights and the authentic charm of a century-old Sofia house.",
       gardenLabel: "Courtyard",
       interiorLabel: "Interior",
       gardenAlt: "Hidden courtyard at The Friendly Bear Sofia",

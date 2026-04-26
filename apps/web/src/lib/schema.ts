@@ -8,6 +8,8 @@ import {
 import { contactFaqItems } from "@/lib/contact-faq";
 import type { FrontendSeasonalMenu } from "@/lib/cms/menu-adapter";
 import { getSeasonalMenuData, getSeasonalMenuFallback } from "@/lib/menu-module";
+import type { TouristAudience } from "@/lib/cms/tourist-landing-page-adapter";
+import type { FrontendTouristLandingPage } from "@/lib/tourist-landing-page-module";
 
 type JsonLd = Record<string, unknown>;
 
@@ -636,6 +638,76 @@ export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusine
           acceptedAnswer: {
             "@type": "Answer",
             text: item.schemaAnswer ?? item.answer
+          }
+        }))
+      }
+    ]
+  };
+}
+
+export function getTouristLandingPageSchema(
+  locale: SiteLocale,
+  audience: TouristAudience,
+  page: FrontendTouristLandingPage,
+  localizedSlugs: Record<SiteLocale, string>
+): JsonLd {
+  const pageUrl = absoluteUrl(`/${locale}/tourists/${localizedSlugs[locale]}`);
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+
+  const faqItems = [
+    {
+      question: locale === "bg" ? "Има ли вегетариански опции?" : "Are there vegetarian options?",
+      answer: page.vegetarianMessage
+    },
+    {
+      question: locale === "bg" ? "Какво е обслужването?" : "What is the service like?",
+      answer: page.serviceMessage
+    }
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.title,
+        description: page.intro,
+        inLanguage: locale === "bg" ? "bg-BG" : "en-GB",
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        about: {
+          "@id": restaurantId
+        }
+      },
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Туристи" : "Tourists",
+            path: locale === "bg" ? "/bg/tourists" : "/en/tourists"
+          },
+          {
+            name: page.title,
+            path: `/${locale}/tourists/${localizedSlugs[locale]}`
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer
           }
         }))
       }

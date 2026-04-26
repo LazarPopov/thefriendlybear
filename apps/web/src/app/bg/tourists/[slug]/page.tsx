@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TouristLandingPageCms } from "@/components/tourist-landing-page-cms";
+import { StructuredData } from "@/components/structured-data";
 import { getTouristLandingPageDataBySlug } from "@/lib/tourist-landing-page-module";
 import { siteConfig } from "@/lib/site";
 import { getTouristMarketLanguageAlternates } from "@/lib/tourist-market-route";
+import { getTouristLandingPageSchema } from "@/lib/schema";
 import type { TouristAudience, TouristMarketLocale } from "@/lib/cms/tourist-landing-page-adapter";
 
 type TouristRouteProps = {
@@ -77,11 +79,21 @@ export default async function Page({ params }: TouristRouteProps) {
     notFound();
   }
 
+  const schema = getTouristLandingPageSchema(
+    "bg",
+    touristPage.audience,
+    touristPage.page,
+    touristPage.localizedSlugs
+  );
+
   return (
-    <TouristLandingPageCms
-      locale="bg"
-      audience={touristPage.audience}
-      touristPage={touristPage.page}
-    />
+    <>
+      <StructuredData data={schema} />
+      <TouristLandingPageCms
+        locale="bg"
+        audience={touristPage.audience}
+        touristPage={touristPage.page}
+      />
+    </>
   );
 }

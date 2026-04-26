@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "marketing_subscribers",
+  "info": {
+    "singularName": "marketing-subscriber",
+    "pluralName": "marketing-subscribers",
+    "displayName": "Marketing Subscriber",
+    "description": "Captured emails for marketing with GDPR consent"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "marketingConsent": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "consentTimestamp": {
+      "type": "datetime",
+      "required": true
+    },
+    "locale": {
+      "type": "string",
+      "required": true
+    },
+    "source": {
+      "type": "string",
+      "default": "reservations_page"
+    },
+    "isConfirmed": {
+      "type": "boolean",
+      "default": false
+    },
+    "confirmationToken": {
+      "type": "string"
+    }
+  }
+}

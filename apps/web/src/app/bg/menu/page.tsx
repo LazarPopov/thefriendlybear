@@ -1,16 +1,18 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { SeasonalMenu } from "@/components/seasonal-menu";
 import { StructuredData } from "@/components/structured-data";
+import { ActionLink } from "@/components/action-link";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getSeasonalMenuData } from "@/lib/menu-module";
 import { getMenuPageSchemaData } from "@/lib/schema";
+import { buildActionTracking } from "@/lib/tracking";
 
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "menu",
-  title: "Специално седмично меню | Вкусът на сезона | The Friendly Bear",
+  title: "Традиционна българска кухня и сезонно меню | The Friendly Bear София",
   description:
-    "Подбрано от Жана (Mish-Mash Recipes) и екипът на Friendly Bear, седмичното ни меню съчетава бавно печени меса, вегетариански предложения, свежи салати и класически десерти."
+    "Вижте нашето меню: бавно печено агнешко, свински уши, пресни салати и вегетариански ястия. Традиционен вкус и сезонни специалитети в центъра на София."
 });
 
 export default async function Page() {
@@ -19,6 +21,39 @@ export default async function Page() {
   return (
     <>
       <StructuredData data={schema} />
+      <div className="page-shell">
+        <section className="page-hero">
+          <p className="eyebrow">Кулинарна бърлога</p>
+          <h1>Нашето меню</h1>
+          <p className="page-lead">
+            Вдъхновени от българските традиции и споделеното в{" "}
+            <a 
+              href="https://www.mish-mash.recipes/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-link"
+            >
+              Mish-Mash Recipes
+            </a>
+            , ви предлагаме подбрани сезонни вкусове.
+          </p>
+          <div className="actions">
+            <ActionLink
+              href="https://www.mish-mash.recipes/"
+              label="Вижте още рецепти в Mish-Mash"
+              external
+              tracking={buildActionTracking({
+                kind: "external",
+                locale: "bg",
+                location: "menu_hero",
+                label: "Mish-Mash Recipes Link",
+                target: "https://www.mish-mash.recipes/",
+                external: true
+              })}
+            />
+          </div>
+        </section>
+      </div>
       <SeasonalMenu locale="bg" menu={menu} />
     </>
   );

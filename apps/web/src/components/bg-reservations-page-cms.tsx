@@ -1,6 +1,7 @@
 ﻿import { ActionLink } from "@/components/action-link";
 import { getBusinessProfileData } from "@/lib/business-profile-module";
 import { filterActionsByModuleToggles, getModuleTogglesData } from "@/lib/module-toggle-module";
+import { NewsletterForm } from "@/components/newsletter-form";
 import {
   getReservationConfirmationMessage,
   getReservationDisplayedActions,
@@ -97,28 +98,16 @@ export async function BulgarianReservationsPageCms() {
 
           <section className="page-grid page-grid-two">
             <article className="page-card">
-              <p className="page-card-label">Какво работи в момента</p>
-              <h2>Статус на booking потока</h2>
-              <ul className="status-list">
-                {reservationStates.map((item) => (
-                  <li key={item.label} className="status-row">
-                    <span>{item.label}</span>
-                    <strong>{item.status}</strong>
-                  </li>
-                ))}
-              </ul>
-              <p className="page-note">{reservationMessage}</p>
-            </article>
-
-            <article className="page-card">
               <p className="page-card-label">Най-добър път за потребителя</p>
-              <h2>Докато live каналите са активни</h2>
+              <h2>Докато live каналите са aktivni</h2>
               <ol className="page-list page-list-numbered">
                 {reservationSteps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
               </ol>
             </article>
+
+            <NewsletterForm locale="bg" source="reservations_page_bg" />
           </section>
         </>
       ) : (

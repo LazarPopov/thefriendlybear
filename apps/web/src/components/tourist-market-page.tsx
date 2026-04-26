@@ -18,7 +18,11 @@ import {
   touristMarketPageCopy,
   type TouristMarketPageCopy
 } from "@/lib/tourist-market-copy";
-import { foodGalleryImages, gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
+import {
+  getFoodGalleryImages,
+  getGardenGalleryImages,
+  getInteriorGalleryImages
+} from "@/lib/venue-gallery-images";
 
 type TouristMarketPageProps = {
   marketLocale: TouristMarketLocale;
@@ -181,14 +185,18 @@ function getLocalizedMarketPageCopy(marketLocale: TouristMarketLocale) {
 }
 
 function createVenueImages(_marketLocale: TouristMarketLocale, venueCopy: TouristMarketPageCopy["venue"]) {
-  const maxLength = Math.max(gardenGalleryImages.length, interiorGalleryImages.length, foodGalleryImages.length);
+  const gardenImages = getGardenGalleryImages("en");
+  const interiorImages = getInteriorGalleryImages("en");
+  const foodImages = getFoodGalleryImages("en");
+
+  const maxLength = Math.max(gardenImages.length, interiorImages.length, foodImages.length);
   const images = [];
   const label = `${venueCopy.gardenLabel} + ${venueCopy.interiorLabel}`;
 
   for (let index = 0; index < maxLength; index += 1) {
-    const gardenImage = gardenGalleryImages[index];
-    const interiorImage = interiorGalleryImages[index];
-    const foodImage = foodGalleryImages[index];
+    const gardenImage = gardenImages[index];
+    const interiorImage = interiorImages[index];
+    const foodImage = foodImages[index];
 
     if (gardenImage) {
       images.push({

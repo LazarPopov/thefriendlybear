@@ -17,7 +17,11 @@ import {
   type TouristAudience
 } from "@/lib/tourist-landing-page-module";
 import { buildActionTracking, type BusinessActionKind } from "@/lib/tracking";
-import { foodGalleryImages, gardenGalleryImages, interiorGalleryImages } from "@/lib/venue-gallery-images";
+import {
+  getFoodGalleryImages,
+  getGardenGalleryImages,
+  getInteriorGalleryImages
+} from "@/lib/venue-gallery-images";
 
 type TouristLandingPageCmsProps = {
   locale: SiteLocale;
@@ -32,14 +36,18 @@ type HeroAction = {
   external?: boolean;
 };
 
-function buildCombinedTouristGalleryImages(label: string) {
-  const maxLength = Math.max(gardenGalleryImages.length, interiorGalleryImages.length, foodGalleryImages.length);
+function buildCombinedTouristGalleryImages(label: string, locale: SiteLocale) {
+  const gardenImages = getGardenGalleryImages(locale);
+  const interiorImages = getInteriorGalleryImages(locale);
+  const foodImages = getFoodGalleryImages(locale);
+
+  const maxLength = Math.max(gardenImages.length, interiorImages.length, foodImages.length);
   const images = [];
 
   for (let index = 0; index < maxLength; index += 1) {
-    const gardenImage = gardenGalleryImages[index];
-    const interiorImage = interiorGalleryImages[index];
-    const foodImage = foodGalleryImages[index];
+    const gardenImage = gardenImages[index];
+    const interiorImage = interiorImages[index];
+    const foodImage = foodImages[index];
 
     if (gardenImage) {
       images.push({
@@ -81,6 +89,9 @@ export async function TouristLandingPageCms({
   if (!touristPage) {
     return null;
   }
+
+  // Ensure we use a supported site locale for images
+  const imageLocale: SiteLocale = locale === "bg" ? "bg" : "en";
 
   const isBg = locale === "bg";
   const primaryActions = filterActionsByModuleToggles(
@@ -200,13 +211,13 @@ export async function TouristLandingPageCms({
         eyebrow={venueSection.eyebrow}
         title={venueSection.title}
         intro={venueSection.intro}
-        images={buildCombinedTouristGalleryImages(venueSection.galleryLabel)}
+        images={buildCombinedTouristGalleryImages(venueSection.galleryLabel, imageLocale)}
         maxImagesBeforeCta={6}
       />
 
       <section className="page-grid page-grid-three">
         <article className="page-card">
-          <p className="page-card-label">{isBg ? "Discovery intent" : "Discovery intent"}</p>
+          <p className="page-card-label">{isBg ? "Намерения за откриване" : "Discovery intent"}</p>
           <p>{touristPage.intro}</p>
         </article>
 
