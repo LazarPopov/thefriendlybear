@@ -4,11 +4,11 @@ Use this checklist while Strapi is running locally at `http://localhost:1337/adm
 
 Frontend preview:
 
-- `http://localhost:3000/bg`
-- `http://localhost:3000/en`
-- `http://localhost:3000/it/ristorante-sofia-centro`
-- `http://localhost:3000/es`
-- `http://localhost:3000/el`
+- `${NEXT_PUBLIC_BASE_URL}/bg`
+- `${NEXT_PUBLIC_BASE_URL}/en`
+- `${NEXT_PUBLIC_BASE_URL}/it/ristorante-sofia-centro`
+- `${NEXT_PUBLIC_BASE_URL}/es`
+- `${NEXT_PUBLIC_BASE_URL}/el`
 
 After editing an entry in Strapi, always click `Save` and `Publish`, then refresh the matching frontend page.
 
@@ -339,4 +339,3 @@ Then manually test:
 - call buttons
 - menu readability
 - all public route URLs
-

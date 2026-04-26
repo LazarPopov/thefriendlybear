@@ -74,6 +74,29 @@ function getRouteContext(pathname: string) {
   };
 }
 
+function getRequiredEventContext(pathname = window.location.pathname) {
+  const routeContext = getRouteContext(pathname);
+
+  return {
+    locale: routeContext.locale,
+    tourist_audience: routeContext.tourist_audience,
+    page_path: `${window.location.pathname}${window.location.search}`
+  };
+}
+
+function getInteractionPayload(payload: TrackingPayload) {
+  const requiredContext = getRequiredEventContext();
+
+  return {
+    locale: payload.locale || requiredContext.locale,
+    location: payload.location,
+    tourist_audience: requiredContext.tourist_audience,
+    action_type: payload.action_type,
+    target: payload.target,
+    page_path: requiredContext.page_path
+  };
+}
+
 function getDocumentScrollPercent() {
   const documentElement = document.documentElement;
   const maxScroll = documentElement.scrollHeight - window.innerHeight;
@@ -132,6 +155,7 @@ export function trackAnalyticsEvent(eventName: string, payload: Record<string, u
   }
 
   const eventPayload = {
+    ...getRequiredEventContext(),
     ...getPageContext(),
     ...payload
   };
@@ -211,12 +235,7 @@ export function AnalyticsEvents({ enabled }: AnalyticsEventsProps) {
         return;
       }
 
-      const payload = {
-        ...tracking.payload,
-        link_url: tracking.payload.target,
-        link_text: tracking.payload.label,
-        ...getPageContext()
-      };
+      const payload = getInteractionPayload(tracking.payload);
 
       pushDataLayerEvent(tracking.eventName, payload);
       window.gtag?.("event", tracking.eventName, payload);
@@ -224,7 +243,7 @@ export function AnalyticsEvents({ enabled }: AnalyticsEventsProps) {
       if (trackedElement.closest(".mobile-quickbar")) {
         const quickbarPayload = {
           ...payload,
-          original_event: tracking.eventName
+          location: "mobile_quickbar"
         };
 
         pushDataLayerEvent("quickbar_click", quickbarPayload);
@@ -233,8 +252,7 @@ export function AnalyticsEvents({ enabled }: AnalyticsEventsProps) {
 
       if (tracking.eventName === "directions_click") {
         const mapPayload = {
-          ...payload,
-          original_event: tracking.eventName
+          ...payload
         };
 
         pushDataLayerEvent("external_map_open", mapPayload);
@@ -244,8 +262,7 @@ export function AnalyticsEvents({ enabled }: AnalyticsEventsProps) {
       if (tracking.eventName === "menu_cta_click" || tracking.eventName === "menu_category_click") {
         const menuPayload = {
           ...payload,
-          original_event: tracking.eventName,
-          intent_source: tracking.payload.location
+          location: tracking.payload.location
         };
 
         pushDataLayerEvent("menu_view_intent", menuPayload);

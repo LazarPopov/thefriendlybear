@@ -59,12 +59,6 @@ const galleryUiCopy: Record<
     previousAria: "Предишна снимка",
     nextAria: "Следваща снимка",
     restartAria: "Започни отначало",
-    // OLD TEXT:
-    // finalEyebrow: "Нека оставим нещо и на въображението",
-    // finalTitle: "Ела в Бърлогата на добрия вкус",
-    // finalText: "Останалото е най-добре да се усети на живо. Влез, отпусни се и остави мястото да довърши историята.",
-    
-    // NEW TEXT:
     finalEyebrow: "Любопитството е убило котката...",
     finalTitle: "Ако искаш да си умреш от кеф",
     finalText: "Ела в бърлогата на добрия вкус",
@@ -216,6 +210,7 @@ function VenueGalleryCard({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const clickCountRef = useRef(0);
+  const finalTrackedRef = useRef(false);
   
   const visibleImages = group.images.slice(0, maxImagesBeforeCta);
   const finalIndex = visibleImages.length;
@@ -246,14 +241,6 @@ function VenueGalleryCard({
     };
 
     trackAnalyticsEvent("venue_gallery_stage_click", basePayload);
-
-    if (nextIndex === finalIndex) {
-      trackAnalyticsEvent("venue_gallery_final_reached", {
-        ...basePayload,
-        label: `${group.label} final slide`,
-        is_final_slide: true
-      });
-    }
   }
 
   useEffect(() => {
@@ -264,6 +251,23 @@ function VenueGalleryCard({
 
   useEffect(() => {
     if (!isFinalSlide) return;
+    if (!finalTrackedRef.current) {
+      finalTrackedRef.current = true;
+      trackAnalyticsEvent("venue_gallery_final_reached", {
+        action_type: "gallery",
+        location: "venue_gallery_final",
+        label: `${group.label} final slide`,
+        locale,
+        target: group.id,
+        is_external: false,
+        gallery_group: group.id,
+        gallery_label: group.label,
+        slide_index: finalIndex,
+        slide_count: visibleImages.length,
+        is_final_slide: true
+      });
+    }
+
     const scrollTimer = setTimeout(() => {
       stageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 120);
@@ -284,7 +288,6 @@ function VenueGalleryCard({
     return () => window.clearTimeout(warmupTimer);
   }, [preloadSources]);
 
-  // Instant transition (used for keyboard or restart button)
   function goNext(source = "keyboard") {
     if (locked) return;
     setLocked(true);
@@ -300,14 +303,11 @@ function VenueGalleryCard({
     }, clickDelayMs);
   }
 
-  // Unified click handler for both the stage and the arrow
   function handleEmojiClick(event: MouseEvent<HTMLElement>) {
     if (locked || isFinalSlide) return;
     
-    // Stop event propagation so clicking the arrow doesn't fire the stage's click too
     event.stopPropagation();
 
-    // Ensure we always calculate coordinates relative to the stage, even if arrow was clicked
     const stageEl = stageRef.current;
     if (!stageEl) return;
 
@@ -321,7 +321,6 @@ function VenueGalleryCard({
     vibrateForBearReaction(currentEmoji);
     trackGalleryAdvance(event.currentTarget instanceof HTMLButtonElement ? "arrow" : "stage");
     
-    // Increment for the next click
     clickCountRef.current += 1;
 
     const id = Date.now();
@@ -331,12 +330,11 @@ function VenueGalleryCard({
 
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    // Wait for the emoji animation to transpire before going to next slide
     timeoutRef.current = setTimeout(() => {
       onActiveIndexChange(index >= finalIndex ? 0 : index + 1);
       setReactions((prev) => prev.filter((r) => r.id !== id));
       setLocked(false);
-    }, 800); // 800ms matches the animation duration
+    }, 800);
   }
 
   function handleStageKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -362,7 +360,6 @@ function VenueGalleryCard({
         onClick={isFinalSlide ? undefined : handleEmojiClick}
         onKeyDown={isFinalSlide ? undefined : handleStageKeyDown}
       >
-        {/* Render Floating Emojis */}
         {reactions.map((reaction) => (
           <span
             key={reaction.id}

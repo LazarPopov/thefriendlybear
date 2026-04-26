@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { StructuredData } from "@/components/structured-data";
 import { TouristMarketPage } from "@/components/tourist-market-page";
+import { siteConfig } from "@/lib/site";
 import { getTouristMarketConfig, getTouristMarketPageData } from "@/lib/tourist-market";
 
 type MarketRouteProps = {
@@ -14,17 +15,16 @@ const greekSlug = "estiatorio-sofia-kentro";
 const greekTitle = "Εστιατόριο με Κήπο στο Κέντρο της Σόφιας | The Friendly Bear";
 const greekDescription =
   "Ψάχνετε εστιατόριο στο κέντρο της Σόφιας; Το The Friendly Bear προσφέρει αυθεντική κουζίνα, κήπο, πιάτα αργού μαγειρέματος και χορτοφαγικές επιλογές.";
-const productionSiteUrl = "https://friendlybear.bg";
 
 function absoluteUrl(path: string) {
-  return new URL(path, productionSiteUrl).toString();
+  return new URL(path, siteConfig.siteUrl).toString();
 }
 
 function getGreekRestaurantSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "@id": `${productionSiteUrl}/#restaurant`,
+    "@id": `${siteConfig.siteUrl}/#restaurant`,
     name: "The Friendly Bear Sofia",
     image: absoluteUrl("/icons/friendly_bear_logo.jpg"),
     logo: absoluteUrl("/icons/friendly_bear_logo.jpg"),
@@ -86,10 +86,10 @@ function getGreekPageSchema() {
           "@id": breadcrumbId
         },
         about: {
-          "@id": `${productionSiteUrl}/#restaurant`
+          "@id": `${siteConfig.siteUrl}/#restaurant`
         },
         mainEntity: {
-          "@id": `${productionSiteUrl}/#restaurant`
+          "@id": `${siteConfig.siteUrl}/#restaurant`
         }
       }
     ]

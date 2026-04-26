@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { StructuredData } from "@/components/structured-data";
 import { TouristMarketPage } from "@/components/tourist-market-page";
+import { siteConfig } from "@/lib/site";
 import { getTouristMarketConfig, getTouristMarketPageData } from "@/lib/tourist-market";
 
 type MarketRouteProps = {
@@ -14,17 +15,16 @@ const italianSlug = "ristorante-sofia-centro";
 const italianTitle = "Ristorante con Giardino nel Centro di Sofia | The Friendly Bear";
 const italianDescription =
   "Cerchi un ristorante in centro a Sofia? The Friendly Bear offre cucina tipica bulgara, carni cotte lentamente, un giardino e opzioni vegetariane. Personale parla inglese.";
-const productionSiteUrl = "https://friendlybear.bg";
 
 function absoluteUrl(path: string) {
-  return new URL(path, productionSiteUrl).toString();
+  return new URL(path, siteConfig.siteUrl).toString();
 }
 
 function getItalianRestaurantSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "@id": `${productionSiteUrl}/#restaurant`,
+    "@id": `${siteConfig.siteUrl}/#restaurant`,
     name: "The Friendly Bear Sofia",
     description: "Un angolo accogliente nel cuore di Sofia con giardino, carni cotte lentamente e cucina tradizionale.",
     image: absoluteUrl("/icons/friendly_bear_logo.jpg"),
@@ -86,10 +86,10 @@ function getItalianPageSchema() {
           "@id": breadcrumbId
         },
         about: {
-          "@id": `${productionSiteUrl}/#restaurant`
+          "@id": `${siteConfig.siteUrl}/#restaurant`
         },
         mainEntity: {
-          "@id": `${productionSiteUrl}/#restaurant`
+          "@id": `${siteConfig.siteUrl}/#restaurant`
         }
       }
     ]

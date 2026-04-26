@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Script from "next/script";
 import { AnalyticsConsent } from "@/components/analytics-consent";
-import { GoogleAnalytics } from "@/components/google-analytics";
 import { ReservationPopupShell } from "@/components/reservation-popup-shell";
 import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
 const defaultGaMeasurementId = "G-4EBJBB4BND";
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_ID?.trim() || defaultGaMeasurementId;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -30,6 +31,10 @@ export const metadata: Metadata = {
       "en-GB": "/en",
       "x-default": "/bg"
     }
+  },
+  robots: {
+    index: false,
+    follow: false
   }
 };
 
@@ -52,15 +57,40 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim() || undefined;
-  const gaMeasurementId =
-    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || defaultGaMeasurementId;
   const directGaMeasurementId = gtmId ? undefined : gaMeasurementId;
   const htmlLanguage = await getHtmlLanguage();
 
   return (
     <html lang={htmlLanguage}>
       <body>
-        <GoogleAnalytics measurementId={directGaMeasurementId} />
+        {directGaMeasurementId ? (
+          <>
+            <Script
+              id="ga4-script"
+              src={`https://www.googletagmanager.com/gtag/js?id=${directGaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="ga4-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = window.gtag || gtag;
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied'
+});
+gtag('js', new Date());
+gtag('config', '${directGaMeasurementId}', { send_page_view: false });
+`
+              }}
+            />
+          </>
+        ) : null}
         <AnalyticsConsent gtmId={gtmId} gaMeasurementId={directGaMeasurementId} />
         <SiteChrome>
           {children}
