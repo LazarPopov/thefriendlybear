@@ -791,6 +791,13 @@ a {
   gap: 12px;
 }
 
+.about-founder-copy a {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .about-founder-frame {
   position: relative;
   min-height: 100%;

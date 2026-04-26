@@ -55,9 +55,13 @@ export async function EnglishAboutPageCms() {
           <p className="page-card-label">Founders</p>
           <h2>The Hearts Behind the Bear</h2>
           <p>
-            Jana, the culinary mind behind the Mish-Mash Recipes blog, and Georgi, the interior designer from
-            Ainterior, spent months uncovering the beauty of this house. "We wanted to create a place that feels like
-            home for everyone - neighbors, travelers, and their pets," they say.
+            Jana, the culinary mind behind the{" "}
+            <a href="https://www.mish-mash.recipes/" target="_blank" rel="noreferrer">
+              Mish-Mash Recipes blog
+            </a>
+            , and Georgi, the interior designer from Ainterior, spent months uncovering the beauty of this house. "We
+            wanted to create a place that feels like home for everyone - neighbors, travelers, and their pets," they
+            say.
           </p>
         </article>
 

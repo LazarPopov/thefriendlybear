@@ -55,7 +55,11 @@ export async function BulgarianAboutPageCms() {
           <p className="page-card-label">Основатели</p>
           <h2>Сърцата зад "Мечката"</h2>
           <p>
-            Жана, кулинарният ум зад блога Mish-Mash Recipes, и Георги, интериорен дизайнер от Ainterior, прекараха
+            Жана, кулинарният ум зад блога{" "}
+            <a href="https://www.mish-mash.recipes/" target="_blank" rel="noreferrer">
+              Mish-Mash Recipes
+            </a>
+            , и Георги, интериорен дизайнер от Ainterior, прекараха
             месеци в разкриване на красотата на тази къща. „Искахме да създадем място, което се усеща като дом за
             всеки - съседи, пътешественици и техните домашни любимци“, споделят те.
           </p>
