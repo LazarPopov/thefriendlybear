@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { getActiveSession, isSupabaseConfigured, signInWithPassword } from "@/lib/bookings/supabase";
 
 export function BookingLoginClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedNext = searchParams.get("next") || "/admin/bookings";
+  const nextPath = requestedNext.startsWith("/admin") ? requestedNext : "/admin/bookings";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -16,10 +19,10 @@ export function BookingLoginClient() {
   useEffect(() => {
     getActiveSession().then((session) => {
       if (session) {
-        router.replace("/admin/bookings");
+        router.replace(nextPath);
       }
     });
-  }, [router]);
+  }, [nextPath, router]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -28,7 +31,7 @@ export function BookingLoginClient() {
 
     try {
       await signInWithPassword(email.trim() || "demo@friendlybear.local", password);
-      router.replace("/admin/bookings");
+      router.replace(nextPath);
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : "Unable to sign in.");
     } finally {

@@ -149,7 +149,11 @@ function normalizePhoneNumber(input?: string | null) {
   return input?.replace(/[^\d+]/g, "");
 }
 
-function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile = businessProfile): JsonLd {
+function getRestaurantNode(
+  locale: SiteLocale,
+  profile: FrontendBusinessProfile = businessProfile,
+  menuNodeId?: string
+): JsonLd {
   return {
     "@type": "Restaurant",
     "@id": restaurantId,
@@ -161,13 +165,6 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
     founder: restaurantFounder,
     priceRange: "$$",
     servesCuisine: ["Bulgarian", "European"],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      reviewCount: "1361",
-      bestRating: "5",
-      worstRating: "1"
-    },
     description:
       locale === "bg"
         ? "Уютен ресторант в центъра на София с градина, отопляема зона за пушачи, бавно готвени меса, сезонно меню и приветливо обслужване."
@@ -189,7 +186,7 @@ function getRestaurantNode(locale: SiteLocale, profile: FrontendBusinessProfile 
       value: true
     })),
     hasMap: profile.mapUrl,
-    hasMenu: absoluteUrl(localeMeta[locale].menuPath),
+    hasMenu: menuNodeId ? { "@id": menuNodeId } : absoluteUrl(localeMeta[locale].menuPath),
     telephone: normalizePhoneNumber(profile.phoneNumber),
     openingHoursSpecification: hasOpeningHours(profile)
       ? profile.openingHours.map((entry) => ({
@@ -433,11 +430,12 @@ export function getMenuPageSchema(
 ): JsonLd {
   const menuUrl = absoluteUrl(localeMeta[locale].menuPath);
   const breadcrumbId = `${menuUrl}#breadcrumb`;
+  const menuId = `${menuUrl}#menu`;
 
   return {
     "@context": "https://schema.org",
     "@graph": [
-      getRestaurantNode(locale, profile),
+      getRestaurantNode(locale, profile, menuId),
       getBreadcrumbNode(
         [
           {
@@ -453,7 +451,7 @@ export function getMenuPageSchema(
       ),
       {
         "@type": "Menu",
-        "@id": `${menuUrl}#menu`,
+        "@id": menuId,
         name: menu.title,
         description: menu.intro,
         inLanguage: localeMeta[locale].language,
@@ -472,11 +470,13 @@ export function getMenuPageSchema(
               name: item.name,
               description: item.description?.join(" "),
               suitableForDiet: item.isVegetarian ? "https://schema.org/VegetarianDiet" : undefined,
-              offers: {
-                "@type": "Offer",
-                price: bgnPrice,
-                priceCurrency: "BGN"
-              }
+              offers: bgnPrice
+                ? {
+                    "@type": "Offer",
+                    price: bgnPrice,
+                    priceCurrency: "BGN"
+                  }
+                : undefined
             };
           })
         })),
@@ -505,38 +505,17 @@ export function getMenuPageSchema(
   };
 }
 
-export function getReviewsPageSchema(locale: SiteLocale, profile: FrontendBusinessProfile = businessProfile): JsonLd {
+export function getReviewsPageSchema(
+  locale: SiteLocale,
+  profile: FrontendBusinessProfile = businessProfile
+): JsonLd {
   const reviewsUrl = absoluteUrl(localeMeta[locale].reviewsPath);
   const breadcrumbId = `${reviewsUrl}#breadcrumb`;
-  const restaurantWithReviews = {
-    ...getRestaurantNode(locale, profile),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      reviewCount: "1361",
-      bestRating: "5",
-      worstRating: "1"
-    },
-    review: reviewSchemaItems[locale].map((review) => ({
-      "@type": "Review",
-      author: {
-        "@type": "Person",
-        name: review.author
-      },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: review.rating,
-        bestRating: "5",
-        worstRating: "1"
-      },
-      reviewBody: review.body
-    }))
-  };
 
   return {
     "@context": "https://schema.org",
     "@graph": [
-      restaurantWithReviews,
+      getRestaurantNode(locale, profile),
       getBreadcrumbNode(
         [
           {

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BookingErrorBoundary } from "@/components/bookings/booking-error-boundary";
 import { BookingsPwaRegister } from "@/components/bookings/bookings-pwa-register";
-import "./bookings.css";
 
 export const metadata: Metadata = {
   title: "The Friendly Bear Bookings",

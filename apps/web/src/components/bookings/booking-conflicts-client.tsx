@@ -92,7 +92,10 @@ export function BookingConflictsClient() {
           <p className="booking-kicker">{context.restaurant.name}</p>
           <h1>Sync conflicts</h1>
         </div>
-        <Link href="/admin/bookings">Back to book</Link>
+        <nav className="booking-nav" aria-label="Admin navigation">
+          <Link href="/admin">Admin</Link>
+          <Link href="/admin/bookings">Back to book</Link>
+        </nav>
       </header>
 
       {message ? <p className="booking-status booking-status-warning">{message}</p> : null}

@@ -70,7 +70,7 @@ export default async function RootLayout({
   });
   const htmlLanguage = await getHtmlLanguage();
   const pathname = await getRequestPathname();
-  const isBookingRoute = pathname.startsWith("/admin/bookings");
+  const isAdminRoute = pathname.startsWith("/admin");
 
   return (
     <html lang={htmlLanguage}>
@@ -106,7 +106,7 @@ gtag('config', '${directGaMeasurementId}', ${directGaConfig});
         <AnalyticsConsent gtmId={gtmId} gaMeasurementId={directGaMeasurementId} />
         <SiteChrome>
           {children}
-          {isBookingRoute ? null : <ReservationPopupShell />}
+          {isAdminRoute ? null : <ReservationPopupShell />}
         </SiteChrome>
       </body>
     </html>

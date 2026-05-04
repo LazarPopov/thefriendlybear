@@ -22,6 +22,14 @@ export type VenueGalleryGroup = {
   images: VenueGalleryImage[];
 };
 
+export type VenueGalleryReviewEntry = {
+  eyebrow: string;
+  quote: string;
+  author: string;
+  meta: string;
+  rating?: number;
+};
+
 type VenueProgressGalleryProps = {
   locale: GalleryLocale;
   eyebrow: string;
@@ -30,6 +38,7 @@ type VenueProgressGalleryProps = {
   groups: VenueGalleryGroup[];
   directionsHref: string;
   callHref: string | null;
+  reviews?: VenueGalleryReviewEntry[];
   maxImagesBeforeCta?: number;
 };
 
@@ -208,12 +217,7 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
 
 const galleryReviewCopy: Record<
   GalleryLocale,
-  Array<{
-    eyebrow: string;
-    quote: string;
-    author: string;
-    meta: string;
-  }>
+  VenueGalleryReviewEntry[]
 > = {
   bg: [
     { eyebrow: "Отзив от Google", quote: "Един от по-добрите ресторанти в София.", author: "Lazar Popov", meta: "5/5 · преди 1 година" },
@@ -533,9 +537,18 @@ function VenueGalleryCard({
   );
 }
 
-function VenueGalleryReview({ locale, index }: { locale: GalleryLocale; index: number; }) {
-  const reviews = galleryReviewCopy[locale];
+function VenueGalleryReview({
+  locale,
+  index,
+  reviews: customReviews
+}: {
+  locale: GalleryLocale;
+  index: number;
+  reviews?: VenueGalleryReviewEntry[];
+}) {
+  const reviews = customReviews?.length ? customReviews : galleryReviewCopy[locale];
   const review = reviews[index % reviews.length];
+  const rating = Math.max(0, Math.min(5, review.rating ?? 5));
 
   return (
     <aside
@@ -546,7 +559,7 @@ function VenueGalleryReview({ locale, index }: { locale: GalleryLocale; index: n
     >
       <div key={`${locale}-${index}`} className="venue-gallery-review-content">
         <p className="page-card-label">{review.eyebrow}</p>
-        <p className="venue-gallery-review-stars" aria-label="5 stars">
+        <p className="venue-gallery-review-stars" aria-label={`${rating} stars`}>
           ★★★★★
         </p>
         <blockquote>“{review.quote}”</blockquote>
@@ -562,12 +575,14 @@ function VenueGalleryFeature({
   group,
   directionsHref,
   callHref,
+  reviews,
   maxImagesBeforeCta
 }: {
   locale: GalleryLocale;
   group: VenueGalleryGroup;
   directionsHref: string;
   callHref: string | null;
+  reviews?: VenueGalleryReviewEntry[];
   maxImagesBeforeCta: number;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -584,7 +599,7 @@ function VenueGalleryFeature({
         activeIndex={activeIndex}
         onActiveIndexChange={setActiveIndex}
       />
-      <VenueGalleryReview locale={locale} index={activeIndex} />
+      <VenueGalleryReview locale={locale} index={activeIndex} reviews={reviews} />
     </div>
   );
 }
@@ -597,6 +612,7 @@ export function VenueProgressGallery({
   groups,
   directionsHref,
   callHref,
+  reviews,
   maxImagesBeforeCta = defaultMaxImagesBeforeCta
 }: VenueProgressGalleryProps) {
   const hasCopy = Boolean(eyebrow || title || intro);
@@ -624,6 +640,7 @@ export function VenueProgressGallery({
               group={group}
               directionsHref={directionsHref}
               callHref={callHref}
+              reviews={reviews}
               maxImagesBeforeCta={maxImagesBeforeCta}
             />
           </div>

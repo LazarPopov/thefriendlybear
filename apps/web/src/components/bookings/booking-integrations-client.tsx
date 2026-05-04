@@ -77,7 +77,10 @@ export function BookingIntegrationsClient() {
           <p className="booking-kicker">{context.restaurant.name}</p>
           <h1>Integrations</h1>
         </div>
-        <Link href="/admin/bookings">Back to book</Link>
+        <nav className="booking-nav" aria-label="Admin navigation">
+          <Link href="/admin">Admin</Link>
+          <Link href="/admin/bookings">Back to book</Link>
+        </nav>
       </header>
 
       {message ? <p className="booking-status booking-status-sync">{message}</p> : null}

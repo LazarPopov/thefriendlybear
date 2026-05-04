@@ -4,7 +4,7 @@ import {
   normalizeReviewSnippetEntries,
   type ReviewSnippetSeed
 } from "@/lib/cms/review-snippet-adapter";
-import { fetchStrapiCollection } from "@/lib/cms/strapi";
+import { fetchFeaturedReviewRows } from "@/lib/content-supabase";
 import type { TouristAudience } from "@/lib/cms/tourist-landing-page-adapter";
 
 type LocalizedText = Record<SiteLocale, string>;
@@ -106,17 +106,28 @@ export function getReviewSnippets(locale: SiteLocale) {
 }
 
 export async function getReviewSnippetsData(locale: SiteLocale) {
-  const entries = await fetchStrapiCollection<(typeof reviewSnippetEntries)[number]>(
-    "/api/review-snippets?populate=*&filters[isFeatured][$eq]=true&sort[0]=publishedAt:desc&pagination[pageSize]=6"
-  );
+  const rows = await fetchFeaturedReviewRows(locale);
 
-  return normalizeReviewSnippetEntries(entries.length > 0 ? entries : reviewSnippetEntries, locale);
+  if (rows.length > 0) {
+    return rows.map((row) => ({
+      id: row.id,
+      author: row.author_name,
+      source: row.source || "Google",
+      rating: row.rating,
+      relativeDate: row.relative_date_label || row.review_date || "",
+      reviewText: row.review_text,
+      tags: row.keyword_tags ?? []
+    }));
+  }
+
+  return normalizeReviewSnippetEntries(reviewSnippetEntries, locale);
 }
 
 export async function getTouristReviewSnippetsData(locale: SiteLocale, audience: TouristAudience) {
   const reviews = await getReviewSnippetsData(locale);
+  const targetedReviews = reviews.filter((review) => touristReviewAudienceMap[review.id]?.includes(audience));
 
-  return reviews.filter((review) => touristReviewAudienceMap[review.id]?.includes(audience)).slice(0, 2);
+  return (targetedReviews.length ? targetedReviews : reviews).slice(0, 2);
 }
 
 export function getReviewSummary(locale: SiteLocale) {

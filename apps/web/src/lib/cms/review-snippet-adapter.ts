@@ -19,7 +19,7 @@ export type CmsReviewSnippetEntry = {
 export type FrontendReviewSnippet = {
   id: string;
   author: string;
-  source: "Google";
+  source: string;
   rating: number;
   relativeDate: string;
   reviewText: string;

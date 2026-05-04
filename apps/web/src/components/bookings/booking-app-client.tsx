@@ -137,7 +137,7 @@ type OverlapLayout = {
 };
 
 type ClientErrorEntry = {
-  kind: "error" | "unhandledrejection" | "console.error" | "screenshot";
+  kind: "error" | "unhandledrejection" | "console.error";
   message: string;
   stack?: string;
   created_at: string;
@@ -187,50 +187,6 @@ function safeJson(value: unknown) {
       return nestedValue;
     })
   ) as Record<string, unknown>;
-}
-
-async function captureScreenShot() {
-  if (!navigator.mediaDevices?.getDisplayMedia) {
-    throw new Error("Screen capture is not available in this browser.");
-  }
-
-  const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
-  const video = document.createElement("video");
-
-  try {
-    video.srcObject = stream;
-    video.muted = true;
-    video.playsInline = true;
-
-    await new Promise<void>((resolve, reject) => {
-      video.onloadedmetadata = () => resolve();
-      video.onerror = () => reject(new Error("Could not load the screen capture frame."));
-      window.setTimeout(() => reject(new Error("Screen capture timed out.")), 5000);
-    });
-
-    await video.play();
-
-    const sourceWidth = video.videoWidth || window.innerWidth;
-    const sourceHeight = video.videoHeight || window.innerHeight;
-    const maxWidth = 1100;
-    const scale = Math.min(1, maxWidth / Math.max(1, sourceWidth));
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.max(1, Math.round(sourceWidth * scale));
-    canvas.height = Math.max(1, Math.round(sourceHeight * scale));
-
-    const context = canvas.getContext("2d");
-
-    if (!context) {
-      throw new Error("Could not prepare screenshot canvas.");
-    }
-
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    return canvas.toDataURL("image/jpeg", 0.72);
-  } finally {
-    stream.getTracks().forEach((track) => track.stop());
-    video.srcObject = null;
-  }
 }
 
 function downloadBugReport(report: BookingBugReport) {
@@ -663,6 +619,8 @@ export function BookingAppClient() {
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBugReportOpen, setIsBugReportOpen] = useState(false);
+  const [bugReportNote, setBugReportNote] = useState("");
   const [isCreatingBugReport, setIsCreatingBugReport] = useState(false);
 
   const resolvedSettings = useMemo(
@@ -1537,20 +1495,7 @@ export function BookingAppClient() {
   async function createBugReport() {
     setIsCreatingBugReport(true);
     setIsMenuOpen(false);
-
-    let screenshotDataUrl: string | null = null;
-    let screenshotError: string | null = null;
-
-    try {
-      screenshotDataUrl = await captureScreenShot();
-    } catch (error) {
-      screenshotError = errorMessage(error);
-      rememberClientError({
-        kind: "screenshot",
-        message: screenshotError,
-        stack: errorStack(error)
-      });
-    }
+    const userNote = bugReportNote.trim() || null;
 
     try {
       const scrollElement = scrollRef.current;
@@ -1570,10 +1515,11 @@ export function BookingAppClient() {
         restaurant_id: context?.restaurant.id ?? null,
         staff_profile_id: context?.staffProfile.id ?? null,
         selected_date: selectedDate,
-        screenshot_data_url: screenshotDataUrl,
-        screenshot_error: screenshotError,
+        screenshot_data_url: null,
+        screenshot_error: null,
         state: safeJson({
           url: window.location.href,
+          user_note: userNote,
           user_agent: navigator.userAgent,
           online: navigator.onLine,
           viewport: {
@@ -1653,15 +1599,14 @@ export function BookingAppClient() {
       }
 
       if (remoteReportId) {
-        setMessage(
-          screenshotDataUrl
-            ? `Bug report saved in the database. ID: ${remoteReportId}`
-            : `Bug report saved in the database without screenshot. ID: ${remoteReportId}`
-        );
+        setMessage(`Bug report saved in the database. ID: ${remoteReportId}`);
       } else {
         downloadBugReport(report);
         setMessage(`Bug report saved on this device and downloaded. ${remoteError ?? ""}`.trim());
       }
+
+      setIsBugReportOpen(false);
+      setBugReportNote("");
     } catch (error) {
       setMessage(`Could not save bug report: ${errorMessage(error)}`);
     } finally {
@@ -1834,7 +1779,10 @@ export function BookingAppClient() {
             aria-label="Save bug report"
             title="Save bug report"
             disabled={isCreatingBugReport}
-            onClick={createBugReport}
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsBugReportOpen(true);
+            }}
           />
           <div className="booking-menu">
             <button
@@ -1848,6 +1796,9 @@ export function BookingAppClient() {
             </button>
             {isMenuOpen ? (
               <div className="booking-menu-panel" role="menu">
+                <Link href="/admin" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Admin home
+                </Link>
                 <Link href="/admin/bookings/settings" role="menuitem" onClick={() => setIsMenuOpen(false)}>
                   Settings
                 </Link>
@@ -1856,6 +1807,15 @@ export function BookingAppClient() {
                 </Link>
                 <Link href="/admin/bookings/integrations" role="menuitem" onClick={() => setIsMenuOpen(false)}>
                   Integrations
+                </Link>
+                <Link href="/admin/menu" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Menu
+                </Link>
+                <Link href="/admin/reviews" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Reviews
+                </Link>
+                <Link href="/admin/content-access" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Content access
                 </Link>
                 <button
                   type="button"
@@ -2188,6 +2148,36 @@ export function BookingAppClient() {
           </button>
         ) : null}
       </section>
+
+      {isBugReportOpen ? (
+        <form
+          className="booking-prepare-popup booking-bug-report-panel"
+          role="dialog"
+          aria-label="Save bug report"
+          onSubmit={(event) => {
+            event.preventDefault();
+            createBugReport();
+          }}
+        >
+          <p className="booking-kicker">Bug report</p>
+          <h2>What happened?</h2>
+          <p>Optional: add a short note. The report will include the current reservation-book diagnostic JSON.</p>
+          <textarea
+            value={bugReportNote}
+            onChange={(event) => setBugReportNote(event.target.value)}
+            placeholder="Describe what went wrong."
+            aria-label="Bug report note"
+          />
+          <div className="booking-conflict-actions">
+            <button type="button" onClick={() => setIsBugReportOpen(false)} disabled={isCreatingBugReport}>
+              Cancel
+            </button>
+            <button type="submit" className="booking-save-settings" disabled={isCreatingBugReport}>
+              Submit report
+            </button>
+          </div>
+        </form>
+      ) : null}
 
       {connectPrompt ? (
         <div className="booking-toast">

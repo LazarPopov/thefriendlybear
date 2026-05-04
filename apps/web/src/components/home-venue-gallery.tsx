@@ -2,7 +2,13 @@ import {
   getBusinessProfileData,
   getPhoneHref
 } from "@/lib/business-profile-module";
-import { VenueProgressGallery, type VenueGalleryGroup, type VenueGalleryImage } from "@/components/venue-progress-gallery";
+import {
+  VenueProgressGallery,
+  type VenueGalleryGroup,
+  type VenueGalleryImage,
+  type VenueGalleryReviewEntry
+} from "@/components/venue-progress-gallery";
+import { getReviewSnippetsData } from "@/lib/review-snippets";
 import type { SiteLocale } from "@/lib/site";
 
 type HomeVenueGalleryProps = {
@@ -151,9 +157,21 @@ function getLocalizedImages(locale: SiteLocale): VenueGalleryImage[] {
   }));
 }
 
+async function getVenueGalleryReviews(locale: SiteLocale): Promise<VenueGalleryReviewEntry[]> {
+  const reviews = await getReviewSnippetsData(locale);
+
+  return reviews.map((review) => ({
+    eyebrow: locale === "bg" ? `Отзив от ${review.source || "Google"}` : `Review from ${review.source || "Google"}`,
+    quote: review.reviewText,
+    author: review.author,
+    meta: [review.rating ? `${review.rating}/5` : "", review.relativeDate].filter(Boolean).join(" · "),
+    rating: review.rating
+  }));
+}
+
 export async function HomeVenueGallery({ locale, maxImagesBeforeCta }: HomeVenueGalleryProps) {
   const copy = galleryCopy[locale];
-  const businessProfile = await getBusinessProfileData();
+  const [businessProfile, reviews] = await Promise.all([getBusinessProfileData(), getVenueGalleryReviews(locale)]);
   const groups: VenueGalleryGroup[] = [
     {
       id: "atmosphere",
@@ -171,6 +189,7 @@ export async function HomeVenueGallery({ locale, maxImagesBeforeCta }: HomeVenue
       groups={groups}
       directionsHref={businessProfile.mapUrl}
       callHref={getPhoneHref(businessProfile)}
+      reviews={reviews}
       maxImagesBeforeCta={maxImagesBeforeCta}
     />
   );

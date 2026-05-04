@@ -179,7 +179,10 @@ export function BookingSettingsClient() {
           <p className="booking-kicker">{context.restaurant.name}</p>
           <h1>Booking settings</h1>
         </div>
-        <Link href="/admin/bookings">Back to book</Link>
+        <nav className="booking-nav" aria-label="Admin navigation">
+          <Link href="/admin">Admin</Link>
+          <Link href="/admin/bookings">Back to book</Link>
+        </nav>
       </header>
 
       {!editable ? <p className="booking-status booking-status-warning">Only owner and admin accounts can change settings.</p> : null}
