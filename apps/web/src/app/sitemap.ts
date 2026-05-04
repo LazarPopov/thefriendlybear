@@ -10,7 +10,16 @@ import {
 } from "@/lib/tourist-market-route";
 import type { TouristMarketLocale } from "@/lib/cms/tourist-landing-page-adapter";
 
-const indexableRouteKeys: SiteRouteKey[] = ["home", "menu", "about", "contact", "reviews", "tourists"];
+const indexableRouteKeys: SiteRouteKey[] = [
+  "home",
+  "menu",
+  "about",
+  "contact",
+  "reservations",
+  "promotions",
+  "reviews",
+  "tourists"
+];
 
 function absoluteUrl(path: string) {
   return new URL(path, siteConfig.siteUrl).toString();
@@ -25,7 +34,7 @@ function getRoutePriority(routeKey: SiteRouteKey) {
     return 0.9;
   }
 
-  if (routeKey === "contact" || routeKey === "reviews") {
+  if (routeKey === "contact" || routeKey === "reservations" || routeKey === "reviews") {
     return 0.8;
   }
 
