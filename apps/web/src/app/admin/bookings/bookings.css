@@ -635,6 +635,10 @@
   padding: 0 10px;
 }
 
+.booking-inline-close {
+  display: none;
+}
+
 .booking-danger-button {
   border-color: #fecaca !important;
   background: #fff1f2 !important;
@@ -708,7 +712,7 @@
 
 .booking-hidden-vertical {
   position: absolute;
-  right: 12px;
+  left: 50%;
   z-index: 38;
   display: inline-flex;
   align-items: center;
@@ -722,14 +726,15 @@
   font: inherit;
   font-weight: 900;
   cursor: pointer;
+  transform: translateX(-50%);
 }
 
 .booking-hidden-up {
-  top: 52px;
+  top: 8px;
 }
 
 .booking-hidden-down {
-  bottom: 14px;
+  bottom: 8px;
 }
 
 .booking-toast,
@@ -1081,12 +1086,33 @@
   .booking-inline-form {
     align-content: start;
     max-width: calc(100vw - 76px);
+    padding-right: 34px;
   }
 
   .booking-inline-form input {
     min-width: 0;
     max-width: 100%;
     flex: 1 1 86px;
+  }
+
+  .booking-inline-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px !important;
+    padding: 0 !important;
+    border-color: #bfdbfe !important;
+    border-radius: 999px !important;
+    background: #ffffff !important;
+    color: #334155 !important;
+    font-size: 0.74rem !important;
+    line-height: 1;
   }
 
   .booking-toast,

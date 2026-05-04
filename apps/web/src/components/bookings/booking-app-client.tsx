@@ -98,7 +98,8 @@ type Draft = {
 
 type ConnectPrompt = {
   keep: Reservation;
-  merge: Reservation;
+  merge?: Reservation;
+  tableId?: string;
 };
 
 type PreparedPopup = {
@@ -157,6 +158,14 @@ function settingsForRestaurant(settings: BookingSettings | null, restaurantId: s
 
 function activeReservations(reservations: Reservation[]) {
   return reservations.filter((reservation) => !reservation.deleted_at);
+}
+
+function normalizedPhone(value: string) {
+  return value.replace(/\s+/g, "").trim();
+}
+
+function isBlankMergeDraft(draft: Draft) {
+  return !draft.customer_name.trim() && !draft.customer_phone.trim() && !draft.note.trim();
 }
 
 function canReadReservationAudit(context: BookingContext | null) {
@@ -1027,6 +1036,18 @@ export function BookingAppClient() {
 
     const partySize = Number(normalizePeople(draft.party_size));
     const rawStartTime = draft.start_time.trim();
+    const startTime = isValidTime(rawStartTime) ? normalizeDraftTime(rawStartTime, resolvedSettings) : rawStartTime;
+
+    if (draft.mode === "create" && isValidTime(rawStartTime) && isBlankMergeDraft(draft)) {
+      const mergeCandidate = findReservationToConnectAtTime(draft.tableId, startTime, reservations);
+
+      if (mergeCandidate) {
+        setConnectPrompt({ keep: mergeCandidate, tableId: draft.tableId });
+        setDraft(null);
+        setMessage(null);
+        return;
+      }
+    }
 
     if (!isValidTime(rawStartTime) || !partySize || !draft.customer_name.trim() || !isValidPhone(draft.customer_phone)) {
       setMessage(`Use format: 17:30 4 name ${PHONE_PLACEHOLDER} ${COMMENT_PLACEHOLDER}`);
@@ -1038,7 +1059,6 @@ export function BookingAppClient() {
       return;
     }
 
-    const startTime = normalizeDraftTime(rawStartTime, resolvedSettings);
     const endTime = addMinutes(startTime, resolvedSettings.default_duration_minutes);
 
     if (draft.mode === "create") {
@@ -1141,17 +1161,35 @@ export function BookingAppClient() {
     await refreshPendingCount();
   }
 
-  function maybePromptConnectedReservation(newReservation: Reservation, allReservations: Reservation[]) {
-    const duplicate = activeReservations(allReservations).find(
+  function findReservationToConnectAtTime(tableId: string, startTime: string, allReservations: Reservation[]) {
+    return activeReservations(allReservations).find(
       (reservation) =>
-        reservation.id !== newReservation.id &&
-        reservation.reservation_date === newReservation.reservation_date &&
-        reservation.start_time === newReservation.start_time &&
+        reservation.reservation_date === selectedDate &&
+        reservation.start_time === startTime &&
+        !reservation.tableIds.includes(tableId)
+    );
+  }
+
+  function maybePromptConnectedReservation(newReservation: Reservation, allReservations: Reservation[]) {
+    const newPhone = normalizedPhone(newReservation.customer_phone);
+    const duplicate = activeReservations(allReservations).find((reservation) => {
+      if (
+        reservation.id === newReservation.id ||
+        reservation.reservation_date !== newReservation.reservation_date ||
+        reservation.start_time !== newReservation.start_time
+      ) {
+        return false;
+      }
+
+      const samePhone = Boolean(newPhone) && normalizedPhone(reservation.customer_phone) === newPhone;
+      const sameReservation =
         reservation.party_size === newReservation.party_size &&
         reservation.customer_name.trim().toLowerCase() === newReservation.customer_name.trim().toLowerCase() &&
-        reservation.customer_phone.trim() === newReservation.customer_phone.trim() &&
-        (reservation.note ?? "") === (newReservation.note ?? "")
-    );
+        samePhone &&
+        (reservation.note ?? "") === (newReservation.note ?? "");
+
+      return sameReservation || samePhone;
+    });
 
     if (duplicate) {
       setConnectPrompt({ keep: duplicate, merge: newReservation });
@@ -1163,7 +1201,14 @@ export function BookingAppClient() {
       return;
     }
 
-    const tableIds = Array.from(new Set([...connectPrompt.keep.tableIds, ...connectPrompt.merge.tableIds]));
+    const tableIdsToAdd = connectPrompt.merge?.tableIds ?? (connectPrompt.tableId ? [connectPrompt.tableId] : []);
+    const tableIds = Array.from(new Set([...connectPrompt.keep.tableIds, ...tableIdsToAdd]));
+
+    if (tableIds.length === connectPrompt.keep.tableIds.length) {
+      setConnectPrompt(null);
+      return;
+    }
+
     const merged: Reservation = {
       ...connectPrompt.keep,
       tableIds,
@@ -1171,13 +1216,15 @@ export function BookingAppClient() {
       updated_by: context.staffProfile.id,
       sync_state: "pending_update"
     };
-    const removed: Reservation = {
-      ...connectPrompt.merge,
-      deleted_at: new Date().toISOString(),
-      deleted_by: context.staffProfile.id,
-      updated_by: context.staffProfile.id,
-      sync_state: "pending_delete"
-    };
+    const removed: Reservation | null = connectPrompt.merge
+      ? {
+          ...connectPrompt.merge,
+          deleted_at: new Date().toISOString(),
+          deleted_by: context.staffProfile.id,
+          updated_by: context.staffProfile.id,
+          sync_state: "pending_delete"
+        }
+      : null;
     const updateMutation = makeReservationMutation(
       "connect_tables",
       merged,
@@ -1185,13 +1232,9 @@ export function BookingAppClient() {
       { table_ids: tableIds },
       connectPrompt.keep.version
     );
-    const deleteMutation = makeReservationMutation(
-      "delete",
-      connectPrompt.merge,
-      context.staffProfile,
-      { operation: "delete" },
-      connectPrompt.merge.version
-    );
+    const deleteMutation = removed
+      ? makeReservationMutation("delete", connectPrompt.merge!, context.staffProfile, { operation: "delete" }, connectPrompt.merge!.version)
+      : null;
 
     setReservations((current) =>
       current.map((reservation) => {
@@ -1199,7 +1242,7 @@ export function BookingAppClient() {
           return merged;
         }
 
-        if (reservation.id === removed.id) {
+        if (removed && reservation.id === removed.id) {
           return removed;
         }
 
@@ -1207,15 +1250,21 @@ export function BookingAppClient() {
       })
     );
     await saveReservation(merged);
-    await saveReservation(removed);
+    if (removed) {
+      await saveReservation(removed);
+    }
     await queueReservationMutation(updateMutation);
-    await queueReservationMutation(deleteMutation);
+    if (deleteMutation) {
+      await queueReservationMutation(deleteMutation);
+    }
     setConnectPrompt(null);
 
     if (session && navigator.onLine) {
       await syncPendingMutations(session);
       await loadDayReservations(session, context.restaurant.id, selectedDate);
     }
+
+    await refreshPendingCount();
   }
 
   async function retryPendingSync() {
@@ -1590,6 +1639,9 @@ export function BookingAppClient() {
                 onClick={(event) => event.stopPropagation()}
                 onKeyDown={handleDraftKeyDown}
               >
+                <button type="button" className="booking-inline-close" aria-label="Close reservation editor" onClick={() => setDraft(null)}>
+                  x
+                </button>
                 <input
                   className="booking-inline-time"
                   aria-label="Time"
