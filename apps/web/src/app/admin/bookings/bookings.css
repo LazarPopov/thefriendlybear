@@ -1119,6 +1119,7 @@
 
   .booking-grid-frame {
     height: calc(100dvh - 214px);
+    margin-top: 0;
   }
 
   .booking-grid-corner,
