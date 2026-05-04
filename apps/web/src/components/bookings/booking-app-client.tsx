@@ -84,9 +84,9 @@ const HOUR_WIDTH = 128;
 const MINUTE_WIDTH = HOUR_WIDTH / 60;
 const TIMELINE_GUTTER_MINUTES = 15;
 const TIMELINE_GUTTER_WIDTH = TIMELINE_GUTTER_MINUTES * MINUTE_WIDTH;
-const OVERLAP_X_OFFSET = 10;
 const LIVE_REFRESH_INTERVAL_MS = 8000;
 const END_OF_DAY_SYNC_INTERVAL_MS = 5 * 60 * 1000;
+const LIST_TAB_DOUBLE_TAP_MS = 320;
 const PEOPLE_WORD = "\u0434\u0443\u0448\u0438";
 const PHONE_PLACEHOLDER = "\u0442\u0435\u043B\u0435\u0444\u043E\u043D";
 const COMMENT_PLACEHOLDER = "\u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440";
@@ -135,6 +135,8 @@ type OverlapLayout = {
   count: number;
   slot: number;
 };
+
+type EditableTarget = EventTarget | null;
 
 type ClientErrorEntry = {
   kind: "error" | "unhandledrejection" | "console.error";
@@ -238,6 +240,14 @@ function normalizedPhone(value: string) {
 
 function isBlankMergeDraft(draft: Draft) {
   return !draft.customer_name.trim() && !draft.customer_phone.trim() && !draft.note.trim();
+}
+
+function isEditableEventTarget(target: EditableTarget) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
 }
 
 function canReadReservationAudit(context: BookingContext | null) {
@@ -597,6 +607,7 @@ export function BookingAppClient() {
   const calendarRef = useRef<HTMLInputElement | null>(null);
   const peopleInputRef = useRef<HTMLInputElement | null>(null);
   const autoScrolledDateRef = useRef<string | null>(null);
+  const reservationListTabAtRef = useRef(0);
   const [session, setSession] = useState<BookingSession | null>(null);
   const [context, setContext] = useState<BookingContext | null>(null);
   const [settings, setSettings] = useState<BookingSettings | null>(null);
@@ -622,6 +633,8 @@ export function BookingAppClient() {
   const [isBugReportOpen, setIsBugReportOpen] = useState(false);
   const [bugReportNote, setBugReportNote] = useState("");
   const [isCreatingBugReport, setIsCreatingBugReport] = useState(false);
+  const [isReservationListOpen, setIsReservationListOpen] = useState(false);
+  const [isReservationListPreviewHeld, setIsReservationListPreviewHeld] = useState(false);
 
   const resolvedSettings = useMemo(
     () => settingsForRestaurant(settings, context?.restaurant.id ?? DEFAULT_BOOKING_SETTINGS.restaurant_id),
@@ -637,6 +650,10 @@ export function BookingAppClient() {
   );
   const tableIndexById = useMemo(() => new Map(visualTables.map((table, index) => [table.id, index])), [visualTables]);
   const activeDayReservations = activeReservations(reservations);
+  const tableLabelById = useMemo(
+    () => new Map(tables.map((table) => [table.id, tableLabel(table)])),
+    [tables]
+  );
   const dailySummary = useMemo(
     () => ({
       reservations: activeDayReservations.length,
@@ -651,6 +668,26 @@ export function BookingAppClient() {
     currentMinute <= Math.min(1439, visibleEndMinute(resolvedSettings))
       ? bookingMinuteToX(currentMinute, resolvedSettings)
       : null;
+  const reservationListItems = useMemo(
+    () =>
+      [...activeDayReservations].sort((a, b) => {
+        const timeSort = toMinutes(a.start_time) - toMinutes(b.start_time);
+
+        if (timeSort !== 0) {
+          return timeSort;
+        }
+
+        const nameSort = a.customer_name.localeCompare(b.customer_name, undefined, { sensitivity: "base" });
+
+        if (nameSort !== 0) {
+          return nameSort;
+        }
+
+        return b.party_size - a.party_size;
+      }),
+    [activeDayReservations]
+  );
+  const shouldShowReservationList = isReservationListOpen || isReservationListPreviewHeld;
   const overlapLayoutByTable = useMemo(() => {
     const layouts = new Map<string, Map<string, OverlapLayout>>();
 
@@ -988,20 +1025,111 @@ export function BookingAppClient() {
       return;
     }
 
-    const scrollElement = scrollRef.current;
+    const autoScrollKey = `${selectedDate}:${isMobileViewport ? "mobile" : "desktop"}`;
 
-    if (!scrollElement || currentTimeX === null || !visualTables.length || autoScrolledDateRef.current === selectedDate) {
+    if (currentTimeX === null || !visualTables.length || autoScrolledDateRef.current === autoScrollKey) {
       return;
     }
 
-    autoScrolledDateRef.current = selectedDate;
-    window.requestAnimationFrame(() => {
+    let isCancelled = false;
+    let didScrollToNow = false;
+    const retryTimers: number[] = [];
+
+    const scrollToNow = () => {
+      if (isCancelled || didScrollToNow) {
+        return;
+      }
+
+      const scrollElement = scrollRef.current;
+
+      if (!scrollElement) {
+        return;
+      }
+
       const maxLeft = Math.max(0, scrollElement.scrollWidth - scrollElement.clientWidth);
-      const targetLeft = clamp(tableColumnWidth + currentTimeX - scrollElement.clientWidth * 0.35, 0, maxLeft);
+      const isMeasured = scrollElement.clientWidth > 0 && scrollElement.scrollWidth > scrollElement.clientWidth;
+
+      if (!isMeasured) {
+        return;
+      }
+
+      const visibleTimelineWidth = Math.max(0, scrollElement.clientWidth - tableColumnWidth);
+      const targetLeft = clamp(currentTimeX - visibleTimelineWidth / 2, 0, maxLeft);
+      scrollElement.scrollLeft = targetLeft;
       scrollElement.scrollTo({ left: targetLeft, behavior: "auto" });
+      didScrollToNow = true;
+      autoScrolledDateRef.current = autoScrollKey;
       updateHiddenRows();
-    });
-  }, [currentTimeX, isTodaySelected, selectedDate, tableColumnWidth, visualTables.length]);
+    };
+
+    window.requestAnimationFrame(scrollToNow);
+    for (const delay of [80, 220, 500, 900]) {
+      retryTimers.push(window.setTimeout(scrollToNow, delay));
+    }
+
+    return () => {
+      isCancelled = true;
+      retryTimers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [currentTimeX, isMobileViewport, isTodaySelected, selectedDate, tableColumnWidth, visualTables.length]);
+
+  useEffect(() => {
+    if (isMobileViewport) {
+      setIsReservationListPreviewHeld(false);
+      return;
+    }
+
+    function handleKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsReservationListOpen(false);
+        setIsReservationListPreviewHeld(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || draft || isEditableEventTarget(event.target)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (event.repeat) {
+        setIsReservationListPreviewHeld(true);
+        return;
+      }
+
+      const now = Date.now();
+      const isDoubleTap = now - reservationListTabAtRef.current <= LIST_TAB_DOUBLE_TAP_MS;
+      reservationListTabAtRef.current = now;
+
+      if (isReservationListOpen) {
+        setIsReservationListOpen(false);
+        setIsReservationListPreviewHeld(false);
+        return;
+      }
+
+      if (isDoubleTap) {
+        setIsReservationListOpen(true);
+        setIsReservationListPreviewHeld(false);
+        return;
+      }
+
+      setIsReservationListPreviewHeld(true);
+    }
+
+    function handleKeyUp(event: globalThis.KeyboardEvent) {
+      if (event.key === "Tab") {
+        setIsReservationListPreviewHeld(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [draft, isMobileViewport, isReservationListOpen]);
 
   useEffect(() => {
     const timer = window.setInterval(async () => {
@@ -1185,6 +1313,39 @@ export function BookingAppClient() {
       note: reservation.note ?? ""
     });
     void loadReservationAudit(reservation);
+  }
+
+  function scrollToReservation(reservation: Reservation) {
+    const scrollElement = scrollRef.current;
+
+    if (!scrollElement) {
+      return;
+    }
+
+    const positions = reservation.tableIds
+      .map((id) => tableIndexById.get(id))
+      .filter((index): index is number => typeof index === "number");
+
+    if (!positions.length) {
+      return;
+    }
+
+    const rowIndex = Math.min(...positions);
+    const reservationLeft = reservationX(reservation, resolvedSettings);
+    const targetLeft = clamp(
+      tableColumnWidth + reservationLeft - scrollElement.clientWidth * (isMobileViewport ? 0.5 : 0.35),
+      0,
+      Math.max(0, scrollElement.scrollWidth - scrollElement.clientWidth)
+    );
+    const rowCenter = HEADER_HEIGHT + rowIndex * ROW_HEIGHT + ROW_HEIGHT / 2;
+    const targetTop = clamp(
+      rowCenter - scrollElement.clientHeight / 2,
+      0,
+      Math.max(0, scrollElement.scrollHeight - scrollElement.clientHeight)
+    );
+
+    scrollElement.scrollTo({ left: targetLeft, top: targetTop, behavior: "auto" });
+    updateHiddenRows();
   }
 
   function updateDraft(patch: Partial<Draft>) {
@@ -1771,6 +1932,17 @@ export function BookingAppClient() {
           <button type="button" data-symbol=">" onClick={() => setSelectedDate(addDays(selectedDate, 1))} aria-label="Next day">
             ›
           </button>
+          <button
+            type="button"
+            className={`booking-list-button ${shouldShowReservationList ? "booking-list-button-active" : ""}`}
+            aria-label="Show reservations"
+            aria-pressed={isReservationListOpen}
+            title="Reservations"
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsReservationListOpen((open) => !open);
+            }}
+          />
         </div>
         <div className="booking-topbar-actions">
           <button
@@ -1860,7 +2032,11 @@ export function BookingAppClient() {
 
       {groupedIds.size ? <p className="booking-group-message">Rows visually grouped for connected reservation</p> : null}
 
-      <section className="booking-grid-frame" aria-label="Reservation grid">
+      <section
+        className="booking-grid-frame"
+        aria-label="Reservation grid"
+        style={{ "--booking-header-height": `${HEADER_HEIGHT}px` } as CSSProperties}
+      >
         <div className="booking-scroll" ref={scrollRef} onScroll={updateHiddenRows}>
           <div
             className="booking-grid-surface"
@@ -1933,13 +2109,12 @@ export function BookingAppClient() {
               const span = Math.max(1, Math.max(...positions) - rowIndex + 1);
               const primaryTableId = visualTables[rowIndex]?.id ?? reservation.tableIds[0];
               const overlap = overlapLayoutByTable.get(primaryTableId)?.get(reservation.id) ?? { count: 1, slot: 0 };
-              const overlapInset = reservation.tableIds.length > 1 || overlap.count < 2 ? 0 : overlap.slot * OVERLAP_X_OFFSET;
               const baseWidth = reservationWidth(reservation);
               const blockStyle = {
                 gridColumn: 2,
                 gridRow: `${rowIndex + 2} / span ${span}`,
-                left: `${reservationX(reservation, resolvedSettings) + overlapInset}px`,
-                width: `${Math.max(44, baseWidth - overlapInset)}px`,
+                left: `${reservationX(reservation, resolvedSettings)}px`,
+                width: `${baseWidth}px`,
                 top: "9px",
                 zIndex: 9 + overlap.slot
               } as CSSProperties;
@@ -2002,6 +2177,7 @@ export function BookingAppClient() {
                 <button type="button" className="booking-inline-close" aria-label="Close reservation editor" onClick={() => setDraft(null)}>
                   x
                 </button>
+                <button type="submit" className="booking-inline-approve" aria-label="Save reservation" title="Save reservation" />
                 <input
                   className="booking-inline-time"
                   aria-label="Time"
@@ -2062,7 +2238,9 @@ export function BookingAppClient() {
                 {draft.mode === "edit" ? (
                   <button
                     type="button"
-                    className="booking-danger-button"
+                    className="booking-danger-button booking-trash-button"
+                    aria-label="Delete reservation"
+                    title="Delete reservation"
                     onClick={() => {
                       const reservation = reservations.find((item) => item.id === draft.reservationId);
 
@@ -2070,9 +2248,7 @@ export function BookingAppClient() {
                         deleteReservation(reservation);
                       }
                     }}
-                  >
-                    Delete
-                  </button>
+                  />
                 ) : null}
                 {phoneSuggestion && !draft.customer_phone ? (
                   <button type="button" className="booking-suggestion" onClick={() => updateDraft({ customer_phone: phoneSuggestion })}>
@@ -2137,6 +2313,67 @@ export function BookingAppClient() {
 
           </div>
         </div>
+        {shouldShowReservationList ? (
+          <div className="booking-future-list-overlay" role="dialog" aria-label="Reservations">
+            <div className="booking-future-list-header">
+              <div>
+                <p className="booking-kicker">{formatDateDisplay(selectedDate)}</p>
+                <h2>Reservations</h2>
+              </div>
+              <button
+                type="button"
+                aria-label="Close reservations"
+                onClick={() => {
+                  setIsReservationListOpen(false);
+                  setIsReservationListPreviewHeld(false);
+                }}
+              >
+                x
+              </button>
+            </div>
+            {reservationListItems.length ? (
+              <div className="booking-future-list">
+                {reservationListItems.map((reservation) => {
+                  const display = reservationDisplayParts(reservation);
+                  const tableLabels = reservation.tableIds.map((id) => tableLabelById.get(id) ?? id).join(", ");
+                  const isPastReservation =
+                    selectedDate < todayDateString() ||
+                    (selectedDate === todayDateString() && toMinutes(reservation.start_time) < currentMinute);
+
+                  return (
+                    <button
+                      key={reservation.id}
+                      type="button"
+                      className={`booking-future-list-item${isPastReservation ? " booking-future-list-item-past" : ""}`}
+                      onClick={() => {
+                        setIsReservationListOpen(false);
+                        setIsReservationListPreviewHeld(false);
+                        scrollToReservation(reservation);
+                        openEditDraft(reservation);
+                      }}
+                    >
+                      <span className="booking-future-list-main">
+                        <strong>{display.time}</strong>
+                        <span>{display.name}</span>
+                        <span className="booking-party-size">
+                          <span className="booking-person-icon booking-person-icon-dark" aria-label="People" role="img" />
+                          {display.partySize} {PEOPLE_WORD}
+                        </span>
+                        <span>{display.phone}</span>
+                        {display.note ? <span className="booking-future-list-note">{display.note}</span> : null}
+                      </span>
+                      <span className="booking-future-list-tables">
+                        {reservation.tableIds.length > 1 ? "Tables" : "Table"} {tableLabels}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="booking-future-list-empty">No reservations for this day.</p>
+            )}
+          </div>
+        ) : null}
         {hiddenVertical.above ? (
           <button type="button" className="booking-hidden-vertical booking-hidden-up" onClick={() => scrollVerticallyToward("up")}>
             &uarr; {hiddenVertical.above}
