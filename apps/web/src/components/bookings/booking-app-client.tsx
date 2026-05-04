@@ -87,6 +87,7 @@ const TIMELINE_GUTTER_WIDTH = TIMELINE_GUTTER_MINUTES * MINUTE_WIDTH;
 const LIVE_REFRESH_INTERVAL_MS = 8000;
 const END_OF_DAY_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 const LIST_TAB_DOUBLE_TAP_MS = 320;
+const LAST_UI_BOOKABLE_START_TIME = "21:15";
 const PEOPLE_WORD = "\u0434\u0443\u0448\u0438";
 const PHONE_PLACEHOLDER = "\u0442\u0435\u043B\u0435\u0444\u043E\u043D";
 const COMMENT_PLACEHOLDER = "\u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440";
@@ -275,9 +276,13 @@ function lastBookableMinute(settings: BookingSettings) {
   return timelineMinuteForTime(settings.last_bookable_start_time, settings);
 }
 
+function lastUiBookableMinute(settings: BookingSettings) {
+  return Math.min(lastBookableMinute(settings), timelineMinuteForTime(LAST_UI_BOOKABLE_START_TIME, settings));
+}
+
 function isOutsideBookableWindow(time: string, settings: BookingSettings) {
-  const minute = toMinutes(time);
-  return minute < toMinutes(settings.opening_start_time) || minute > toMinutes(settings.last_bookable_start_time);
+  const minute = timelineMinuteForTime(time, settings);
+  return minute < toMinutes(settings.opening_start_time) || minute > lastUiBookableMinute(settings);
 }
 
 function reservationX(reservation: Pick<Reservation, "start_time">, settings: BookingSettings) {
@@ -320,8 +325,60 @@ function buildTimeLabels(settings: BookingSettings) {
 
 function normalizeDraftTime(value: string, settings: BookingSettings) {
   const start = toMinutes(settings.opening_start_time);
-  const end = lastBookableMinute(settings);
+  const end = lastUiBookableMinute(settings);
   return minutesToTime(clamp(timelineMinuteForTime(value, settings), start, end));
+}
+
+function buildTimePickerOptions(settings: BookingSettings) {
+  const start = toMinutes(settings.opening_start_time);
+  const end = lastUiBookableMinute(settings);
+  const step = Math.max(1, settings.slot_step_minutes);
+  const hours = new Set<number>();
+  const minutesByHour = new Map<number, string[]>();
+
+  for (let minute = start; minute <= end; minute += step) {
+    const normalized = ((minute % 1440) + 1440) % 1440;
+    const hour = Math.floor(normalized / 60);
+    const minuteLabel = String(normalized % 60).padStart(2, "0");
+    hours.add(hour);
+    minutesByHour.set(hour, [...(minutesByHour.get(hour) ?? []), minuteLabel]);
+  }
+
+  return {
+    hours: [...hours],
+    minutesByHour
+  };
+}
+
+function parseDraftTimeInput(value: string) {
+  const trimmed = value.trim();
+
+  if (isValidTime(trimmed)) {
+    const [hours, minutes] = trimmed.split(":");
+    return `${hours.padStart(2, "0")}:${minutes}`;
+  }
+
+  const digits = trimmed.replace(/\D/g, "");
+
+  if (digits.length === 3) {
+    const hours = Number(digits.slice(0, 1));
+    const minutes = Number(digits.slice(1));
+
+    if (hours <= 9 && minutes <= 59) {
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    }
+  }
+
+  if (digits.length === 4) {
+    const hours = Number(digits.slice(0, 2));
+    const minutes = Number(digits.slice(2));
+
+    if (hours <= 23 && minutes <= 59) {
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    }
+  }
+
+  return null;
 }
 
 function normalizePeople(value: string) {
@@ -636,6 +693,8 @@ export function BookingAppClient() {
   const [isCreatingBugReport, setIsCreatingBugReport] = useState(false);
   const [isReservationListOpen, setIsReservationListOpen] = useState(false);
   const [isReservationListPreviewHeld, setIsReservationListPreviewHeld] = useState(false);
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+  const [timePickerHour, setTimePickerHour] = useState<number | null>(null);
 
   const resolvedSettings = useMemo(
     () => settingsForRestaurant(settings, context?.restaurant.id ?? DEFAULT_BOOKING_SETTINGS.restaurant_id),
@@ -645,6 +704,7 @@ export function BookingAppClient() {
   const timelineBookableWidth = timeRangeMinutes(resolvedSettings) * MINUTE_WIDTH;
   const timelineWidth = timelineBookableWidth + TIMELINE_GUTTER_WIDTH;
   const timeLabels = buildTimeLabels(resolvedSettings);
+  const timePickerOptions = useMemo(() => buildTimePickerOptions(resolvedSettings), [resolvedSettings]);
   const { tables: visualTables, groupedIds } = useMemo(
     () => groupedTableOrder(tables.filter((table) => table.is_active), reservations, resolvedSettings),
     [tables, reservations, resolvedSettings]
@@ -1013,6 +1073,13 @@ export function BookingAppClient() {
   }, [draft?.mode, draft?.tableId, draft?.start_time]);
 
   useEffect(() => {
+    if (!draft) {
+      setIsTimePickerOpen(false);
+      setTimePickerHour(null);
+    }
+  }, [draft]);
+
+  useEffect(() => {
     const timer = window.setInterval(() => {
       setCurrentMinute(currentLocalMinute());
     }, 60000);
@@ -1355,6 +1422,22 @@ export function BookingAppClient() {
     setDraft((current) => (current ? { ...current, ...patch } : current));
   }
 
+  function openTimePicker() {
+    setIsTimePickerOpen(true);
+    setTimePickerHour(null);
+  }
+
+  function selectTimePickerMinute(minute: string) {
+    if (timePickerHour === null) {
+      return;
+    }
+
+    const startTime = normalizeDraftTime(`${String(timePickerHour).padStart(2, "0")}:${minute}`, resolvedSettings);
+    updateDraft({ start_time: startTime, position_start_time: startTime });
+    setIsTimePickerOpen(false);
+    setTimePickerHour(null);
+  }
+
   async function saveDraft() {
     if (!draft || !context) {
       return;
@@ -1381,7 +1464,7 @@ export function BookingAppClient() {
     }
 
     if (isOutsideBookableWindow(rawStartTime, resolvedSettings)) {
-      setMessage(`Bookable starts are ${resolvedSettings.opening_start_time} to ${resolvedSettings.last_bookable_start_time}.`);
+      setMessage(`Bookable starts are ${resolvedSettings.opening_start_time} to ${minutesToTime(lastUiBookableMinute(resolvedSettings))}.`);
       return;
     }
 
@@ -2187,28 +2270,57 @@ export function BookingAppClient() {
                   aria-label="Time"
                   type="text"
                   value={draft.start_time}
-                  onChange={(event) => {
-                    const startTime = event.target.value;
-                    updateDraft({
-                      start_time: startTime,
-                      ...(isValidTime(startTime) ? { position_start_time: normalizeDraftTime(startTime, resolvedSettings) } : {})
-                    });
-                  }}
+                  readOnly
                   onBlur={() => {
                     if (isValidTime(draft.start_time)) {
                       const startTime = normalizeDraftTime(draft.start_time, resolvedSettings);
                       updateDraft({ start_time: startTime, position_start_time: startTime });
                     }
                   }}
-                  onFocus={(event) => event.currentTarget.select()}
+                  onClick={openTimePicker}
+                  onFocus={(event) => {
+                    event.currentTarget.select();
+                    openTimePicker();
+                  }}
                   onPointerUp={(event) => {
                     event.preventDefault();
                     event.currentTarget.select();
+                    openTimePicker();
                   }}
                   inputMode="numeric"
                   placeholder="17:30"
                   required
                 />
+                {isTimePickerOpen ? (
+                  <div className="booking-time-picker" aria-label="Choose reservation time">
+                    <div className="booking-time-picker-section">
+                      <span className="booking-time-picker-label">Hour</span>
+                      <div className="booking-time-picker-grid booking-time-picker-hours">
+                        {timePickerOptions.hours.map((hour) => (
+                          <button
+                            key={hour}
+                            type="button"
+                            className={timePickerHour === hour ? "booking-time-picker-active" : ""}
+                            aria-pressed={timePickerHour === hour}
+                            onClick={() => setTimePickerHour(hour)}
+                          >
+                            {String(hour).padStart(2, "0")}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="booking-time-picker-section">
+                      <span className="booking-time-picker-label">Minutes</span>
+                      <div className="booking-time-picker-grid booking-time-picker-minutes">
+                        {(timePickerHour === null ? [] : timePickerOptions.minutesByHour.get(timePickerHour) ?? []).map((minute) => (
+                          <button key={minute} type="button" onClick={() => selectTimePickerMinute(minute)}>
+                            {minute}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
                 <span className="booking-inline-people-wrap">
                   <span className="booking-person-icon booking-person-icon-dark" aria-label="People" role="img" />
                   <input
