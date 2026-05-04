@@ -132,6 +132,11 @@ function formatOpeningHours(entry: BusinessHoursEntry, closedLabel: string) {
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() || "/bg";
+
+  if (pathname.startsWith("/admin/bookings")) {
+    return <>{children}</>;
+  }
+
   const touristMarketAudience = getTouristMarketAudienceFromPath(pathname);
   const locale = getLocaleFromPath(pathname);
   const languagePath = getLanguageSwitchPath(pathname, locale, touristMarketAudience);

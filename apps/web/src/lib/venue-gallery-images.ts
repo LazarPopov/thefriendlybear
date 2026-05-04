@@ -142,3 +142,7 @@ export const getFoodGalleryImages = (locale: SiteLocale): StaticVenueGalleryImag
     locale
   )
 ];
+
+export const gardenGalleryImages = getGardenGalleryImages("en");
+export const interiorGalleryImages = getInteriorGalleryImages("en");
+export const foodGalleryImages = getFoodGalleryImages("en");

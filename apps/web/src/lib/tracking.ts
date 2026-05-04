@@ -2,6 +2,7 @@ export type BusinessActionKind =
   | "phone"
   | "whatsapp"
   | "external_booking"
+  | "external"
   | "menu"
   | "menu_category"
   | "about"
@@ -35,6 +36,7 @@ const eventNameMap: Record<BusinessActionKind, string> = {
   phone: "click_to_call",
   whatsapp: "whatsapp_click",
   external_booking: "external_booking_click",
+  external: "external_link_click",
   menu: "menu_cta_click",
   menu_category: "menu_category_click",
   about: "story_cta_click",

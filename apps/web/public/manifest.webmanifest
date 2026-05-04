@@ -1,0 +1,21 @@
+{
+  "name": "The Friendly Bear Bookings",
+  "short_name": "Bookings",
+  "start_url": "/admin/bookings",
+  "scope": "/admin/bookings",
+  "display": "standalone",
+  "background_color": "#f5f5f4",
+  "theme_color": "#334155",
+  "icons": [
+    {
+      "src": "/icons/bookings-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/bookings-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

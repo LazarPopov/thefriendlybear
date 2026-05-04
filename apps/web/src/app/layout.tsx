@@ -52,6 +52,11 @@ async function getHtmlLanguage() {
   return siteConfig.defaultLocale;
 }
 
+async function getRequestPathname() {
+  const requestHeaders = await headers();
+  return requestHeaders.get("x-friendlybear-pathname") ?? "";
+}
+
 export default async function RootLayout({
   children
 }: Readonly<{
@@ -64,6 +69,8 @@ export default async function RootLayout({
     ...(gaDebugMode ? { debug_mode: true } : {})
   });
   const htmlLanguage = await getHtmlLanguage();
+  const pathname = await getRequestPathname();
+  const isBookingRoute = pathname.startsWith("/admin/bookings");
 
   return (
     <html lang={htmlLanguage}>
@@ -99,7 +106,7 @@ gtag('config', '${directGaMeasurementId}', ${directGaConfig});
         <AnalyticsConsent gtmId={gtmId} gaMeasurementId={directGaMeasurementId} />
         <SiteChrome>
           {children}
-          <ReservationPopupShell />
+          {isBookingRoute ? null : <ReservationPopupShell />}
         </SiteChrome>
       </body>
     </html>

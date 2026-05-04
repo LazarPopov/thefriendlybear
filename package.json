@@ -11,6 +11,7 @@
     "build:web": "npm run build --workspace @friendlybear/web",
     "start:web": "npm run start --workspace @friendlybear/web",
     "lint:web": "npm run lint --workspace @friendlybear/web",
+    "seed:booking-staff": "node scripts/setup/seed-booking-staff.mjs",
     "dev:cms": "npm --prefix apps/cms run develop",
     "build:cms": "npm --prefix apps/cms run build",
     "start:cms": "npm --prefix apps/cms run start"

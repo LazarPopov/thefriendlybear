@@ -27,6 +27,7 @@ export function proxy(request: NextRequest) {
     "x-friendlybear-html-lang",
     getHtmlLanguage(request.nextUrl.pathname)
   );
+  requestHeaders.set("x-friendlybear-pathname", request.nextUrl.pathname);
 
   return NextResponse.next({
     request: {
