@@ -100,6 +100,7 @@
 }
 
 .booking-datebar,
+.booking-topbar-actions,
 .booking-menu,
 .booking-nav,
 .booking-conflict-actions,
@@ -114,6 +115,7 @@
 }
 
 .booking-datebar button,
+.booking-bug-button,
 .booking-menu-trigger,
 .booking-menu-panel a,
 .booking-menu-panel button,
@@ -160,6 +162,47 @@
 .booking-menu {
   position: relative;
   flex: 0 0 auto;
+}
+
+.booking-topbar-actions {
+  flex: 0 0 auto;
+}
+
+.booking-bug-button {
+  position: relative;
+  width: 44px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.booking-bug-button::before {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-right: 11px solid transparent;
+  border-bottom: 20px solid #f59e0b;
+  border-left: 11px solid transparent;
+  content: "";
+  transform: translateX(-50%);
+}
+
+.booking-bug-button::after {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  color: #ffffff;
+  content: "!";
+  font-size: 0.94rem;
+  font-weight: 1000;
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+.booking-bug-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
 }
 
 .booking-menu-trigger {
@@ -1026,7 +1069,7 @@
     min-width: 0;
   }
 
-  .booking-menu {
+  .booking-topbar-actions {
     grid-column: 2;
     grid-row: 1;
     align-self: center;

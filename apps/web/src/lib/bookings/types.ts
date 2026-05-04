@@ -160,3 +160,14 @@ export type BookingContext = {
   staffProfile: StaffProfile;
   membership: RestaurantMembership;
 };
+
+export type BookingBugReport = {
+  id: string;
+  created_at: string;
+  restaurant_id: string | null;
+  staff_profile_id: string | null;
+  selected_date: string | null;
+  screenshot_data_url: string | null;
+  screenshot_error: string | null;
+  state: Record<string, unknown>;
+};

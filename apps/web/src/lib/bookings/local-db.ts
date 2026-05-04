@@ -1,7 +1,7 @@
-import type { BookingSettings, PendingMutation, Reservation, Restaurant, RestaurantTable, StaffProfile } from "./types";
+import type { BookingBugReport, BookingSettings, PendingMutation, Reservation, Restaurant, RestaurantTable, StaffProfile } from "./types";
 
 const DB_NAME = "friendlybear_bookings";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 const STORE_NAMES = [
   "restaurants",
@@ -12,6 +12,7 @@ const STORE_NAMES = [
   "reservation_tables_by_date",
   "pending_mutations",
   "dismissed_prepare_popups",
+  "bug_reports",
   "local_ui_state"
 ] as const;
 
@@ -58,6 +59,7 @@ export function openBookingDb() {
       createStore(db, "reservation_tables_by_date", "id");
       const mutations = createStore(db, "pending_mutations", "mutation_id");
       createStore(db, "dismissed_prepare_popups", "id");
+      createStore(db, "bug_reports", "id");
       createStore(db, "local_ui_state", "key");
 
       if (tables && !tables.indexNames.contains("restaurant_id")) {
@@ -184,6 +186,15 @@ export async function savePendingMutations(mutations: PendingMutation[]) {
 export async function loadPendingMutations() {
   const mutations = await getAll<PendingMutation>("pending_mutations");
   return mutations.sort((a, b) => a.created_at.localeCompare(b.created_at));
+}
+
+export async function saveBugReport(report: BookingBugReport) {
+  await put("bug_reports", report);
+}
+
+export async function loadBugReports() {
+  const reports = await getAll<BookingBugReport>("bug_reports");
+  return reports.sort((a, b) => b.created_at.localeCompare(a.created_at));
 }
 
 export async function loadActivePendingMutations() {

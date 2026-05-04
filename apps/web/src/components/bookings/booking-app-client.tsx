@@ -29,10 +29,12 @@ import {
 } from "@/lib/bookings/defaults";
 import {
   isPopupDismissed,
+  loadPendingMutations,
   loadReservationsForDate,
   loadSettings,
   loadTables,
   rememberDismissedPopup,
+  saveBugReport,
   saveReservation,
   saveReservations,
   saveRestaurant,
@@ -62,6 +64,7 @@ import {
   subscribeToBookingChanges
 } from "@/lib/bookings/supabase";
 import type {
+  BookingBugReport,
   BookingContext,
   BookingSession,
   BookingSettings,
@@ -128,6 +131,115 @@ type OverlapLayout = {
   count: number;
   slot: number;
 };
+
+type ClientErrorEntry = {
+  kind: "error" | "unhandledrejection" | "console.error" | "screenshot";
+  message: string;
+  stack?: string;
+  created_at: string;
+};
+
+const clientErrorLog: ClientErrorEntry[] = [];
+
+function rememberClientError(entry: Omit<ClientErrorEntry, "created_at">) {
+  clientErrorLog.push({ ...entry, created_at: new Date().toISOString() });
+
+  if (clientErrorLog.length > 30) {
+    clientErrorLog.splice(0, clientErrorLog.length - 30);
+  }
+}
+
+function errorMessage(value: unknown) {
+  if (value instanceof Error) {
+    return value.message;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return String(value);
+  }
+}
+
+function errorStack(value: unknown) {
+  return value instanceof Error ? value.stack : undefined;
+}
+
+function safeJson(value: unknown) {
+  return JSON.parse(
+    JSON.stringify(value, (_key, nestedValue) => {
+      if (nestedValue instanceof Error) {
+        return {
+          name: nestedValue.name,
+          message: nestedValue.message,
+          stack: nestedValue.stack
+        };
+      }
+
+      return nestedValue;
+    })
+  ) as Record<string, unknown>;
+}
+
+async function captureScreenShot() {
+  if (!navigator.mediaDevices?.getDisplayMedia) {
+    throw new Error("Screen capture is not available in this browser.");
+  }
+
+  const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+  const video = document.createElement("video");
+
+  try {
+    video.srcObject = stream;
+    video.muted = true;
+    video.playsInline = true;
+
+    await new Promise<void>((resolve, reject) => {
+      video.onloadedmetadata = () => resolve();
+      video.onerror = () => reject(new Error("Could not load the screen capture frame."));
+      window.setTimeout(() => reject(new Error("Screen capture timed out.")), 5000);
+    });
+
+    await video.play();
+
+    const sourceWidth = video.videoWidth || window.innerWidth;
+    const sourceHeight = video.videoHeight || window.innerHeight;
+    const maxWidth = 1400;
+    const scale = Math.min(1, maxWidth / Math.max(1, sourceWidth));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+    canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("Could not prepare screenshot canvas.");
+    }
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL("image/png");
+  } finally {
+    stream.getTracks().forEach((track) => track.stop());
+    video.srcObject = null;
+  }
+}
+
+function downloadBugReport(report: BookingBugReport) {
+  const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `friendlybear-bug-report-${report.created_at.replace(/[:.]/g, "-")}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
 
 function currentLocalMinute() {
   const now = new Date();
@@ -547,6 +659,7 @@ export function BookingAppClient() {
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCreatingBugReport, setIsCreatingBugReport] = useState(false);
 
   const resolvedSettings = useMemo(
     () => settingsForRestaurant(settings, context?.restaurant.id ?? DEFAULT_BOOKING_SETTINGS.restaurant_id),
@@ -728,6 +841,44 @@ export function BookingAppClient() {
       mediaQuery.removeEventListener("change", handleViewportChange);
     };
   }, [bootstrap, refreshPendingCount]);
+
+  useEffect(() => {
+    const originalConsoleError = console.error;
+
+    function handleWindowError(event: ErrorEvent) {
+      rememberClientError({
+        kind: "error",
+        message: event.message,
+        stack: event.error instanceof Error ? event.error.stack : undefined
+      });
+    }
+
+    function handleUnhandledRejection(event: PromiseRejectionEvent) {
+      rememberClientError({
+        kind: "unhandledrejection",
+        message: errorMessage(event.reason),
+        stack: errorStack(event.reason)
+      });
+    }
+
+    console.error = (...args: unknown[]) => {
+      rememberClientError({
+        kind: "console.error",
+        message: args.map(errorMessage).join(" "),
+        stack: args.map(errorStack).filter(Boolean).join("\n")
+      });
+      originalConsoleError.apply(console, args);
+    };
+
+    window.addEventListener("error", handleWindowError);
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      console.error = originalConsoleError;
+      window.removeEventListener("error", handleWindowError);
+      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+    };
+  }, []);
 
   useEffect(() => {
     if (!session || !context) {
@@ -1289,6 +1440,119 @@ export function BookingAppClient() {
     router.replace("/admin/bookings/login");
   }
 
+  async function createBugReport() {
+    setIsCreatingBugReport(true);
+    setIsMenuOpen(false);
+
+    let screenshotDataUrl: string | null = null;
+    let screenshotError: string | null = null;
+
+    try {
+      screenshotDataUrl = await captureScreenShot();
+    } catch (error) {
+      screenshotError = errorMessage(error);
+      rememberClientError({
+        kind: "screenshot",
+        message: screenshotError,
+        stack: errorStack(error)
+      });
+    }
+
+    try {
+      const scrollElement = scrollRef.current;
+      const pendingMutations = await loadPendingMutations().catch((error) => {
+        rememberClientError({
+          kind: "error",
+          message: `Could not load pending mutations for bug report: ${errorMessage(error)}`,
+          stack: errorStack(error)
+        });
+        return [];
+      });
+      const storageEstimate = navigator.storage?.estimate ? await navigator.storage.estimate().catch(() => null) : null;
+      const now = new Date().toISOString();
+      const report: BookingBugReport = {
+        id: createId("bug-report"),
+        created_at: now,
+        restaurant_id: context?.restaurant.id ?? null,
+        staff_profile_id: context?.staffProfile.id ?? null,
+        selected_date: selectedDate,
+        screenshot_data_url: screenshotDataUrl,
+        screenshot_error: screenshotError,
+        state: safeJson({
+          url: window.location.href,
+          user_agent: navigator.userAgent,
+          online: navigator.onLine,
+          viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            device_pixel_ratio: window.devicePixelRatio
+          },
+          screen: {
+            width: window.screen.width,
+            height: window.screen.height,
+            avail_width: window.screen.availWidth,
+            avail_height: window.screen.availHeight
+          },
+          scroll: scrollElement
+            ? {
+                left: scrollElement.scrollLeft,
+                top: scrollElement.scrollTop,
+                width: scrollElement.scrollWidth,
+                height: scrollElement.scrollHeight,
+                client_width: scrollElement.clientWidth,
+                client_height: scrollElement.clientHeight
+              }
+            : null,
+          storage_estimate: storageEstimate,
+          supabase_configured: isSupabaseConfigured(),
+          demo_session: session ? isDemoSession(session) : false,
+          session_user: session
+            ? {
+                id: session.user.id,
+                email: session.user.email ?? null
+              }
+            : null,
+          restaurant: context?.restaurant ?? null,
+          staff_profile: context?.staffProfile ?? null,
+          membership: context?.membership ?? null,
+          selected_date: selectedDate,
+          date_text: dateText,
+          message,
+          is_online: isOnline,
+          is_mobile_viewport: isMobileViewport,
+          pending_count: pendingCount,
+          daily_summary: dailySummary,
+          settings: resolvedSettings,
+          tables,
+          visual_tables: visualTables,
+          reservations,
+          active_day_reservations: activeDayReservations,
+          pending_mutations: pendingMutations,
+          draft,
+          connect_prompt: connectPrompt,
+          prepare_popup: preparePopup,
+          hidden_rows: hiddenRows,
+          hidden_vertical: hiddenVertical,
+          current_minute: currentMinute,
+          current_time_x: currentTimeX,
+          recent_errors: clientErrorLog
+        })
+      };
+
+      await saveBugReport(report);
+      downloadBugReport(report);
+      setMessage(
+        screenshotDataUrl
+          ? "Bug report saved on this device and downloaded."
+          : `Bug report saved without screenshot. ${screenshotError ?? ""}`.trim()
+      );
+    } catch (error) {
+      setMessage(`Could not save bug report: ${errorMessage(error)}`);
+    } finally {
+      setIsCreatingBugReport(false);
+    }
+  }
+
   function scrollToward(direction: "left" | "right") {
     const scrollElement = scrollRef.current;
 
@@ -1447,39 +1711,49 @@ export function BookingAppClient() {
             ›
           </button>
         </div>
-        <div className="booking-menu">
+        <div className="booking-topbar-actions">
           <button
             type="button"
-            className="booking-menu-trigger"
-            aria-label="Booking menu"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((open) => !open)}
-          >
-            ...
-          </button>
-          {isMenuOpen ? (
-            <div className="booking-menu-panel" role="menu">
-              <Link href="/admin/bookings/settings" role="menuitem" onClick={() => setIsMenuOpen(false)}>
-                Settings
-              </Link>
-              <Link href="/admin/bookings/conflicts" role="menuitem" onClick={() => setIsMenuOpen(false)}>
-                Conflicts
-              </Link>
-              <Link href="/admin/bookings/integrations" role="menuitem" onClick={() => setIsMenuOpen(false)}>
-                Integrations
-              </Link>
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  signOut();
-                }}
-              >
-                Sign out
-              </button>
-            </div>
-          ) : null}
+            className="booking-bug-button"
+            aria-label="Save bug report"
+            title="Save bug report"
+            disabled={isCreatingBugReport}
+            onClick={createBugReport}
+          />
+          <div className="booking-menu">
+            <button
+              type="button"
+              className="booking-menu-trigger"
+              aria-label="Booking menu"
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((open) => !open)}
+            >
+              ...
+            </button>
+            {isMenuOpen ? (
+              <div className="booking-menu-panel" role="menu">
+                <Link href="/admin/bookings/settings" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Settings
+                </Link>
+                <Link href="/admin/bookings/conflicts" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Conflicts
+                </Link>
+                <Link href="/admin/bookings/integrations" role="menuitem" onClick={() => setIsMenuOpen(false)}>
+                  Integrations
+                </Link>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    signOut();
+                  }}
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 
