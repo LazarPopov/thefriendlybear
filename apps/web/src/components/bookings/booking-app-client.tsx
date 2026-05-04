@@ -97,6 +97,7 @@ type Draft = {
   tableId: string;
   tableIds: string[];
   start_time: string;
+  position_start_time: string;
   party_size: string;
   customer_name: string;
   customer_phone: string;
@@ -1243,6 +1244,7 @@ export function BookingAppClient() {
       tableId,
       tableIds: [tableId],
       start_time: startTime,
+      position_start_time: startTime,
       party_size: "4",
       customer_name: "",
       customer_phone: phoneSuggestion ?? "",
@@ -1307,6 +1309,7 @@ export function BookingAppClient() {
       tableId: reservation.tableIds[0],
       tableIds: reservation.tableIds,
       start_time: reservation.start_time.slice(0, 5),
+      position_start_time: reservation.start_time.slice(0, 5),
       party_size: String(reservation.party_size),
       customer_name: reservation.customer_name,
       customer_phone: reservation.customer_phone,
@@ -1840,7 +1843,8 @@ export function BookingAppClient() {
   }
 
   function getInlineFormMetrics(currentDraft: Draft) {
-    const rawLeft = bookingMinuteToX(timelineMinuteForTime(currentDraft.start_time, resolvedSettings), resolvedSettings);
+    const positionTime = isValidTime(currentDraft.start_time) ? currentDraft.start_time : currentDraft.position_start_time;
+    const rawLeft = bookingMinuteToX(timelineMinuteForTime(positionTime, resolvedSettings), resolvedSettings);
     const desiredWidth = Math.max(420, resolvedSettings.default_duration_minutes * MINUTE_WIDTH);
     const scrollElement = scrollRef.current;
 
@@ -2183,11 +2187,23 @@ export function BookingAppClient() {
                   aria-label="Time"
                   type="text"
                   value={draft.start_time}
-                  onChange={(event) => updateDraft({ start_time: event.target.value })}
+                  onChange={(event) => {
+                    const startTime = event.target.value;
+                    updateDraft({
+                      start_time: startTime,
+                      ...(isValidTime(startTime) ? { position_start_time: normalizeDraftTime(startTime, resolvedSettings) } : {})
+                    });
+                  }}
                   onBlur={() => {
                     if (isValidTime(draft.start_time)) {
-                      updateDraft({ start_time: normalizeDraftTime(draft.start_time, resolvedSettings) });
+                      const startTime = normalizeDraftTime(draft.start_time, resolvedSettings);
+                      updateDraft({ start_time: startTime, position_start_time: startTime });
                     }
+                  }}
+                  onFocus={(event) => event.currentTarget.select()}
+                  onPointerUp={(event) => {
+                    event.preventDefault();
+                    event.currentTarget.select();
                   }}
                   inputMode="numeric"
                   placeholder="17:30"
