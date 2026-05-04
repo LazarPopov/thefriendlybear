@@ -1,6 +1,7 @@
 import { DEFAULT_RESTAURANT } from "./defaults";
 import type {
   BookingContext,
+  BookingBugReport,
   BookingSession,
   BookingSettings,
   PendingMutation,
@@ -416,6 +417,17 @@ export async function resolveRemoteConflict(
     p_conflict_id: conflictId,
     p_resolution: resolution,
     p_manual_payload: manualPayload
+  });
+}
+
+export async function createRemoteBugReport(session: BookingSession, report: BookingBugReport) {
+  return rpc<string>(session, "create_booking_bug_report", {
+    p_restaurant_id: report.restaurant_id,
+    p_local_report_id: report.id,
+    p_selected_date: report.selected_date,
+    p_screenshot_data_url: report.screenshot_data_url,
+    p_screenshot_error: report.screenshot_error,
+    p_state: report.state
   });
 }
 

@@ -29,14 +29,16 @@ import {
 } from "@/lib/bookings/defaults";
 import {
   isPopupDismissed,
+  loadLocalUiState,
   loadPendingMutations,
   loadReservationsForDate,
   loadSettings,
   loadTables,
   rememberDismissedPopup,
+  replaceReservationsForDate,
   saveBugReport,
+  saveLocalUiState,
   saveReservation,
-  saveReservations,
   saveRestaurant,
   saveSettings,
   saveStaffProfile,
@@ -51,6 +53,7 @@ import {
 } from "@/lib/bookings/sync";
 import {
   clearStoredSession,
+  createRemoteBugReport,
   fallbackContext,
   fetchBookingContext,
   fetchBookingSettings,
@@ -83,6 +86,7 @@ const TIMELINE_GUTTER_MINUTES = 15;
 const TIMELINE_GUTTER_WIDTH = TIMELINE_GUTTER_MINUTES * MINUTE_WIDTH;
 const OVERLAP_X_OFFSET = 10;
 const LIVE_REFRESH_INTERVAL_MS = 8000;
+const END_OF_DAY_SYNC_INTERVAL_MS = 5 * 60 * 1000;
 const PEOPLE_WORD = "\u0434\u0443\u0448\u0438";
 const PHONE_PLACEHOLDER = "\u0442\u0435\u043B\u0435\u0444\u043E\u043D";
 const COMMENT_PLACEHOLDER = "\u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440";
@@ -208,7 +212,7 @@ async function captureScreenShot() {
 
     const sourceWidth = video.videoWidth || window.innerWidth;
     const sourceHeight = video.videoHeight || window.innerHeight;
-    const maxWidth = 1400;
+    const maxWidth = 1100;
     const scale = Math.min(1, maxWidth / Math.max(1, sourceWidth));
     const canvas = document.createElement("canvas");
     canvas.width = Math.max(1, Math.round(sourceWidth * scale));
@@ -222,7 +226,7 @@ async function captureScreenShot() {
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    return canvas.toDataURL("image/png");
+    return canvas.toDataURL("image/jpeg", 0.72);
   } finally {
     stream.getTracks().forEach((track) => track.stop());
     video.srcObject = null;
@@ -713,7 +717,7 @@ export function BookingAppClient() {
       if (isSupabaseConfigured() && !isDemoSession(activeSession) && navigator.onLine) {
         try {
           nextReservations = await fetchReservations(activeSession, restaurantId, dateValue);
-          await saveReservations(nextReservations);
+          await replaceReservationsForDate(restaurantId, dateValue, nextReservations);
           setMessage(null);
         } catch {
           setMessage("Server unavailable. Changes are saved on this device and will sync later.");
@@ -938,6 +942,55 @@ export function BookingAppClient() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [context, loadDayReservations, selectedDate, session]);
+
+  useEffect(() => {
+    if (!session || !context || isDemoSession(session) || !isSupabaseConfigured()) {
+      return;
+    }
+
+    let isCancelled = false;
+    const activeSession = session;
+    const restaurantId = context.restaurant.id;
+    const syncKey = `booking_last_end_of_day_force_sync_${restaurantId}`;
+
+    async function forceSyncPreviousDay() {
+      if (isCancelled || !navigator.onLine) {
+        return;
+      }
+
+      const dateToSync = addDays(todayDateString(), -1);
+      const lastSyncedDate = await loadLocalUiState<string>(syncKey);
+
+      if (lastSyncedDate === dateToSync) {
+        return;
+      }
+
+      try {
+        await syncPendingMutations(activeSession);
+        const remoteReservations = await fetchReservations(activeSession, restaurantId, dateToSync);
+        await replaceReservationsForDate(restaurantId, dateToSync, remoteReservations);
+        await saveLocalUiState(syncKey, dateToSync);
+
+        if (!isCancelled && selectedDate === dateToSync) {
+          setReservations(remoteReservations);
+        }
+
+        await refreshPendingCount();
+      } catch (error) {
+        if (!isCancelled && selectedDate === dateToSync) {
+          setMessage(`End-of-day sync failed: ${errorMessage(error)}`);
+        }
+      }
+    }
+
+    forceSyncPreviousDay();
+    const timer = window.setInterval(forceSyncPreviousDay, END_OF_DAY_SYNC_INTERVAL_MS);
+
+    return () => {
+      isCancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [context, refreshPendingCount, selectedDate, session]);
 
   useEffect(() => {
     if (!context || !session || isDemoSession(session) || !isSupabaseConfigured() || !navigator.onLine) {
@@ -1435,6 +1488,47 @@ export function BookingAppClient() {
     await refreshPendingCount();
   }
 
+  async function forceSyncDay(dateValue = selectedDate, showMessage = true) {
+    if (!session || !context) {
+      if (showMessage) {
+        setMessage("Sign in again to sync local changes.");
+      }
+      return false;
+    }
+
+    if (!navigator.onLine || isDemoSession(session) || !isSupabaseConfigured()) {
+      if (showMessage) {
+        setMessage("Offline. Changes are saved on this device and will sync when internet returns.");
+      }
+      return false;
+    }
+
+    try {
+      const result = await syncPendingMutations(session);
+      const remoteReservations = await fetchReservations(session, context.restaurant.id, dateValue);
+      await replaceReservationsForDate(context.restaurant.id, dateValue, remoteReservations);
+
+      if (dateValue === selectedDate) {
+        setReservations(remoteReservations);
+      }
+
+      await refreshPendingCount();
+
+      if (showMessage) {
+        const detail = syncResultMessage(result);
+        setMessage(`Forced sync complete for ${formatDateDisplay(dateValue)}. ${detail}`);
+      }
+
+      return true;
+    } catch (error) {
+      if (showMessage) {
+        setMessage(`Forced sync failed: ${errorMessage(error)}`);
+      }
+
+      return false;
+    }
+  }
+
   function signOut() {
     clearStoredSession();
     router.replace("/admin/bookings/login");
@@ -1540,12 +1634,34 @@ export function BookingAppClient() {
       };
 
       await saveBugReport(report);
-      downloadBugReport(report);
-      setMessage(
-        screenshotDataUrl
-          ? "Bug report saved on this device and downloaded."
-          : `Bug report saved without screenshot. ${screenshotError ?? ""}`.trim()
-      );
+      let remoteReportId: string | null = null;
+      let remoteError: string | null = null;
+
+      if (session && context && navigator.onLine && isSupabaseConfigured() && !isDemoSession(session)) {
+        try {
+          remoteReportId = await createRemoteBugReport(session, report);
+        } catch (error) {
+          remoteError = errorMessage(error);
+          rememberClientError({
+            kind: "error",
+            message: `Could not save bug report to database: ${remoteError}`,
+            stack: errorStack(error)
+          });
+        }
+      } else {
+        remoteError = "Database submit is unavailable while offline or in local demo mode.";
+      }
+
+      if (remoteReportId) {
+        setMessage(
+          screenshotDataUrl
+            ? `Bug report saved in the database. ID: ${remoteReportId}`
+            : `Bug report saved in the database without screenshot. ID: ${remoteReportId}`
+        );
+      } else {
+        downloadBugReport(report);
+        setMessage(`Bug report saved on this device and downloaded. ${remoteError ?? ""}`.trim());
+      }
     } catch (error) {
       setMessage(`Could not save bug report: ${errorMessage(error)}`);
     } finally {
@@ -1741,6 +1857,16 @@ export function BookingAppClient() {
                 <Link href="/admin/bookings/integrations" role="menuitem" onClick={() => setIsMenuOpen(false)}>
                   Integrations
                 </Link>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    forceSyncDay();
+                  }}
+                >
+                  Force sync day
+                </button>
                 <button
                   type="button"
                   role="menuitem"

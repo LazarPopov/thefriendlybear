@@ -180,12 +180,25 @@ create table if not exists phone_call_events (
   created_at timestamptz not null default now()
 );
 
+create table if not exists booking_bug_reports (
+  id uuid primary key default gen_random_uuid(),
+  restaurant_id uuid not null references restaurants(id) on delete cascade,
+  created_by uuid references staff_profiles(id) on delete set null,
+  local_report_id text,
+  selected_date date,
+  screenshot_data_url text,
+  screenshot_error text,
+  state jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists restaurant_memberships_staff_idx on restaurant_memberships (staff_profile_id, is_active);
 create index if not exists restaurant_tables_restaurant_sort_idx on restaurant_tables (restaurant_id, sort_order);
 create index if not exists reservations_restaurant_date_idx on reservations (restaurant_id, reservation_date, deleted_at);
 create index if not exists reservation_tables_restaurant_reservation_idx on reservation_tables (restaurant_id, reservation_id);
 create index if not exists sync_conflicts_restaurant_unresolved_idx on sync_conflicts (restaurant_id, resolved_at);
 create index if not exists phone_call_events_restaurant_status_idx on phone_call_events (restaurant_id, status, call_started_at desc);
+create index if not exists booking_bug_reports_restaurant_created_idx on booking_bug_reports (restaurant_id, created_at desc);
 
 create or replace function touch_updated_at()
 returns trigger
@@ -882,6 +895,53 @@ begin
 end;
 $$;
 
+create or replace function create_booking_bug_report(
+  p_restaurant_id uuid,
+  p_local_report_id text,
+  p_selected_date date,
+  p_screenshot_data_url text,
+  p_screenshot_error text,
+  p_state jsonb
+)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  profile_id uuid;
+  new_report_id uuid;
+begin
+  if not is_restaurant_member(p_restaurant_id) then
+    raise exception 'Not allowed to create bug reports for restaurant %', p_restaurant_id using errcode = '42501';
+  end if;
+
+  profile_id := current_staff_profile_id();
+
+  insert into booking_bug_reports (
+    restaurant_id,
+    created_by,
+    local_report_id,
+    selected_date,
+    screenshot_data_url,
+    screenshot_error,
+    state
+  )
+  values (
+    p_restaurant_id,
+    profile_id,
+    p_local_report_id,
+    p_selected_date,
+    p_screenshot_data_url,
+    p_screenshot_error,
+    coalesce(p_state, '{}'::jsonb)
+  )
+  returning id into new_report_id;
+
+  return new_report_id;
+end;
+$$;
+
 alter table restaurants enable row level security;
 alter table staff_profiles enable row level security;
 alter table restaurant_memberships enable row level security;
@@ -893,6 +953,7 @@ alter table reservation_activity_log enable row level security;
 alter table sync_conflicts enable row level security;
 alter table external_reservation_sources enable row level security;
 alter table phone_call_events enable row level security;
+alter table booking_bug_reports enable row level security;
 
 drop policy if exists "Members can read their restaurants" on restaurants;
 create policy "Members can read their restaurants" on restaurants
@@ -1011,12 +1072,21 @@ for all to authenticated
 using (has_restaurant_role(restaurant_id, array['owner','admin']::booking_role[]))
 with check (has_restaurant_role(restaurant_id, array['owner','admin']::booking_role[]));
 
+drop policy if exists "Members can read own bug reports" on booking_bug_reports;
+create policy "Members can read own bug reports" on booking_bug_reports
+for select to authenticated
+using (
+  created_by = current_staff_profile_id()
+  or has_restaurant_role(restaurant_id, array['owner','admin','manager']::booking_role[])
+);
+
 grant execute on function create_reservation(uuid, date, uuid[], time, integer, integer, text, text, text, uuid, text, text, uuid, text) to authenticated;
 grant execute on function update_reservation(uuid, integer, jsonb, uuid, text) to authenticated;
 grant execute on function soft_delete_reservation(uuid, integer, uuid, text) to authenticated;
 grant execute on function apply_reservation_mutation(jsonb) to authenticated;
 grant execute on function resolve_sync_conflict(uuid, sync_conflict_resolution, jsonb) to authenticated;
 grant execute on function get_reservation_admin_audit(uuid, date) to authenticated;
+grant execute on function create_booking_bug_report(uuid, text, date, text, text, jsonb) to authenticated;
 
 do $$
 declare

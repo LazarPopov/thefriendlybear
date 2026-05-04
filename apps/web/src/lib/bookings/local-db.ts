@@ -164,6 +164,24 @@ export async function saveReservations(reservations: Reservation[]) {
   await putMany("reservations_by_date", reservations);
 }
 
+export async function replaceReservationsForDate(restaurantId: string, reservationDate: string, reservations: Reservation[]) {
+  const existing = await getAll<Reservation>("reservations_by_date");
+  const db = await openBookingDb();
+
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction("reservations_by_date", "readwrite");
+    const store = transaction.objectStore("reservations_by_date");
+
+    existing
+      .filter((reservation) => reservation.restaurant_id === restaurantId && reservation.reservation_date === reservationDate)
+      .forEach((reservation) => store.delete(reservation.id));
+
+    reservations.forEach((reservation) => store.put(reservation));
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
 export async function saveReservation(reservation: Reservation) {
   await put("reservations_by_date", reservation);
 }
