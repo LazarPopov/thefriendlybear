@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { FoodMarquee } from "@/components/food-marquee";
 import type { SiteLocale } from "@/lib/site";
 import { foodGalleryImages } from "@/lib/venue-gallery-images";
 
@@ -7,8 +7,6 @@ type FoodShowcaseLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb
 type FoodShowcaseStripProps = {
   locale: FoodShowcaseLocale;
 };
-
-const marqueeImages = [...foodGalleryImages, ...foodGalleryImages];
 
 const showcaseCopy: Record<
   FoodShowcaseLocale,
@@ -71,22 +69,11 @@ export function FoodShowcaseStrip({ locale }: FoodShowcaseStripProps) {
         <p>{copy.intro}</p>
       </div>
 
-      <div className="brand-marquee">
-        <div className="brand-marquee-track">
-          {marqueeImages.map((image, index) => (
-            <article key={`${image.src}-${index}`} className="food-card" aria-hidden={index >= foodGalleryImages.length}>
-              <Image
-                src={image.src}
-                alt={index < foodGalleryImages.length ? image.alt : ""}
-                width={420}
-                height={315}
-                className="food-card-image"
-                sizes="(max-width: 640px) 78vw, (max-width: 1024px) 40vw, 300px"
-              />
-            </article>
-          ))}
-        </div>
-      </div>
+      <FoodMarquee
+        images={foodGalleryImages}
+        ariaLabel="Next food photo"
+        sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 300px"
+      />
     </section>
   );
 }

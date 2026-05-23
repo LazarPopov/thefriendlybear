@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
+import { MenuDownloadForm } from "@/components/menu-download-form";
 import {
   getBgPrimaryActions,
   getBusinessProfileData,
@@ -226,6 +227,12 @@ export async function TouristsPageCms({ locale }: TouristsPageCmsProps) {
           ))}
         </div>
       </section>
+
+      <MenuDownloadForm
+        locale={locale}
+        menuLocale={isBg ? "bg" : "en"}
+        source={`${locale}_tourists_hub`}
+      />
 
       <nav className="mobile-quickbar" aria-label={isBg ? "Бързи действия" : "Quick actions"}>
         {primaryActions.map((action) => (

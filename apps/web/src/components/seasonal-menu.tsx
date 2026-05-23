@@ -1,11 +1,13 @@
 import type { FrontendSeasonalMenu } from "@/lib/cms/menu-adapter";
 import type { SiteLocale } from "@/lib/site";
 import { ActionLink } from "@/components/action-link";
+import { MenuDownloadForm } from "@/components/menu-download-form";
 import { buildActionTracking } from "@/lib/tracking";
 
 type SeasonalMenuProps = {
   locale: SiteLocale;
   menu: FrontendSeasonalMenu;
+  showDownloadForm?: boolean;
 };
 
 function getSignatureNote(locale: SiteLocale, itemName: string) {
@@ -52,7 +54,7 @@ function getDinerNote(locale: SiteLocale) {
       };
 }
 
-export function SeasonalMenu({ locale, menu }: SeasonalMenuProps) {
+export function SeasonalMenu({ locale, menu, showDownloadForm = true }: SeasonalMenuProps) {
   const dinerNote = getDinerNote(locale);
 
   return (
@@ -144,6 +146,10 @@ export function SeasonalMenu({ locale, menu }: SeasonalMenuProps) {
         <p className="menu-diner-note-label">{dinerNote.title}</p>
         <p>{dinerNote.text}</p>
       </aside>
+
+      {showDownloadForm ? (
+        <MenuDownloadForm locale={locale} menuLocale={locale} source={`${locale}_menu_page`} />
+      ) : null}
     </main>
   );
 }

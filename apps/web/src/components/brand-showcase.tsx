@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { FoodMarquee, type FoodMarqueeImage } from "@/components/food-marquee";
 import type { SiteLocale } from "@/lib/site";
 
-const foodImages = [
+const foodImages: FoodMarqueeImage[] = [
   {
     src: "/images/food_1.jpg",
     alt: "Signature slow-roasted lamb with baby potatoes at The Friendly Bear Sofia"
@@ -31,8 +32,6 @@ const foodImages = [
     alt: "Seasonal dessert or house plate at The Friendly Bear Sofia"
   }
 ];
-
-const marqueeImages = [...foodImages, ...foodImages];
 
 type BrandShowcaseProps = {
   locale?: SiteLocale;
@@ -71,26 +70,13 @@ export function BrandShowcase({ locale = "en" }: BrandShowcaseProps) {
           </div>
         </div>
 
-        <div className="brand-marquee">
-          <div className="brand-marquee-track">
-            {marqueeImages.map((image, index) => (
-              <article
-                key={`${image.src}-${index}`}
-                className="food-card"
-                aria-hidden={index >= foodImages.length}
-              >
-                <Image
-                  src={image.src}
-                  alt={index < foodImages.length ? image.alt : ""}
-                  width={320}
-                  height={240}
-                  className="food-card-image"
-                  sizes="(max-width: 640px) 70vw, (max-width: 1024px) 34vw, 240px"
-                />
-              </article>
-            ))}
-          </div>
-        </div>
+        <FoodMarquee
+          images={foodImages}
+          ariaLabel="Next food photo"
+          imageWidth={320}
+          imageHeight={240}
+          sizes="(max-width: 640px) 70vw, (max-width: 1024px) 34vw, 240px"
+        />
       </div>
     </section>
   );

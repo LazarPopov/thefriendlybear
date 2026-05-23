@@ -1,4 +1,5 @@
 import { ActionLink } from "@/components/action-link";
+import { MenuDownloadForm } from "@/components/menu-download-form";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
   getBusinessProfileData,
@@ -422,6 +423,8 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
           <p>{localizedCopy.specialNote.text}</p>
         </aside>
       ) : null}
+
+      <MenuDownloadForm locale={marketLocale} menuLocale="en" source={`${marketLocale}_tourist_page`} />
 
       <nav className="mobile-quickbar" aria-label={config.ui.quickActions}>
         {marketActions.map((action) => (

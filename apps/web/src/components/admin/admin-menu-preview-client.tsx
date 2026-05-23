@@ -121,7 +121,7 @@ export function AdminMenuPreviewClient() {
         </div>
       </div>
 
-      <SeasonalMenu locale={locale} menu={menu[locale]} />
+      <SeasonalMenu locale={locale} menu={menu[locale]} showDownloadForm={false} />
     </>
   );
 }

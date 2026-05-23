@@ -1,4 +1,5 @@
 import { ActionLink } from "@/components/action-link";
+import { MenuDownloadForm } from "@/components/menu-download-form";
 import { TouristReviewSnippets } from "@/components/tourist-review-snippets";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
@@ -269,6 +270,12 @@ export async function TouristLandingPageCms({
           </ul>
         </article>
       </section>
+
+      <MenuDownloadForm
+        locale={locale}
+        menuLocale={isBg ? "bg" : "en"}
+        source={`${locale}_tourists_${audience}`}
+      />
 
       <nav className="mobile-quickbar" aria-label={isBg ? "Бързи действия" : "Quick actions"}>
         {primaryActions.map((action) => (
