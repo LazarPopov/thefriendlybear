@@ -31,6 +31,10 @@ assertContains(migration, "menu_requested boolean not null default true", "menu 
 assertContains(migration, "extras_requested boolean not null default false", "menu lead migration");
 assertContains(migration, "alter table menu_download_leads enable row level security", "menu lead migration");
 assertContains(migration, "grant insert, select on table menu_download_leads to service_role", "menu lead migration");
+assertContains(migration, "create table if not exists regular_menu_files", "regular menu file migration");
+assertContains(migration, "content_base64 text not null", "regular menu file migration");
+assertContains(migration, "alter table regular_menu_files enable row level security", "regular menu file migration");
+assertContains(migration, "grant select, insert, update on table regular_menu_files to service_role", "regular menu file migration");
 
 const formPath = "apps/web/src/components/menu-download-form.tsx";
 assert.ok(existsSync(join(root, formPath)), "expected MenuDownloadForm component");
@@ -62,24 +66,19 @@ const downloadRoutePath = "apps/web/src/app/api/menu-download/route.ts";
 assert.ok(existsSync(join(root, downloadRoutePath)), "expected menu download route");
 const downloadRoute = read(downloadRoutePath);
 
-assertContains(downloadRoute, "Response.redirect", "menu download route");
-assertContains(downloadRoute, "/files/", "menu download route");
-assertContains(downloadRoute, "the-friendly-bear-menu", "menu download route");
+assertContains(downloadRoute, "regular_menu_files", "menu download route");
+assertContains(downloadRoute, "SUPABASE_SERVICE_ROLE_KEY", "menu download route");
+assertContains(downloadRoute, "Buffer.from", "menu download route");
+assertContains(downloadRoute, "application/pdf", "menu download route");
+assertContains(downloadRoute, "Content-Disposition", "menu download route");
 
-const nextConfig = read("apps/web/next.config.mjs");
-assertContains(nextConfig, "Content-Disposition", "Next static PDF headers");
-assertContains(nextConfig, "application/pdf", "Next static PDF headers");
-assertContains(nextConfig, "the-friendly-bear-menu-bg.pdf", "Next static PDF headers");
-assertContains(nextConfig, "the-friendly-bear-menu-en.pdf", "Next static PDF headers");
-
-assert.ok(
-  existsSync(join(root, "apps", "web", "public", "files", "the-friendly-bear-menu-bg.pdf")),
-  "expected Bulgarian regular menu PDF in public files"
-);
-assert.ok(
-  existsSync(join(root, "apps", "web", "public", "files", "the-friendly-bear-menu-en.pdf")),
-  "expected English regular menu PDF in public files"
-);
+const uploadScriptPath = "scripts/upsert-menu-pdfs.mjs";
+assert.ok(existsSync(join(root, uploadScriptPath)), "expected regular menu PDF upload script");
+const uploadScript = read(uploadScriptPath);
+assertContains(uploadScript, "regular_menu_files", "menu upload script");
+assertContains(uploadScript, "fb bg menu.pdf", "menu upload script");
+assertContains(uploadScript, "fb eng menu.pdf", "menu upload script");
+assertContains(uploadScript, "content_base64", "menu upload script");
 
 const seasonalMenu = read("apps/web/src/components/seasonal-menu.tsx");
 assertContains(seasonalMenu, "MenuDownloadForm", "SeasonalMenu");

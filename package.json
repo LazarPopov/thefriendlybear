@@ -11,6 +11,7 @@
     "build:web": "npm run build --workspace @friendlybear/web",
     "start:web": "npm run start --workspace @friendlybear/web",
     "lint:web": "npm run lint --workspace @friendlybear/web",
+    "upsert:regular-menu-pdfs": "node scripts/upsert-menu-pdfs.mjs",
     "seed:booking-staff": "node scripts/setup/seed-booking-staff.mjs",
     "seed:booking-dummy-reservations": "node scripts/setup/reset-booking-dummy-reservations.mjs",
     "dev:cms": "npm --prefix apps/cms run develop",
