@@ -14,8 +14,8 @@ const promotionFallbackEntries: CmsPromotionEntry[] = [
       en: "special-spring-menu"
     },
     title: {
-      bg: "Пролетно специално меню",
-      en: "Special Weekly Menu"
+      bg: "Специално меню",
+      en: "Special Menu"
     },
     summary: {
       bg: "Сезонни предложения с бавно печено агнешко, свежи салати и вегетариански опции.",

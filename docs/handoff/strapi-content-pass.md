@@ -159,8 +159,8 @@ Open `Promotions`.
 Review the spring menu promotion:
 
 - `isEnabled`: true if the spring menu is currently active
-- `title.bg`: `Пролетно специално меню`
-- `title.en`: `Special Spring Menu`
+- `title.bg`: `Специално меню`
+- `title.en`: `Special Menu`
 - `summary.bg`: should clearly mention seasonal dishes
 - `summary.en`: should clearly mention seasonal dishes
 - `ctaLabel.bg`: `Виж менюто`

@@ -24,7 +24,7 @@ type SeasonalMenuContent = {
 
 export const seasonalMenu: Record<SiteLocale, SeasonalMenuContent> = {
   bg: {
-    eyebrow: "Специално седмично меню",
+    eyebrow: "Специално меню",
     title: "Вкусът на сезона",
     intro:
       "Подбрано от Жана (Mish-Mash Recipes) и екипът на Friendly Bear, нашето седмично меню съчетава традиционни български вкусове с модерен почерк. От запазената ни марка - бавно печени меса, до вегетариански предложения, свежи салати и класически десерти.",
@@ -119,7 +119,7 @@ export const seasonalMenu: Record<SiteLocale, SeasonalMenuContent> = {
     ]
   },
   en: {
-    eyebrow: "Special Weekly Menu",
+    eyebrow: "Special Menu",
     title: "A Taste of the Season",
     intro:
       "Curated by Jana (Mish-Mash Recipes) and the Friendly Bear team, our weekly menu brings traditional Bulgarian flavors together with a modern touch. From our signature slow-cooked meats to vegetarian dishes, fresh salads, and classic desserts.",

@@ -16,13 +16,13 @@ type SubmitState = "idle" | "submitting" | "success" | "error";
 
 const copy = {
   bg: {
-    eyebrow: "Редовно меню",
-    title: "Изтеглете редовното меню",
+    eyebrow: "Основно меню",
+    title: "Изтеглете основното меню",
     name: "Име",
     email: "Имейл",
     namePlaceholder: "Вашето име",
     emailPlaceholder: "you@example.com",
-    menuOption: "Изпратете ми редовното меню и започнете свалянето.",
+    menuOption: "Изпратете ми основното меню и започнете свалянето.",
     extrasOption: "Искам да получавам и специални предложения и събития.",
     buttonIdle: "Изтеглете менюто",
     buttonLoading: "Подготвяме файла...",

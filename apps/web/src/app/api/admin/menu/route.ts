@@ -7,6 +7,7 @@ import {
   requireMenuEditor,
   saveSeasonalMenuDraft
 } from "@/lib/admin/content-server";
+import { requestGoogleIndexingForMenuUrls } from "@/lib/admin/google-indexing";
 import { normalizeSeasonalMenuPayload } from "@/lib/content-types";
 import { springMenuContent } from "@/lib/spring-menu-content";
 
@@ -39,7 +40,8 @@ export async function POST(request: Request) {
 
     if (body.action === "publish") {
       const published = await publishSeasonalMenu(context, payload);
-      return NextResponse.json({ context, published, menu: payload });
+      const indexing = await requestGoogleIndexingForMenuUrls();
+      return NextResponse.json({ context, published, menu: payload, indexing });
     }
 
     const draft = await saveSeasonalMenuDraft(context, payload);

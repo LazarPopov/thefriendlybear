@@ -11,6 +11,13 @@ import type { SiteLocale } from "@/lib/site";
 type MenuApiResponse = {
   context: ContentAdminContext;
   menu: SeasonalMenuPayload;
+  indexing?: {
+    attempted: boolean;
+    urls: string[];
+    submitted: string[];
+    failed: { url: string; status?: number; error: string }[];
+    skippedReason?: string;
+  };
 };
 
 const locales: SiteLocale[] = ["bg", "en"];
@@ -43,6 +50,26 @@ function emptySection(locale: SiteLocale): FrontendMenuSection {
     title: locale === "bg" ? "Нова секция" : "New section",
     items: [emptyItem()]
   };
+}
+
+function getPublishMessage(indexing: MenuApiResponse["indexing"]) {
+  if (!indexing) {
+    return "Menu published.";
+  }
+
+  if (!indexing.attempted) {
+    return indexing.skippedReason ? `Menu published. Google indexing skipped: ${indexing.skippedReason}` : "Menu published. Google indexing skipped.";
+  }
+
+  if (indexing.failed.length > 0 && indexing.submitted.length > 0) {
+    return `Menu published. Google indexing requested for ${indexing.submitted.length} page(s); ${indexing.failed.length} failed.`;
+  }
+
+  if (indexing.failed.length > 0) {
+    return `Menu published. Google indexing failed for ${indexing.failed.length} page(s).`;
+  }
+
+  return `Menu published. Google indexing requested for ${indexing.submitted.length} page(s).`;
 }
 
 export function AdminMenuClient() {
@@ -184,7 +211,7 @@ export function AdminMenuClient() {
       });
       setContext(payload.context);
       setMenu(payload.menu);
-      setMessage(action === "publish" ? "Menu published." : "Draft saved.");
+      setMessage(action === "publish" ? getPublishMessage(payload.indexing) : "Draft saved.");
     } catch (saveError) {
       setError(saveError instanceof Error ? saveError.message : "Unable to save menu.");
     } finally {
