@@ -116,6 +116,21 @@ function cleanDescription(value: unknown) {
   return lines.length ? lines : undefined;
 }
 
+function normalizeLegacySpecialMenuText(value: string) {
+  return value
+    .replaceAll("Специално седмично меню", "Специално меню")
+    .replaceAll("специално седмично меню", "специално меню")
+    .replaceAll("нашето седмично меню", "нашето специално меню")
+    .replaceAll("седмично меню", "специално меню")
+    .replaceAll("Седмично меню", "Специално меню")
+    .replaceAll("Special Weekly Menu", "Special Menu")
+    .replaceAll("Special weekly menu", "Special Menu")
+    .replaceAll("special weekly menu", "special menu")
+    .replaceAll("our weekly menu", "our special menu")
+    .replaceAll("weekly menu", "special menu")
+    .replaceAll("Weekly menu", "Special menu");
+}
+
 function normalizeMenu(localeValue: unknown, fallback: FrontendSeasonalMenu): FrontendSeasonalMenu {
   if (!isRecord(localeValue)) {
     return fallback;
@@ -163,9 +178,9 @@ function normalizeMenu(localeValue: unknown, fallback: FrontendSeasonalMenu): Fr
     : [];
 
   return {
-    eyebrow: cleanText(localeValue.eyebrow) || fallback.eyebrow,
-    title: cleanText(localeValue.title) || fallback.title,
-    intro: cleanText(localeValue.intro) || fallback.intro,
+    eyebrow: normalizeLegacySpecialMenuText(cleanText(localeValue.eyebrow)) || fallback.eyebrow,
+    title: normalizeLegacySpecialMenuText(cleanText(localeValue.title)) || fallback.title,
+    intro: normalizeLegacySpecialMenuText(cleanText(localeValue.intro)) || fallback.intro,
     sections: sections.length ? sections : fallback.sections
   };
 }

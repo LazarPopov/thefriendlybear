@@ -201,7 +201,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           shortSlogan: "The den of good taste",
           footerNote: "The den of the good taste - come in, relax and enjoy",
           footerSeo:
-            "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23 with a garden, heated smoking area, weekly menu, slow-cooked meats, and vegetarian options.",
+            "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23 with a garden, heated smoking area, special menu, slow-cooked meats, and vegetarian options.",
           navigationLabel: "Main navigation",
           footerNavLabel: "Useful links",
           footerMainLabel: "Restaurant",

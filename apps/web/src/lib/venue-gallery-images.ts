@@ -96,8 +96,8 @@ export const getFoodGalleryImages = (locale: SiteLocale): StaticVenueGalleryImag
   getLocalizedImage(
     "/images/food_2.jpg",
     {
-      bg: "Свежа сезонна салата от седмичното ни меню в The Friendly Bear София",
-      en: "Fresh seasonal salad from The Friendly Bear Sofia weekly menu"
+      bg: "Свежа сезонна салата от специалното ни меню в The Friendly Bear София",
+      en: "Fresh seasonal salad from The Friendly Bear Sofia special menu"
     },
     locale
   ),

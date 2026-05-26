@@ -8,7 +8,7 @@ const foodImages: FoodMarqueeImage[] = [
   },
   {
     src: "/images/food_2.jpg",
-    alt: "Fresh seasonal salad from The Friendly Bear Sofia weekly menu"
+    alt: "Fresh seasonal salad from The Friendly Bear Sofia special menu"
   },
   {
     src: "/images/food_3.jpg",

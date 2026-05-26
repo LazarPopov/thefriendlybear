@@ -7,7 +7,7 @@ const localAnswers = [
   {
     question: "Where can I find slow-roasted lamb and slow-cooked meats in central Sofia?",
     answer:
-      "The Friendly Bear Sofia serves slow-cooked meats from quality Bulgarian producers, weekly seasonal specials, and a direct path to the full menu and reservations."
+      "The Friendly Bear Sofia serves slow-cooked meats from quality Bulgarian producers, seasonal specials, and a direct path to the full menu and reservations."
   },
   {
     question: "Where is a cozy restaurant near Slavyanska 23?",

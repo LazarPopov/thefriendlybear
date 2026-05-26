@@ -77,7 +77,7 @@ function getAdminTools(context: ContentAdminContext): AdminTool[] {
       {
         href: "/admin/menu",
         label: "Seasonal menu editor",
-        description: "Edit and publish the Bulgarian and English weekly menu.",
+        description: "Edit and publish the Bulgarian and English special menu.",
         section: "Content"
       },
       {

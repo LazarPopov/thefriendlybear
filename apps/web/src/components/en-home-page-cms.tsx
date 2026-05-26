@@ -17,7 +17,7 @@ const localStories = [
   {
     title: "Slow-roasted lamb, pork ears, and slow-cooked meats in Sofia Center",
     text:
-      "Come for slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and weekly seasonal specials."
+      "Come for slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and seasonal specials."
   },
   {
     title: "A quiet pause in the heart of Sofia for long conversations",
@@ -38,7 +38,7 @@ const trustPillars = [
   },
   {
     label: "Always Fresh",
-    text: "Explore our seasonal menu, updated weekly with local ingredients and artisan flavors."
+    text: "Explore our seasonal menu with local ingredients and artisan flavors."
   },
   {
     label: "Easy to Visit",

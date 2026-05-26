@@ -118,7 +118,7 @@ const enFaqs = [
   {
     question: "Where can I find slow-roasted lamb, pork ears, and slow-cooked meats in Sofia Center?",
     answer:
-      "The Friendly Bear serves slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and weekly seasonal specials on Slavyanska 23 in central Sofia."
+      "The Friendly Bear serves slow-cooked meats from quality Bulgarian producers, 20 kinds of rakia, a rich 0% alcohol drinks menu, and seasonal specials on Slavyanska 23 in central Sofia."
   },
   {
     question: "Where can I find a quiet place for dinner near Slavyanska 23?",
@@ -168,7 +168,7 @@ function getRestaurantNode(
     description:
       locale === "bg"
         ? "Уютен ресторант в центъра на София с градина, отопляема зона за пушачи, бавно готвени меса, сезонно меню и приветливо обслужване."
-        : "A cozy central Sofia restaurant with a garden, heated smoking area, slow-cooked meats, weekly menu, and warm hospitality.",
+        : "A cozy central Sofia restaurant with a garden, heated smoking area, slow-cooked meats, special menu, and warm hospitality.",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.streetAddress,
@@ -255,7 +255,7 @@ export function getHomePageSchema(locale: SiteLocale, profile: FrontendBusinessP
       description:
         locale === "bg"
           ? "The Friendly Bear Sofia е уютен ресторант в центъра на София, на ул. „Славянска“ 23 - с градина, отопляема зона за пушачи, сезонно меню, бавно готвени меса и вегетариански опции."
-          : "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23, with a garden, heated smoking area, weekly menu, slow-cooked meats, and vegetarian options.",
+          : "The Friendly Bear Sofia is a cozy restaurant in central Sofia on Slavyanska 23, with a garden, heated smoking area, special menu, slow-cooked meats, and vegetarian options.",
       inLanguage: localeMeta[locale].language,
       isPartOf: {
         "@id": websiteId

@@ -54,3 +54,17 @@ test("special and regular menu copy uses the requested labels", () => {
   assert.ok(!downloadForm.includes("Редовно меню"), "Bulgarian regular menu label should not say regular menu");
   assert.ok(!downloadForm.includes("редовното меню"), "Bulgarian regular menu sentence should not say regular menu");
 });
+
+test("saved special menu payloads are normalized away from weekly wording", () => {
+  const contentTypes = read("apps/web/src/lib/content-types.ts");
+
+  assertContains(contentTypes, "normalizeLegacySpecialMenuText", "seasonal menu payload normalizer");
+  assertContains(contentTypes, '"Специално седмично меню"', "seasonal menu payload normalizer");
+  assertContains(contentTypes, '"Специално меню"', "seasonal menu payload normalizer");
+  assertContains(contentTypes, '"Special Weekly Menu"', "seasonal menu payload normalizer");
+  assertContains(contentTypes, '"Special Menu"', "seasonal menu payload normalizer");
+  assertContains(contentTypes, "нашето специално меню", "seasonal menu payload normalizer");
+  assertContains(contentTypes, "our special menu", "seasonal menu payload normalizer");
+  assertContains(contentTypes, "normalizeLegacySpecialMenuText(cleanText(localeValue.eyebrow)", "seasonal menu payload normalizer");
+  assertContains(contentTypes, "normalizeLegacySpecialMenuText(cleanText(localeValue.intro)", "seasonal menu payload normalizer");
+});
