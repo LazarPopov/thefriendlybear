@@ -68,3 +68,11 @@ test("saved special menu payloads are normalized away from weekly wording", () =
   assertContains(contentTypes, "normalizeLegacySpecialMenuText(cleanText(localeValue.eyebrow)", "seasonal menu payload normalizer");
   assertContains(contentTypes, "normalizeLegacySpecialMenuText(cleanText(localeValue.intro)", "seasonal menu payload normalizer");
 });
+
+test("menu sitemap entries use daily freshness because the special menu changes every three days", () => {
+  const sitemap = read("apps/web/src/app/sitemap.ts");
+
+  assertContains(sitemap, "getRouteChangeFrequency", "sitemap");
+  assertContains(sitemap, 'routeKey === "menu" ? "daily" : "weekly"', "sitemap");
+  assertContains(sitemap, "changeFrequency: getRouteChangeFrequency(routeKey)", "sitemap");
+});

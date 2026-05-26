@@ -41,6 +41,10 @@ function getRoutePriority(routeKey: SiteRouteKey) {
   return 0.75;
 }
 
+function getRouteChangeFrequency(routeKey: SiteRouteKey) {
+  return routeKey === "menu" ? "daily" : "weekly";
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const touristRoutes = await getTouristLandingPagePathPairs();
@@ -62,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     Object.values(routeMap[routeKey]).map((path) => ({
       url: absoluteUrl(path),
       lastModified: now,
-      changeFrequency: "weekly" as const,
+      changeFrequency: getRouteChangeFrequency(routeKey),
       priority: getRoutePriority(routeKey),
       alternates: {
         languages: getLanguageAlternates(routeKey)
