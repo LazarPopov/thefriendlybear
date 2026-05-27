@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { AdminClientError, adminFetch, adminLoginPath } from "@/lib/admin/content-client";
-import { getActiveSession } from "@/lib/bookings/supabase";
+import { clearStoredSession, getActiveSession } from "@/lib/bookings/supabase";
 import type { BookingSession } from "@/lib/bookings/types";
 
 export function AdminAccountClient() {
@@ -15,8 +16,6 @@ export function AdminAccountClient() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -29,6 +28,7 @@ export function AdminAccountClient() {
         }
 
         if (!active || active.access_token === "demo-local-session") {
+          clearStoredSession();
           router.replace(adminLoginPath("/admin/account"));
           return;
         }
@@ -48,26 +48,24 @@ export function AdminAccountClient() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitError(null);
-    setMessage(null);
 
     if (!currentPassword) {
-      setSubmitError("Enter your current password.");
+      toast.error("Enter your current password.");
       return;
     }
 
     if (newPassword.length < 8) {
-      setSubmitError("New password must be at least 8 characters.");
+      toast.error("New password must be at least 8 characters.");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setSubmitError("New password and confirmation do not match.");
+      toast.error("New password and confirmation do not match.");
       return;
     }
 
     if (newPassword === currentPassword) {
-      setSubmitError("New password must be different from the current one.");
+      toast.error("New password must be different from the current one.");
       return;
     }
 
@@ -78,7 +76,7 @@ export function AdminAccountClient() {
         method: "POST",
         body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
       });
-      setMessage("Password updated.");
+      toast.success("Password updated.");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -88,11 +86,12 @@ export function AdminAccountClient() {
         error.status === 401 &&
         !error.message.toLowerCase().includes("current password")
       ) {
+        clearStoredSession();
         router.replace(adminLoginPath("/admin/account"));
         return;
       }
 
-      setSubmitError(error instanceof Error ? error.message : "Unable to update password.");
+      toast.error(error instanceof Error ? error.message : "Unable to update password.");
     } finally {
       setIsSubmitting(false);
     }
@@ -165,9 +164,6 @@ export function AdminAccountClient() {
                 required
               />
             </label>
-
-            {submitError ? <p className="booking-form-error">{submitError}</p> : null}
-            {message ? <p className="booking-status booking-status-sync">{message}</p> : null}
 
             <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Updating..." : "Update password"}

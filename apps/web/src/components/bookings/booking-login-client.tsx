@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { getActiveSession, isSupabaseConfigured, signInWithPassword } from "@/lib/bookings/supabase";
+import { getActiveSession, isDemoSession, isSupabaseConfigured, signInWithPassword } from "@/lib/bookings/supabase";
+
+function destinationAcceptsDemoSession(nextPath: string) {
+  return nextPath === "/admin/bookings" || nextPath.startsWith("/admin/bookings/");
+}
 
 export function BookingLoginClient() {
   const router = useRouter();
@@ -18,9 +22,15 @@ export function BookingLoginClient() {
 
   useEffect(() => {
     getActiveSession().then((session) => {
-      if (session) {
-        router.replace(nextPath);
+      if (!session) {
+        return;
       }
+
+      if (isDemoSession(session) && !destinationAcceptsDemoSession(nextPath)) {
+        return;
+      }
+
+      router.replace(nextPath);
     });
   }, [nextPath, router]);
 
@@ -30,7 +40,13 @@ export function BookingLoginClient() {
     setIsSubmitting(true);
 
     try {
-      await signInWithPassword(email.trim() || "demo@friendlybear.local", password);
+      const session = await signInWithPassword(email.trim() || "demo@friendlybear.local", password);
+
+      if (isDemoSession(session) && !destinationAcceptsDemoSession(nextPath)) {
+        setError("This area requires a real Supabase account. Set up Supabase environment variables to sign in here.");
+        return;
+      }
+
       router.replace(nextPath);
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : "Unable to sign in.");

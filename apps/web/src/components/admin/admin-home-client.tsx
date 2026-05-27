@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AdminClientError, adminFetch, adminLoginPath } from "@/lib/admin/content-client";
+import { clearStoredSession } from "@/lib/bookings/supabase";
 import type { BookingRole } from "@/lib/bookings/types";
 import type { ContentAdminContext } from "@/lib/content-types";
 
@@ -162,6 +163,7 @@ export function AdminHomeClient() {
         }
       } catch (loadError) {
         if (loadError instanceof AdminClientError && loadError.status === 401) {
+          clearStoredSession();
           router.replace(adminLoginPath("/admin"));
           return;
         }
