@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AdminClientError, adminFetch, adminLoginPath } from "@/lib/admin/content-client";
+import { clearStoredSession } from "@/lib/bookings/supabase";
 import type { BookingRole } from "@/lib/bookings/types";
 import type { ContentAdminContext } from "@/lib/content-types";
 
@@ -15,7 +16,7 @@ type AdminTool = {
   href: string;
   label: string;
   description: string;
-  section: "Reservations" | "Content" | "Access";
+  section: "Reservations" | "Content" | "Access" | "Account";
 };
 
 function hasRole(role: BookingRole, allowed: BookingRole[]) {
@@ -115,6 +116,13 @@ function getAdminTools(context: ContentAdminContext): AdminTool[] {
     });
   }
 
+  tools.push({
+    href: "/admin/account",
+    label: "Change password",
+    description: "Update the password for your signed-in account.",
+    section: "Account"
+  });
+
   return tools;
 }
 
@@ -130,7 +138,7 @@ export function AdminHomeClient() {
     }
 
     const tools = getAdminTools(context);
-    const sections: AdminTool["section"][] = ["Reservations", "Content", "Access"];
+    const sections: AdminTool["section"][] = ["Reservations", "Content", "Access", "Account"];
 
     return sections
       .map((section) => ({
@@ -155,6 +163,7 @@ export function AdminHomeClient() {
         }
       } catch (loadError) {
         if (loadError instanceof AdminClientError && loadError.status === 401) {
+          clearStoredSession();
           router.replace(adminLoginPath("/admin"));
           return;
         }
@@ -194,6 +203,7 @@ export function AdminHomeClient() {
           <h1>Admin unavailable</h1>
           {error ? <p className="booking-form-error">{error}</p> : null}
           <Link href="/admin/bookings/login?next=%2Fadmin">Sign in</Link>
+          <Link href="/admin/account">Change your password</Link>
         </section>
       </main>
     );
