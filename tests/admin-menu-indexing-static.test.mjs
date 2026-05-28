@@ -38,6 +38,12 @@ test("admin menu publish requests Google indexing for both localized menu pages"
 test("special and regular menu copy uses the requested labels", () => {
   const specialMenu = read("apps/web/src/lib/spring-menu-content.ts");
   assertContains(specialMenu, 'eyebrow: "Специално меню"', "Bulgarian special menu fallback");
+  assertContains(
+    specialMenu,
+    "Подбрано от Жана (Mish-Mash Recipes) и екипа на Friendly Bear, нашето специално меню съчетава традиционни български вкусове с модерен почерк. От запазената ни марка - бавно печени меса, до вегетариански предложения, свежи салати и класически десерти.",
+    "Bulgarian special menu fallback intro"
+  );
+  assert.ok(!specialMenu.includes("и екипът на Friendly Bear"), "Bulgarian special menu fallback intro should use екипа");
   assertContains(specialMenu, 'eyebrow: "Special Menu"', "English special menu fallback");
   assert.ok(!specialMenu.includes("Специално седмично меню"), "Bulgarian special menu fallback should not say weekly");
   assert.ok(!specialMenu.includes("Special Weekly Menu"), "English special menu fallback should not say weekly");

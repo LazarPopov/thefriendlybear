@@ -48,6 +48,7 @@ assertContains(form, "name=\"email\"", "MenuDownloadForm");
 assertContains(form, "name=\"menuRequested\"", "MenuDownloadForm");
 assertContains(form, "name=\"extrasRequested\"", "MenuDownloadForm");
 assertContains(form, "menu-download-options", "MenuDownloadForm");
+assert.ok(!form.includes("defaultChecked"), "MenuDownloadForm checkboxes should start unchecked");
 assert.ok(!form.includes("Напишете име и имейл"), "MenuDownloadForm should not show the old Bulgarian intro sentence");
 assert.ok(!form.includes("Write your name and email"), "MenuDownloadForm should not show the old English intro sentence");
 

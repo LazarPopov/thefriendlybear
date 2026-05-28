@@ -148,7 +148,7 @@ export function MenuDownloadForm({
 
         <div className="menu-download-options">
           <label className="menu-download-check" htmlFor={menuOptionId}>
-            <input id={menuOptionId} name="menuRequested" type="checkbox" defaultChecked required />
+            <input id={menuOptionId} name="menuRequested" type="checkbox" required />
             <span>{text.menuOption}</span>
           </label>
 
