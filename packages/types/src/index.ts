@@ -1,5 +1,5 @@
 export type SiteLocale = "bg" | "en";
-export type TouristMarketLocale = "it" | "es" | "el" | "de" | "ro" | "en-gb";
+export type TouristMarketLocale = "it" | "es" | "el" | "de" | "ro" | "nl" | "en-gb";
 
 export type LocalizedString = Record<SiteLocale, string>;
 export type LocalizedStringList = Record<SiteLocale, string[]>;
@@ -11,7 +11,7 @@ export type ContentStatus = "draft" | "published" | "archived";
 export type ReviewSource = "google" | "tripadvisor" | "manual";
 export type ReservationMode = "pending" | "call_only" | "call_whatsapp" | "external_booking" | "hybrid";
 export type BookingProvider = "rezzo" | "opentable" | "other";
-export type TouristAudience = "italian" | "spanish" | "greek" | "german" | "romanian" | "uk";
+export type TouristAudience = "italian" | "spanish" | "greek" | "german" | "romanian" | "dutch" | "uk";
 export type BusinessProfileSourceMode = "manual";
 export type BusinessProfileFutureConnector = "google_business_profile";
 

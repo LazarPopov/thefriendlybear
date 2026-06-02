@@ -39,3 +39,39 @@ test("tourist detail slugs are served by the dynamic routes instead of self-redi
     assert.equal(existsSync(join(root, route)), false, `${route} should not shadow the dynamic tourist route`);
   }
 });
+
+test("Dutch tourist market page is configured for indexing and tracking", () => {
+  const adapter = read("apps/web/src/lib/cms/tourist-landing-page-adapter.ts");
+  const module = read("apps/web/src/lib/tourist-landing-page-module.ts");
+  const market = read("apps/web/src/lib/tourist-market.ts");
+  const route = read("apps/web/src/lib/tourist-market-route.ts");
+  const copy = read("apps/web/src/lib/tourist-market-copy.ts");
+  const hub = read("apps/web/src/components/tourists-page-cms.tsx");
+  const analytics = read("apps/web/src/components/analytics-events.tsx");
+  const schema = read("apps/web/src/lib/schema.ts");
+  const proxy = read("apps/web/src/proxy.ts");
+  const layout = read("apps/web/src/app/layout.tsx");
+  const cmsSchema = read("apps/cms/src/api/tourist-landing-page/content-types/tourist-landing-page/schema.json");
+  const marketString = read("apps/cms/src/components/shared/market-string.json");
+  const marketText = read("apps/cms/src/components/shared/market-text.json");
+
+  assert.equal(existsSync(join(root, "apps/web/src/app/nl/[slug]/page.tsx")), true);
+  assert.match(adapter, /TouristAudience = .*"dutch"/);
+  assert.match(adapter, /TouristMarketLocale = .*"nl"/);
+  assert.match(module, /touristAudienceOrder[\s\S]*"dutch"/);
+  assert.match(module, /audience:\s*"dutch"/);
+  assert.match(market, /nl:\s*\{[\s\S]*audience:\s*"dutch"/);
+  assert.match(route, /nl:\s*\{[\s\S]*slug:\s*"restaurant-sofia-centrum"/);
+  assert.match(route, /inLanguage:\s*"nl-NL"/);
+  assert.match(route, /knowsLanguage:\s*\[[^\]]*"nl"/);
+  assert.match(copy, /nl:\s*\{[\s\S]*gezellige avond/);
+  assert.match(copy, /Bekijk het menu/);
+  assert.match(hub, /href:\s*"\/nl\/restaurant-sofia-centrum"/);
+  assert.match(analytics, /nl:\s*"dutch"/);
+  assert.match(schema, /url:\s*absoluteUrl\("\/nl\/restaurant-sofia-centrum"\)/);
+  assert.match(proxy, /nl:\s*"nl"/);
+  assert.match(layout, /"nl"/);
+  assert.match(cmsSchema, /"dutch"/);
+  assert.match(marketString, /"nl"/);
+  assert.match(marketText, /"nl"/);
+});

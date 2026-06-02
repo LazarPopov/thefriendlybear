@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
-const allowedLocales = new Set(["bg", "en", "it", "es", "el", "de", "ro", "en-gb"]);
+const allowedLocales = new Set(["bg", "en", "it", "es", "el", "de", "ro", "nl", "en-gb"]);
 const allowedMenuLocales = new Set(["bg", "en"]);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 

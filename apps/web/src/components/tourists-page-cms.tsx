@@ -51,6 +51,13 @@ const languageGuides = [
       "O oprire sățioasă în centrul Sofiei, cu porții generoase, grădină ascunsă și meniu ușor de deschis în engleză."
   },
   {
+    id: "dutch",
+    href: "/nl/restaurant-sofia-centrum",
+    title: "Voor Nederlandse bezoekers",
+    text:
+      "Gezellig eten in Sofia centrum: verborgen tuin, Engelse service, vegetarische opties en Bulgaarse smaken zonder toeristenval."
+  },
+  {
     id: "uk",
     href: "/en-gb/traditional-restaurant-sofia",
     title: "For UK visitors",

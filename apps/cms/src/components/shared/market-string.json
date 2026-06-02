@@ -21,6 +21,9 @@
     "ro": {
       "type": "string"
     },
+    "nl": {
+      "type": "string"
+    },
     "enGb": {
       "type": "string"
     }

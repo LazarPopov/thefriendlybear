@@ -60,6 +60,7 @@ function getRouteContext(pathname: string) {
     el: "greek",
     de: "german",
     ro: "romanian",
+    nl: "dutch",
     "en-gb": "uk"
   };
   const supportedLocales = ["bg", "en", ...Object.keys(touristAudienceByMarketLocale)];

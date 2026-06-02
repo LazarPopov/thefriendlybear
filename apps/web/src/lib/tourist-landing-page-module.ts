@@ -18,7 +18,15 @@ export type TouristLandingPageMatch = {
   page: FrontendTouristLandingPage;
 };
 
-const touristAudienceOrder: TouristAudience[] = ["italian", "spanish", "greek", "german", "romanian", "uk"];
+const touristAudienceOrder: TouristAudience[] = [
+  "italian",
+  "spanish",
+  "greek",
+  "german",
+  "romanian",
+  "dutch",
+  "uk"
+];
 
 const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
   {
@@ -207,6 +215,43 @@ const touristLandingPageFallbackEntries: CmsTouristLandingPageEntry[] = [
     primaryCtaUrl: { bg: "/bg/menu", en: "/en/menu" }
   },
   {
+    audience: "dutch",
+    slug: { bg: "dutch", en: "dutch" },
+    marketSlug: { nl: "restaurant-sofia-centrum" },
+    title: {
+      bg: "Уютен ресторант в София за нидерландски посетители",
+      en: "A cozy Sofia restaurant for Dutch visitors"
+    },
+    marketTitle: {
+      nl: "Restaurant in Sofia centrum: gezellig eten zonder toeristenval"
+    },
+    intro: {
+      bg: "Централно място за гости от Нидерландия, които търсят уютна градина, честна храна, английско обслужване и лесен достъп до менюто.",
+      en: "A central Sofia restaurant for Dutch visitors looking for a cozy garden, honest food, English-speaking service, and an easy menu before booking."
+    },
+    marketIntro: {
+      nl: "The Friendly Bear ligt op Slavyanska 23, vlak bij het Nationaal Theater. Verwacht een huis uit 1923, een verborgen tuin, rustige retro kamers en Bulgaarse smaken zonder toeristenval."
+    },
+    vegetarianMessage: {
+      bg: "В менюто има свежи салати и вегетариански опции, така че групите с различни вкусове могат да изберат спокойно.",
+      en: "Fresh salads and vegetarian-friendly choices make the menu easy for mixed groups and flexitarian travelers."
+    },
+    marketVegetarianMessage: {
+      nl: "Handig voor flexitarische groepen: verse salades, duidelijke vegetarische opties en stevige Bulgaarse gerechten zoals langzaam gegaard lamsvlees met paddenstoelen."
+    },
+    serviceMessage: {
+      bg: "Екипът говори английски, менюто се отваря лесно от телефон, а адресът е удобен за разходка в центъра.",
+      en: "The team speaks English, the menu is easy to open from a phone, and the address is walkable from central Sofia landmarks."
+    },
+    marketServiceMessage: {
+      nl: "Ons team spreekt Engels, het menu is makkelijk online te bekijken en de sfeer blijft direct, vriendelijk en ontspannen voor lunch, diner of een drankje in de tuin."
+    },
+    primaryCtaLabel: { bg: "Виж менюто", en: "See the menu" },
+    marketPrimaryCtaLabel: { nl: "Bekijk het menu" },
+    marketPrimaryCtaUrl: { nl: "/en/menu" },
+    primaryCtaUrl: { bg: "/bg/menu", en: "/en/menu" }
+  },
+  {
     audience: "uk",
     slug: { bg: "uk", en: "uk" },
     marketSlug: { "en-gb": "traditional-restaurant-sofia" },
@@ -308,6 +353,7 @@ export function getTouristAudienceLabel(locale: SiteLocale, audience: TouristAud
     greek: { bg: "Гръцки посетители", en: "Greek visitors" },
     german: { bg: "Германски посетители", en: "German visitors" },
     romanian: { bg: "Румънски посетители", en: "Romanian visitors" },
+    dutch: { bg: "Нидерландски посетители", en: "Dutch visitors" },
     uk: { bg: "Гости от Великобритания", en: "UK visitors" }
   } as const;
 

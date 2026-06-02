@@ -90,6 +90,7 @@ Tourist market route context now covers:
 - `/el/estiatorio-sofia-kentro` with `tourist_audience=greek`
 - `/de/restaurant-sofia-zentrum` with `tourist_audience=german`
 - `/ro/restaurante-centru-sofia` with `tourist_audience=romanian`
+- `/nl/restaurant-sofia-centrum` with `tourist_audience=dutch`
 - `/en-gb/traditional-restaurant-sofia` with `tourist_audience=uk`
 - `/en/hidden-gem-restaurant-sofia` with `tourist_audience=hidden_gem`
 

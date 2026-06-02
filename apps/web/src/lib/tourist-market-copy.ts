@@ -345,6 +345,69 @@ export const touristMarketPageCopy: Record<TouristMarketLocale, TouristMarketPag
       interiorAlt: "Interiorul retro al restaurantului The Friendly Bear din Sofia"
     }
   },
+  nl: {
+    title: "Restaurant in Sofia centrum: gezellig eten zonder toeristenval",
+    intro:
+      "The Friendly Bear is een gezellig restaurant op Slavyanska 23, vlak bij het Nationaal Theater. Je vindt hier een verborgen tuin, rustige retro kamers, eerlijke Bulgaarse smaken en een ontspannen sfeer na een dag wandelen door Sofia.",
+    vegetarian:
+      "Handig voor gemengde groepen en flexitariers: verse salades, duidelijke vegetarische opties en stevige huisgerechten zoals langzaam gegaard lamsvlees met paddenstoelen.",
+    service:
+      "Ons team spreekt Engels, het menu is makkelijk online te bekijken en de ervaring blijft direct, vriendelijk en praktisch: bekijk het menu, bel voor een tafel en kom langs voor een gezellige avond.",
+    primaryCtaLabel: "Bekijk het menu",
+    callLabel: "Bel om te Reserveren",
+    cards: [
+      {
+        label: "Gezellig",
+        title: "Warm, rustig en niet stijf",
+        text:
+          "Een huis uit 1923 met hout, tuinlicht en retro details: goed voor een ontspannen diner, een drankje of een lange avond met vrienden."
+      },
+      {
+        label: "Eerlijk",
+        title: "Bulgaarse smaken met fair value",
+        text:
+          "Probeer lokale comfort food, Bulgaarse drankjes en seizoensproducten zonder het gevoel van een toeristische val."
+      },
+      {
+        label: "Praktisch",
+        title: "Centraal en makkelijk te plannen",
+        text:
+          "Slavyanska 23 ligt op loopafstand van bekende plekken in Sofia. Open eerst het Engelse menu en bel als je een tafel wilt vastleggen."
+      }
+    ],
+    signature: {
+      label: "Wat te bestellen",
+      title: "Huisgerechten met karakter",
+      dishes: [
+        "Langzaam gegaard lamsvlees met paddenstoelen",
+        "Sandwich met kalfstong en gekaramelliseerde ui",
+        "Huisgemaakte vissoep",
+        "Baileys Creme Brulee"
+      ]
+    },
+    atmosphere: {
+      label: "Sfeer",
+      title: "Verborgen tuin en retro kamers",
+      text:
+        "De tuin voelt als een stille pauze in het centrum, terwijl de licht ondergrondse kamers de plek een lokaal en memorabel karakter geven."
+    },
+    venue: {
+      eyebrow: "Sfeer",
+      title: "Verborgen tuin en warme retro kamers",
+      intro:
+        "Bekijk alvast de sfeer: tuinlicht, houten details, comfort food en de charme van een oud huis in het centrum van Sofia.",
+      gardenLabel: "Tuin",
+      interiorLabel: "Interieur",
+      gardenAlt: "Verborgen tuin van The Friendly Bear restaurant in Sofia",
+      interiorAlt: "Gezellig retro interieur van The Friendly Bear Sofia"
+    },
+    specialNote: {
+      ariaLabel: "Gezellige avond in Sofia",
+      label: "Voor een gezellige avond",
+      text:
+        "Bekijk het menu, kies iets lokaals en reserveer op tijd als je zeker wilt zijn van een plek in de tuin of een rustige kamer binnen."
+    }
+  },
   "en-gb": {
     title: "Sofia's Best Kept Secret: Traditional Food & A Proper Welcome",
     intro:

@@ -55,9 +55,13 @@ export interface SharedMarketString extends Struct.ComponentSchema {
     displayName: 'Market String';
   };
   attributes: {
+    de: Schema.Attribute.String;
     el: Schema.Attribute.String;
+    enGb: Schema.Attribute.String;
     es: Schema.Attribute.String;
     it: Schema.Attribute.String;
+    nl: Schema.Attribute.String;
+    ro: Schema.Attribute.String;
   };
 }
 
@@ -68,9 +72,13 @@ export interface SharedMarketText extends Struct.ComponentSchema {
     displayName: 'Market Text';
   };
   attributes: {
+    de: Schema.Attribute.Text;
     el: Schema.Attribute.Text;
+    enGb: Schema.Attribute.Text;
     es: Schema.Attribute.Text;
     it: Schema.Attribute.Text;
+    nl: Schema.Attribute.Text;
+    ro: Schema.Attribute.Text;
   };
 }
 

@@ -1,7 +1,7 @@
 import type { SiteLocale } from "@/lib/site";
 
-export type TouristAudience = "italian" | "spanish" | "greek" | "german" | "romanian" | "uk";
-export type TouristMarketLocale = "it" | "es" | "el" | "de" | "ro" | "en-gb";
+export type TouristAudience = "italian" | "spanish" | "greek" | "german" | "romanian" | "dutch" | "uk";
+export type TouristMarketLocale = "it" | "es" | "el" | "de" | "ro" | "nl" | "en-gb";
 
 type SiteLocalizedText = Partial<Record<SiteLocale, string>>;
 type MarketLocalizedText = Partial<Record<TouristMarketLocale, string>> & {

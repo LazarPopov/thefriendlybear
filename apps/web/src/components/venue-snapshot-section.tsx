@@ -11,7 +11,7 @@ import {
 } from "@/components/venue-progress-gallery";
 import { getReviewSnippetsData } from "@/lib/review-snippets";
 
-type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb";
+type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "nl" | "en-gb";
 
 type VenueSnapshotImage = VenueGalleryImage & {
   label: string;

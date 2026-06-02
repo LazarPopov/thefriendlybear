@@ -5,7 +5,7 @@
 ## Общи правила
 
 - Всички основни текстови полета трябва да поддържат `bg` и `en`.
-- Tourist landing pages могат да имат и допълнителни market-specific полета за `it`, `es` и `el`.
+- Tourist landing pages могат да имат и допълнителни market-specific полета за `it`, `es`, `el`, `de`, `ro`, `nl` и `enGb`.
 - Не ползваме автоматичен runtime превод.
 - Всички основни типове съдържание имат SEO метаданни там, където има смисъл.
 - Статусите са `draft`, `published`, `archived`.
@@ -203,36 +203,64 @@
 - `marketSlug.it`
 - `marketSlug.es`
 - `marketSlug.el`
+- `marketSlug.de`
+- `marketSlug.ro`
+- `marketSlug.nl`
+- `marketSlug.enGb`
 - `title.bg`
 - `title.en`
 - `marketTitle.it`
 - `marketTitle.es`
 - `marketTitle.el`
+- `marketTitle.de`
+- `marketTitle.ro`
+- `marketTitle.nl`
+- `marketTitle.enGb`
 - `intro.bg`
 - `intro.en`
 - `marketIntro.it`
 - `marketIntro.es`
 - `marketIntro.el`
+- `marketIntro.de`
+- `marketIntro.ro`
+- `marketIntro.nl`
+- `marketIntro.enGb`
 - `vegetarianMessage.bg`
 - `vegetarianMessage.en`
 - `marketVegetarianMessage.it`
 - `marketVegetarianMessage.es`
 - `marketVegetarianMessage.el`
+- `marketVegetarianMessage.de`
+- `marketVegetarianMessage.ro`
+- `marketVegetarianMessage.nl`
+- `marketVegetarianMessage.enGb`
 - `serviceMessage.bg`
 - `serviceMessage.en`
 - `marketServiceMessage.it`
 - `marketServiceMessage.es`
 - `marketServiceMessage.el`
+- `marketServiceMessage.de`
+- `marketServiceMessage.ro`
+- `marketServiceMessage.nl`
+- `marketServiceMessage.enGb`
 - `primaryCtaLabel.bg`
 - `primaryCtaLabel.en`
 - `marketPrimaryCtaLabel.it`
 - `marketPrimaryCtaLabel.es`
 - `marketPrimaryCtaLabel.el`
+- `marketPrimaryCtaLabel.de`
+- `marketPrimaryCtaLabel.ro`
+- `marketPrimaryCtaLabel.nl`
+- `marketPrimaryCtaLabel.enGb`
 - `primaryCtaUrl.bg`
 - `primaryCtaUrl.en`
 - `marketPrimaryCtaUrl.it`
 - `marketPrimaryCtaUrl.es`
 - `marketPrimaryCtaUrl.el`
+- `marketPrimaryCtaUrl.de`
+- `marketPrimaryCtaUrl.ro`
+- `marketPrimaryCtaUrl.nl`
+- `marketPrimaryCtaUrl.enGb`
 - `seo`
 
 ### 9. ModuleToggles
@@ -298,4 +326,4 @@ SEO блокът трябва да поддържа:
 - Review records трябва да поддържат keyword филтриране, например `cozy` и `craft beer`.
 - Tourist landing pages трябва да останат леки и бързи, без тежки widgets.
 - Frontend-ът трябва да е готов да чете CMS данни първо, с локален fallback само докато връзката със CMS още не е вързана.
-- Market routes като `/it`, `/es` и `/el` трябва да четат първо native market полетата и да падат обратно към `en`, ако native copy още не е попълнен.
+- Market routes като `/it`, `/es`, `/el`, `/de`, `/ro`, `/nl` и `/en-gb` трябва да четат първо native market полетата и да падат обратно към `en`, ако native copy още не е попълнен.

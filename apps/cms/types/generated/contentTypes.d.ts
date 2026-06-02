@@ -811,7 +811,9 @@ export interface ApiTouristLandingPageTouristLandingPage
     draftAndPublish: true;
   };
   attributes: {
-    audience: Schema.Attribute.Enumeration<['italian', 'spanish', 'greek']> &
+    audience: Schema.Attribute.Enumeration<
+      ['italian', 'spanish', 'greek', 'german', 'romanian', 'dutch', 'uk']
+    > &
       Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

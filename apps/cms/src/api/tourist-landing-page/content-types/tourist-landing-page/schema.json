@@ -12,7 +12,7 @@
   "attributes": {
     "audience": {
       "type": "enumeration",
-      "enum": ["italian", "spanish", "greek", "german", "romanian", "uk"],
+      "enum": ["italian", "spanish", "greek", "german", "romanian", "dutch", "uk"],
       "required": true
     },
     "slug": {

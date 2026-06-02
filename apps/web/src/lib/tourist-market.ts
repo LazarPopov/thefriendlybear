@@ -159,6 +159,31 @@ const touristMarketConfig: Record<TouristMarketLocale, TouristMarketConfig> = {
       centralSignal: "Locație centrală în Sofia"
     }
   },
+  nl: {
+    audience: "dutch",
+    label: "Nederlandse bezoekers",
+    ogLocale: "nl_NL",
+    nav: {
+      menu: "Menu",
+      reservations: "Reserveren",
+      contact: "Contact",
+      directions: "Route",
+      phone: "Bel om te Reserveren"
+    },
+    ui: {
+      pageLabel: "Pagina voor Nederlandse bezoekers",
+      highlights: "Highlights",
+      vegetarian: "Vegetarische opties",
+      service: "Engelssprekend team",
+      nextSteps: "Volgende stappen",
+      whyThisWorks: "Waarom The Friendly Bear",
+      quickActions: "Snelle acties",
+      openReservations: "Bel om te reserveren of bekijk eerst het Engelse menu.",
+      openContact: "Bel om te reserveren of bekijk eerst het Engelse menu.",
+      openDirections: "Open de route naar Slavyanska 23 wanneer je klaar bent om te gaan.",
+      centralSignal: "Centrale locatie in Sofia"
+    }
+  },
   "en-gb": {
     audience: "uk",
     label: "UK visitors",

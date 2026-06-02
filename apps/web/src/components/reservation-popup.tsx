@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { trackAnalyticsEvent } from "@/components/analytics-events";
 import { buildActionTracking, getActionTrackingAttributes, type BusinessActionKind } from "@/lib/tracking";
 
-type Locale = "bg" | "en" | "it" | "es" | "el";
+type Locale = "bg" | "en" | "it" | "es" | "el" | "nl";
 type ActionLocale = "bg" | "en";
 type PopupState = "pending" | "expanded" | "minimized";
 
@@ -78,6 +78,17 @@ const copy = {
     minimize: "Ελαχιστοποίηση",
     expand: "Κράτηση",
     phoneActionLabel: "Καλέστε για κράτηση"
+  },
+  nl: {
+    aria: "Reserveren",
+    kicker: "Reserveren",
+    title: "Bel om te reserveren",
+    body:
+      "Reserveer een tafel bij The Friendly Bear Sofia op Slavyanska 23. Bel ons in het Engels en we helpen je kiezen tussen de verborgen tuin, de verwarmde rookzone of een rustige kamer binnen.",
+    phoneLabel: "Telefoon",
+    minimize: "Minimaliseren",
+    expand: "Reserveer",
+    phoneActionLabel: "Bel om te reserveren"
   }
 } as const;
 
@@ -88,6 +99,7 @@ function getLocaleFromPath(pathname: string): Locale {
   if (pathname.startsWith("/it")) return "it";
   if (pathname.startsWith("/es")) return "es";
   if (pathname.startsWith("/el")) return "el";
+  if (pathname.startsWith("/nl")) return "nl";
   if (pathname.startsWith("/en")) return "en";
   return "bg";
 }
@@ -97,6 +109,7 @@ function isTouristReservationPath(pathname: string) {
     pathname.startsWith("/it") ||
     pathname.startsWith("/es") ||
     pathname.startsWith("/el") ||
+    pathname.startsWith("/nl") ||
     pathname.startsWith("/en/tourists")
   );
 }

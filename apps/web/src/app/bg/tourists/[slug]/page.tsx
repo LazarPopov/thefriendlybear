@@ -20,6 +20,7 @@ const marketLocaleByAudience: Record<TouristAudience, TouristMarketLocale> = {
   greek: "el",
   german: "de",
   romanian: "ro",
+  dutch: "nl",
   uk: "en-gb"
 };
 

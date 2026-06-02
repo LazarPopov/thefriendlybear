@@ -8,6 +8,7 @@ const htmlLanguageByRoutePrefix: Record<string, string> = {
   el: "el",
   de: "de",
   ro: "ro",
+  nl: "nl",
   "en-gb": "en-GB"
 };
 

@@ -97,8 +97,8 @@ const reviewSnippetSeeds: ReviewSnippetSeed[] = [
 const reviewSnippetEntries = createReviewSnippetFallbackEntries(reviewSnippetSeeds);
 
 const touristReviewAudienceMap: Record<string, TouristAudience[]> = {
-  "j-moreno-google": ["spanish", "german", "romanian", "uk"],
-  "alice-t-google": ["italian", "greek", "german", "romanian", "uk"]
+  "j-moreno-google": ["spanish", "german", "romanian", "dutch", "uk"],
+  "alice-t-google": ["italian", "greek", "german", "romanian", "dutch", "uk"]
 };
 
 export function getReviewSnippets(locale: SiteLocale) {

@@ -408,12 +408,18 @@ export function getTouristsHubSchema(locale: SiteLocale): JsonLd {
           {
             "@type": "ListItem",
             position: 6,
+            name: "Gids voor Nederlandse bezoekers",
+            url: absoluteUrl("/nl/restaurant-sofia-centrum")
+          },
+          {
+            "@type": "ListItem",
+            position: 7,
             name: "UK visitor guide",
             url: absoluteUrl("/en-gb/traditional-restaurant-sofia")
           },
           {
             "@type": "ListItem",
-            position: 7,
+            position: 8,
             name: "Hidden gem restaurant Sofia",
             url: absoluteUrl("/en/hidden-gem-restaurant-sofia")
           }

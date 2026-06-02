@@ -94,6 +94,10 @@ function getTouristMarketAudienceFromPath(pathname: string) {
     return "romanian";
   }
 
+  if (pathname === "/nl" || pathname.startsWith("/nl/")) {
+    return "dutch";
+  }
+
   if (pathname === "/en-gb" || pathname.startsWith("/en-gb/")) {
     return "uk";
   }

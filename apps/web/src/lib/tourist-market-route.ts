@@ -80,6 +80,19 @@ export const touristMarketRouteDefinitions: Record<TouristMarketLocale, TouristM
       "Un restaurant primitor în centrul Sofiei, cu mâncare consistentă, grădină ascunsă, interior retro și servicii în engleză.",
     knowsLanguage: ["en", "bg", "ro"]
   },
+  nl: {
+    pathPrefix: "nl",
+    slug: "restaurant-sofia-centrum",
+    title: "Restaurant Sofia Centrum voor Nederlandse Toeristen | The Friendly Bear",
+    description:
+      "Gezellig restaurant in Sofia centrum voor Nederlandse toeristen: verborgen tuin, Engelse service, eerlijke Bulgaarse smaken, vegetarische opties en fair value.",
+    inLanguage: "nl-NL",
+    regionalCode: "nl-NL",
+    breadcrumbName: "Gids voor Nederlandse bezoekers",
+    restaurantDescription:
+      "Een gezellig restaurant in het centrum van Sofia met verborgen tuin, Engelse service, Bulgaarse comfort food en vegetarische opties.",
+    knowsLanguage: ["en", "bg", "nl"]
+  },
   "en-gb": {
     pathPrefix: "en-gb",
     slug: "traditional-restaurant-sofia",

@@ -6,7 +6,7 @@ import { trackAnalyticsEvent } from "@/components/analytics-events";
 import type { SiteLocale } from "@/lib/site";
 import { buildActionTracking } from "@/lib/tracking";
 
-type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "en-gb";
+type GalleryLocale = SiteLocale | "it" | "es" | "el" | "de" | "ro" | "nl" | "en-gb";
 
 export type VenueGalleryImage = {
   src: string;
@@ -136,6 +136,16 @@ const galleryUiCopy: Record<
     directions: "Indicații",
     callToReserve: "Sună pentru rezervare"
   },
+  nl: {
+    previousAria: "Vorige afbeelding",
+    nextAria: "Volgende afbeelding",
+    restartAria: "Galerij opnieuw starten",
+    finalEyebrow: "We laten iets over voor je bezoek",
+    finalTitle: "Kom naar de den of the good taste",
+    finalText: "De rest beleef je beter zelf. Kom binnen, ontspan en geniet.",
+    directions: "Route",
+    callToReserve: "Bel om te reserveren"
+  },
   "en-gb": {
     previousAria: "Previous image",
     nextAria: "Next image",
@@ -205,6 +215,14 @@ const galleryPolaroidCaptions: Record<GalleryLocale, string[]> = {
     "O conversație lungă",
     "Confortul are o adresă"
   ],
+  nl: [
+    "Avond in de verborgen tuin",
+    "Koud bier onder de lichten",
+    "Een rustige plek in hartje Sofia",
+    "In een warme retro kamer",
+    "Een lang gesprek aan tafel",
+    "Gezellig heeft een adres"
+  ],
   "en-gb": [
     "Evening in the hidden courtyard",
     "Cold beer under the lights",
@@ -250,6 +268,10 @@ const galleryReviewCopy: Record<
   ro: [
     { eyebrow: "Recenzie pe Google", quote: "Loc perfect, cu servicii excelente și mâncare foarte bună.", author: "Viltė Čepulytė", meta: "5/5 · acum 2 luni" },
     { eyebrow: "Recenzie pe Google", quote: "Am venit fără rezervare, iar chelnerul ne-a ajutat să găsim o masă foarte bună.", author: "Alice T", meta: "5/5 · acum 2 luni" }
+  ],
+  nl: [
+    { eyebrow: "Review van Google", quote: "Perfecte plek met geweldige service en heel goed eten.", author: "Viltė Čepulytė", meta: "5/5 · 2 maanden geleden" },
+    { eyebrow: "Review van Google", quote: "We kwamen zonder reservering en de ober hielp ons aan een fijne tafel.", author: "Alice T", meta: "5/5 · 2 maanden geleden" }
   ],
   "en-gb": [
     { eyebrow: "Review from Google", quote: "Perfect place with amazing service and great food.", author: "Viltė Čepulytė", meta: "5/5 · 2 months ago" },
