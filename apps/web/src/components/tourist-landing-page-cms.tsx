@@ -1,6 +1,8 @@
 import { ActionLink } from "@/components/action-link";
+import { BrandShowcasePanel } from "@/components/brand-showcase-panel";
 import { MenuDownloadForm } from "@/components/menu-download-form";
 import { TouristReviewSnippets } from "@/components/tourist-review-snippets";
+import { TouristVisitPanel } from "@/components/tourist-visit-panel";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
   getBgPrimaryActions,
@@ -178,6 +180,7 @@ export async function TouristLandingPageCms({
       <section className="page-hero">
         <p className="eyebrow">{getTouristAudienceLabel(locale, audience)}</p>
         <h1>{touristPage.title}</h1>
+        <BrandShowcasePanel locale={isBg ? "bg" : "en"} />
         <p className="page-lead">{touristPage.intro}</p>
 
         <div className="page-tags" aria-label={isBg ? "Основни сигнали" : "Visitor page highlights"}>
@@ -276,6 +279,8 @@ export async function TouristLandingPageCms({
         menuLocale={isBg ? "bg" : "en"}
         source={`${locale}_tourists_${audience}`}
       />
+
+      <TouristVisitPanel locale={locale} businessProfile={businessProfile} context="tourist_page" />
 
       <nav className="mobile-quickbar" aria-label={isBg ? "Бързи действия" : "Quick actions"}>
         {primaryActions.map((action) => (

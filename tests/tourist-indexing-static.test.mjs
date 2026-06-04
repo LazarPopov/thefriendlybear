@@ -75,3 +75,39 @@ test("Dutch tourist market page is configured for indexing and tracking", () => 
   assert.match(marketString, /"nl"/);
   assert.match(marketText, /"nl"/);
 });
+
+test("tourist pages show the food showcase and localized visit panel", () => {
+  const touristHub = read("apps/web/src/components/tourists-page-cms.tsx");
+  const touristDetail = read("apps/web/src/components/tourist-landing-page-cms.tsx");
+  const marketPage = read("apps/web/src/components/tourist-market-page.tsx");
+  const visitPanel = read("apps/web/src/components/tourist-visit-panel.tsx");
+
+  for (const component of [touristHub, touristDetail, marketPage]) {
+    assert.match(component, /BrandShowcasePanel/);
+    assert.match(component, /TouristVisitPanel/);
+  }
+
+  assert.match(visitPanel, /home-section home-visit-panel/);
+  assert.match(visitPanel, /home-visit-copy/);
+  assert.match(visitPanel, /home-visit-actions/);
+  assert.match(visitPanel, /home-visit-map-card/);
+  assert.match(visitPanel, /CopyAddressButton/);
+  assert.match(visitPanel, /DeferredMapEmbed/);
+  assert.match(visitPanel, /mapPinLabel/);
+  assert.match(visitPanel, /tourists_visit_panel/);
+  assert.match(visitPanel, /tourist_page_visit_panel/);
+  assert.match(visitPanel, /market_visit_panel/);
+
+  for (const locale of ["en", "bg", "nl", "de", "it", "es", "el", "ro", "en-gb"]) {
+    assert.match(visitPanel, new RegExp(`["']?${locale}["']?:\\s*\\{`));
+  }
+
+  assert.match(visitPanel, /Visit us/);
+  assert.match(visitPanel, /Посетете ни/);
+  assert.match(visitPanel, /Bezoek ons/);
+  assert.match(visitPanel, /Besuchen Sie uns/);
+  assert.match(visitPanel, /Vieni a trovarci/);
+  assert.match(visitPanel, /Visítanos/);
+  assert.match(visitPanel, /Επισκεφθείτε μας/);
+  assert.match(visitPanel, /Vizitează-ne/);
+});

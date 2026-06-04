@@ -6,9 +6,10 @@ type DeferredMapEmbedProps = {
   src: string;
   title: string;
   loadLabel: string;
+  mapPinLabel?: string;
 };
 
-export function DeferredMapEmbed({ src, title, loadLabel }: DeferredMapEmbedProps) {
+export function DeferredMapEmbed({ src, title, loadLabel, mapPinLabel = "Map" }: DeferredMapEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   if (isLoaded) {
@@ -27,7 +28,7 @@ export function DeferredMapEmbed({ src, title, loadLabel }: DeferredMapEmbedProp
   return (
     <div className="home-visit-map-placeholder">
       <span aria-hidden="true" className="home-visit-map-pin">
-        Map
+        {mapPinLabel}
       </span>
       <button type="button" className="home-visit-map-load" onClick={() => setIsLoaded(true)}>
         {loadLabel}

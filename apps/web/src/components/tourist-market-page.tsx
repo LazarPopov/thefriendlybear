@@ -1,5 +1,7 @@
 import { ActionLink } from "@/components/action-link";
+import { BrandShowcasePanel } from "@/components/brand-showcase-panel";
 import { MenuDownloadForm } from "@/components/menu-download-form";
+import { TouristVisitPanel } from "@/components/tourist-visit-panel";
 import { VenueSnapshotSection } from "@/components/venue-snapshot-section";
 import {
   getBusinessProfileData,
@@ -337,6 +339,7 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
       <section className="page-hero">
         <p className="eyebrow">{config.ui.pageLabel}</p>
         <h1>{renderedTouristPage.title}</h1>
+        <BrandShowcasePanel locale="en" />
         <p className="page-lead">{renderedTouristPage.intro}</p>
         <p className="tourist-brand-motto">{touristBrandMotto}</p>
 
@@ -425,6 +428,8 @@ export async function TouristMarketPage({ marketLocale }: TouristMarketPageProps
       ) : null}
 
       <MenuDownloadForm locale={marketLocale} menuLocale="en" source={`${marketLocale}_tourist_page`} />
+
+      <TouristVisitPanel locale={marketLocale} businessProfile={businessProfile} context="market" />
 
       <nav className="mobile-quickbar" aria-label={config.ui.quickActions}>
         {marketActions.map((action) => (

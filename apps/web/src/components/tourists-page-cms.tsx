@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { ActionLink } from "@/components/action-link";
+import { BrandShowcasePanel } from "@/components/brand-showcase-panel";
 import { MenuDownloadForm } from "@/components/menu-download-form";
+import { TouristVisitPanel } from "@/components/tourist-visit-panel";
 import {
   getBgPrimaryActions,
   getBusinessProfileData,
@@ -157,6 +159,7 @@ export async function TouristsPageCms({ locale }: TouristsPageCmsProps) {
               ? "Добре дошли в София: вашият дом в центъра"
               : "Welcome to Sofia: Your Home in the City Center"}
           </h1>
+          <BrandShowcasePanel locale={isBg ? "bg" : "en"} />
           <p className="page-lead">
             {isBg
               ? "Посещението на нов град може да бъде объркващо. В The Friendly Bear го правим лесно. Намираме се в историческа къща от 1923 г. близо до хотел „Радисън“ и Народния театър, с топло посрещане, екип с английски език и меню с бавно готвени меса, вегетариански предложения и свежи салати."
@@ -240,6 +243,8 @@ export async function TouristsPageCms({ locale }: TouristsPageCmsProps) {
         menuLocale={isBg ? "bg" : "en"}
         source={`${locale}_tourists_hub`}
       />
+
+      <TouristVisitPanel locale={locale} businessProfile={businessProfile} context="tourists" />
 
       <nav className="mobile-quickbar" aria-label={isBg ? "Бързи действия" : "Quick actions"}>
         {primaryActions.map((action) => (
