@@ -1,0 +1,20 @@
+# The Vercel project root is apps/web. Keep local CMS/runtime and audit artifacts out of deploy uploads.
+apps/cms
+apps/cms/**
+docs
+docs/**
+infra
+infra/**
+scripts
+scripts/**
+tests
+tests/**
+data
+data/**
+
+dev-web*.log
+.claude
+.claude/**
+.xdg
+.xdg/**
+**/*.tsbuildinfo

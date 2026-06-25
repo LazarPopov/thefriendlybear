@@ -10,7 +10,7 @@ export const metadata: Metadata = buildPageMetadata({
   routeKey: "menu",
   title: "Bulgarian Cuisine & Seasonal Menu | The Friendly Bear Sofia",
   description:
-    "Explore our menu featuring slow-roasted lamb, traditional Bulgarian dishes, and seasonal specials. Authentic Sofia dining experience with vegetarian-friendly options."
+    "Explore slow-roasted lamb, Bulgarian dishes, seasonal specials, and vegetarian options at The Friendly Bear Sofia."
 });
 
 export default async function Page() {

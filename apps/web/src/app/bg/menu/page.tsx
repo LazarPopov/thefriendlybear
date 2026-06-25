@@ -8,7 +8,7 @@ import { getMenuPageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "menu",
-  title: "Традиционна българска кухня и сезонно меню | The Friendly Bear София",
+  title: "Българска кухня и сезонно меню | The Friendly Bear",
   description:
     "Вижте нашето меню: бавно печено агнешко, свински уши, пресни салати и вегетариански ястия. Традиционен вкус и сезонни специалитети в центъра на София."
 });

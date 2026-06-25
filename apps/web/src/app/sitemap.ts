@@ -18,6 +18,8 @@ const indexableRouteKeys: SiteRouteKey[] = [
   "reservations",
   "promotions",
   "reviews",
+  "photos",
+  "whereToEat",
   "tourists"
 ];
 

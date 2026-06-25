@@ -30,6 +30,14 @@ export const routeMap = {
     bg: "/bg/reviews",
     en: "/en/reviews"
   },
+  photos: {
+    bg: "/bg/photos",
+    en: "/en/photos"
+  },
+  whereToEat: {
+    bg: "/bg/where-to-eat-sofia-center",
+    en: "/en/where-to-eat-sofia-center"
+  },
   tourists: {
     bg: "/bg/tourists",
     en: "/en/tourists"

@@ -25,6 +25,14 @@ const contactHighlights = [
   }
 ] as const;
 
+const petFriendlyAnswer = {
+  label: "Pet-friendly",
+  title: "pet-friendly ресторант в центъра на София",
+  text:
+    "Кучета с добро поведение са добре дошли в градината и вътре. Обадете се преди посещение, ако искате най-удобната маса с куче.",
+  note: "Екипът ще помогне с по-спокойна маса според свободните места."
+} as const;
+
 const socialLinks = [
   {
     label: "Instagram: @friendlybear.bg",
@@ -144,6 +152,43 @@ export async function BulgarianContactPageCms() {
               </a>
             ))}
           </div>
+        </article>
+      </section>
+
+      <section
+        className="page-grid page-grid-two"
+        data-track-section="contact_pet_friendly"
+        data-track-section-label={petFriendlyAnswer.title}
+      >
+        <article className="page-card">
+          <p className="page-card-label">{petFriendlyAnswer.label}</p>
+          <h2>{petFriendlyAnswer.title}</h2>
+          <p>{petFriendlyAnswer.text}</p>
+          <p className="page-note">{petFriendlyAnswer.note}</p>
+        </article>
+
+        <article className="page-card">
+          <p className="page-card-label">Преди посещение</p>
+          <h2>Звъннете за най-удобната маса</h2>
+          <p>
+            Кажете ни, че идвате с куче, и ще предложим по-спокойно място в градината, в къщата
+            или вътре според свободните маси.
+          </p>
+          {phoneHref ? (
+            <ActionLink
+              href={phoneHref}
+              label="Звъннете за маса с куче"
+              className="page-inline-link"
+              tracking={buildActionTracking({
+                kind: "phone",
+                locale: "bg",
+                location: "contact_pet_friendly_card",
+                label: "Звъннете за маса с куче",
+                target: phoneHref,
+                external: false
+              })}
+            />
+          ) : null}
         </article>
       </section>
 

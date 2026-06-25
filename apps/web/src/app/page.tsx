@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "The Friendly Bear Sofia",
@@ -17,6 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootPage() {
-  redirect("/bg");
-  return null;
+  permanentRedirect("/bg");
 }

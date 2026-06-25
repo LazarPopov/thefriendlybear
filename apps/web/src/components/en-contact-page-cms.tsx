@@ -25,6 +25,14 @@ const contactHighlights = [
   }
 ] as const;
 
+const petFriendlyAnswer = {
+  label: "Pet-friendly",
+  title: "Pet-friendly restaurant in Sofia Center",
+  text:
+    "Well-behaved dogs are welcome in the garden and inside. Call before you arrive if you want the easiest table with a dog.",
+  note: "We can help choose a calmer table when space allows."
+} as const;
+
 const socialLinks = [
   {
     label: "Instagram: @friendlybear.bg",
@@ -144,6 +152,43 @@ export async function EnglishContactPageCms() {
               </a>
             ))}
           </div>
+        </article>
+      </section>
+
+      <section
+        className="page-grid page-grid-two"
+        data-track-section="contact_pet_friendly"
+        data-track-section-label={petFriendlyAnswer.title}
+      >
+        <article className="page-card">
+          <p className="page-card-label">{petFriendlyAnswer.label}</p>
+          <h2>{petFriendlyAnswer.title}</h2>
+          <p>{petFriendlyAnswer.text}</p>
+          <p className="page-note">{petFriendlyAnswer.note}</p>
+        </article>
+
+        <article className="page-card">
+          <p className="page-card-label">Before you come</p>
+          <h2>Call for the easiest table</h2>
+          <p>
+            Tell us you are coming with a dog and we will suggest the calmer garden, cabin, or indoor
+            spot available at that moment.
+          </p>
+          {phoneHref ? (
+            <ActionLink
+              href={phoneHref}
+              label="Call about a dog-friendly table"
+              className="page-inline-link"
+              tracking={buildActionTracking({
+                kind: "phone",
+                locale: "en",
+                location: "contact_pet_friendly_card",
+                label: "Call about a dog-friendly table",
+                target: phoneHref,
+                external: false
+              })}
+            />
+          ) : null}
         </article>
       </section>
 

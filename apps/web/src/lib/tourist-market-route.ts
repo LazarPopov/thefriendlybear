@@ -20,7 +20,7 @@ export const touristMarketRouteDefinitions: Record<TouristMarketLocale, TouristM
     slug: "ristorante-sofia-centro",
     title: "Dove Mangiare Bene a Sofia Centro | The Friendly Bear",
     description:
-      "Ristorante tipico nel centro di Sofia per italiani: giardino nascosto, atmosfera retro, slow-roasted lamb, panino con lingua di vitello e drink prima della nightlife.",
+      "Ristorante tipico nel centro di Sofia: giardino nascosto, atmosfera retro, slow-roasted lamb, panino con lingua di vitello e drink prima della nightlife.",
     inLanguage: "it-IT",
     regionalCode: "it-IT",
     breadcrumbName: "Guida per visitatori italiani",
@@ -83,7 +83,7 @@ export const touristMarketRouteDefinitions: Record<TouristMarketLocale, TouristM
   nl: {
     pathPrefix: "nl",
     slug: "restaurant-sofia-centrum",
-    title: "Restaurant Sofia Centrum voor Nederlandse Toeristen | The Friendly Bear",
+    title: "Restaurant Sofia Centrum | The Friendly Bear",
     description:
       "Gezellig restaurant in Sofia centrum voor Nederlandse toeristen: verborgen tuin, Engelse service, eerlijke Bulgaarse smaken, vegetarische opties en fair value.",
     inLanguage: "nl-NL",

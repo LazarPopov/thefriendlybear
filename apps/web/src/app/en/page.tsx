@@ -7,9 +7,9 @@ import { getHomePageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "en",
   routeKey: "home",
-  title: "Authentic Bulgarian Restaurant & Garden in Sofia Center | The Friendly Bear",
+  title: "Bulgarian Restaurant in Sofia Center | The Friendly Bear",
   description:
-    "Discover The Friendly Bear, an authentic Bulgarian restaurant in central Sofia. Cozy atmosphere, secret garden, slow-cooked meats, and seasonal specials on Slavyanska 23."
+    "Discover The Friendly Bear, a cozy Bulgarian restaurant in central Sofia with a secret garden, slow-cooked meats, seasonal specials, and Slavyanska 23 address."
 });
 
 export default async function Page() {

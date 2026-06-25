@@ -10,26 +10,43 @@ import type { FrontendSeasonalMenu } from "@/lib/cms/menu-adapter";
 import { getSeasonalMenuData, getSeasonalMenuFallback } from "@/lib/menu-module";
 import type { TouristAudience } from "@/lib/cms/tourist-landing-page-adapter";
 import type { FrontendTouristLandingPage } from "@/lib/tourist-landing-page-module";
+import {
+  getFoodGalleryImages,
+  getGardenGalleryImages,
+  getInteriorGalleryImages
+} from "@/lib/venue-gallery-images";
 
 type JsonLd = Record<string, unknown>;
 
 const localeMeta: Record<
   SiteLocale,
-  { language: string; homePath: string; menuPath: string; contactPath: string; reviewsPath: string }
+  {
+    language: string;
+    homePath: string;
+    menuPath: string;
+    contactPath: string;
+    reviewsPath: string;
+    photosPath: string;
+    whereToEatPath: string;
+  }
 > = {
   bg: {
     language: "bg-BG",
     homePath: "/bg",
     menuPath: "/bg/menu",
     contactPath: "/bg/contact",
-    reviewsPath: "/bg/reviews"
+    reviewsPath: "/bg/reviews",
+    photosPath: "/bg/photos",
+    whereToEatPath: "/bg/where-to-eat-sofia-center"
   },
   en: {
     language: "en-GB",
     homePath: "/en",
     menuPath: "/en/menu",
     contactPath: "/en/contact",
-    reviewsPath: "/en/reviews"
+    reviewsPath: "/en/reviews",
+    photosPath: "/en/photos",
+    whereToEatPath: "/en/where-to-eat-sofia-center"
   }
 };
 
@@ -131,6 +148,60 @@ const enFaqs = [
       "Yes. Vegetarian-friendly dishes and fresh salads are easy to find on the menu, so everyone at the table can choose with confidence."
   }
 ] as const;
+
+const menuFaqs: Record<SiteLocale, Array<{ question: string; answer: string }>> = {
+  bg: [
+    {
+      question: "Плато със сирена или колбаси има ли в The Friendly Bear?",
+      answer:
+        "В текущото специално меню няма фиксирано плато със сирена или колбаси. За споделяне започнете със сезонни стартери, мус от сирена, хрупкави лучени кръгчета или попитайте екипа за най-подходящите ястия към вино и бира."
+    }
+  ],
+  en: [
+    {
+      question: "Does The Friendly Bear have a cheese board or charcuterie board?",
+      answer:
+        "The current special menu does not list a fixed cheese board or charcuterie board. For sharing, start with seasonal starters, cheese mousse, crispy onion rings, or ask the team for the best plates to pair with wine and beer."
+    }
+  ]
+};
+
+const whereToEatFaqs: Record<SiteLocale, Array<{ question: string; answer: string }>> = {
+  bg: [
+    {
+      question: "Къде да вечерям в центъра на София?",
+      answer:
+        "The Friendly Bear е практичен избор за спокойна вечеря в центъра на София, близо до Народния театър, с градина, сезонно меню, бавно готвени меса и вегетариански опции. В делнични дни работи от 17:00 до 23:00."
+    },
+    {
+      question: "Къде да хапна обяд през уикенда в центъра на София?",
+      answer:
+        "The Friendly Bear приема гости за обяд в събота и неделя от 12:00 до 23:00. През седмицата ресторантът е подходящ основно за вечеря, защото отваря в 17:00."
+    },
+    {
+      question: "Има ли вегетариански опции и място на открито?",
+      answer:
+        "Да. В менюто има вегетариански предложения и свежи салати, а ресторантът разполага с градина и отопляема зона за пушачи."
+    }
+  ],
+  en: [
+    {
+      question: "Where should I eat dinner in Sofia Center?",
+      answer:
+        "The Friendly Bear is a practical choice for a relaxed dinner in Sofia Center, close to the National Theatre, with garden seating, seasonal dishes, slow-cooked meats, and vegetarian options. It opens Tuesday to Friday from 17:00 to 23:00."
+    },
+    {
+      question: "Where can I eat lunch near the National Theatre in Sofia?",
+      answer:
+        "The Friendly Bear is a weekend lunch option near the National Theatre, open Saturday and Sunday from 12:00 to 23:00. On weekdays it is a dinner-first restaurant because service starts at 17:00."
+    },
+    {
+      question: "Does The Friendly Bear have vegetarian options and outdoor seating?",
+      answer:
+        "Yes. The menu includes vegetarian-friendly dishes and fresh salads, and the venue has garden seating plus a heated smoking area."
+    }
+  ]
+};
 
 function absoluteUrl(path: string) {
   return new URL(path, siteConfig.siteUrl).toString();
@@ -342,6 +413,7 @@ export function getTouristsHubSchema(locale: SiteLocale): JsonLd {
   return {
     "@context": "https://schema.org",
     "@graph": [
+      getRestaurantNode(locale),
       {
         "@type": "WebPage",
         "@id": `${touristsUrl}#webpage`,
@@ -506,6 +578,19 @@ export function getMenuPageSchema(
         about: {
           "@id": restaurantId
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${menuUrl}#faq`,
+        inLanguage: localeMeta[locale].language,
+        mainEntity: menuFaqs[locale].map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer
+          }
+        }))
       }
     ]
   };
@@ -560,6 +645,155 @@ export function getReviewsPageSchema(
         mainEntity: {
           "@id": restaurantId
         }
+      }
+    ]
+  };
+}
+
+export function getPhotosPageSchema(locale: SiteLocale): JsonLd {
+  const photosUrl = absoluteUrl(localeMeta[locale].photosPath);
+  const breadcrumbId = `${photosUrl}#breadcrumb`;
+  const galleryId = `${photosUrl}#imagegallery`;
+  const images = [
+    ...getFoodGalleryImages(locale),
+    ...getGardenGalleryImages(locale),
+    ...getInteriorGalleryImages(locale)
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRestaurantNode(locale),
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Снимки" : "Photos",
+            path: localeMeta[locale].photosPath
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "WebPage",
+        "@id": `${photosUrl}#webpage`,
+        url: photosUrl,
+        name:
+          locale === "bg"
+            ? "Снимки от The Friendly Bear Sofia"
+            : "The Friendly Bear Sofia Photos",
+        description:
+          locale === "bg"
+            ? "Снимки на храната, скритата градина и уютния интериор на The Friendly Bear Sofia."
+            : "Photos of the food, hidden garden, and cozy interior at The Friendly Bear Sofia.",
+        inLanguage: localeMeta[locale].language,
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        about: {
+          "@id": restaurantId
+        },
+        mainEntity: {
+          "@id": galleryId
+        }
+      },
+      {
+        "@type": "ImageGallery",
+        "@id": galleryId,
+        url: photosUrl,
+        name:
+          locale === "bg"
+            ? "Снимки от The Friendly Bear Sofia"
+            : "The Friendly Bear Sofia Photos",
+        inLanguage: localeMeta[locale].language,
+        about: {
+          "@id": restaurantId
+        },
+        image: images.map((image, index) => ({
+          "@type": "ImageObject",
+          "@id": `${photosUrl}#image-${index + 1}`,
+          url: absoluteUrl(image.src),
+          contentUrl: absoluteUrl(image.src),
+          name: image.alt,
+          caption: image.alt,
+          representativeOfPage: index === 0
+        }))
+      }
+    ]
+  };
+}
+
+export function getWhereToEatPageSchema(
+  locale: SiteLocale,
+  profile: FrontendBusinessProfile = businessProfile
+): JsonLd {
+  const whereToEatUrl = absoluteUrl(localeMeta[locale].whereToEatPath);
+  const breadcrumbId = `${whereToEatUrl}#breadcrumb`;
+  const pageName =
+    locale === "bg"
+      ? "Къде да хапнете в центъра на София"
+      : "Where to Eat Dinner or Lunch in Sofia Center";
+  const pageDescription =
+    locale === "bg"
+      ? "Практичен отговор за вечеря и уикенд обяд в центъра на София: The Friendly Bear на ул. Славянска 23, близо до Народния театър."
+      : "A practical answer for dinner and weekend lunch in Sofia Center: The Friendly Bear on Slavyanska 23, close to the National Theatre.";
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRestaurantNode(locale, profile),
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Къде да хапнем" : "Where to eat",
+            path: localeMeta[locale].whereToEatPath
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "WebPage",
+        "@id": `${whereToEatUrl}#webpage`,
+        url: whereToEatUrl,
+        name: pageName,
+        description: pageDescription,
+        inLanguage: localeMeta[locale].language,
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        isPartOf: {
+          "@id": websiteId
+        },
+        about: {
+          "@id": restaurantId
+        },
+        mainEntity: {
+          "@id": restaurantId
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", ".page-lead"]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${whereToEatUrl}#faq`,
+        inLanguage: localeMeta[locale].language,
+        mainEntity: whereToEatFaqs[locale].map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer
+          }
+        }))
       }
     ]
   };
@@ -630,6 +864,114 @@ export function getContactPageSchema(locale: SiteLocale, profile: FrontendBusine
   };
 }
 
+export function getReservationsPageSchema(
+  locale: SiteLocale,
+  profile: FrontendBusinessProfile = businessProfile
+): JsonLd {
+  const reservationsPath = locale === "bg" ? "/bg/reservations" : "/en/reservations";
+  const reservationsUrl = absoluteUrl(reservationsPath);
+  const breadcrumbId = `${reservationsUrl}#breadcrumb`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRestaurantNode(locale, profile),
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Резервации" : "Reservations",
+            path: reservationsPath
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "WebPage",
+        "@id": `${reservationsUrl}#webpage`,
+        url: reservationsUrl,
+        name: locale === "bg" ? "Резервации | The Friendly Bear Sofia" : "Reservations | The Friendly Bear Sofia",
+        description:
+          locale === "bg"
+            ? "Звъннете за маса в The Friendly Bear Sofia на ул. Славянска 23 и попитайте за градината, отопляемата зона за пушачи или вътрешните зали."
+            : "Call to reserve a table at The Friendly Bear Sofia on Slavyanska 23 and ask about the garden, heated smoking area, or indoor dining rooms.",
+        inLanguage: localeMeta[locale].language,
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        about: {
+          "@id": restaurantId
+        },
+        mainEntity: {
+          "@id": restaurantId
+        },
+        potentialAction: {
+          "@type": "ReserveAction",
+          target: reservationsUrl,
+          object: {
+            "@id": restaurantId
+          }
+        }
+      }
+    ]
+  };
+}
+
+export function getPromotionsPageSchema(
+  locale: SiteLocale,
+  profile: FrontendBusinessProfile = businessProfile
+): JsonLd {
+  const promotionsPath = locale === "bg" ? "/bg/promotions" : "/en/promotions";
+  const promotionsUrl = absoluteUrl(promotionsPath);
+  const breadcrumbId = `${promotionsUrl}#breadcrumb`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRestaurantNode(locale, profile),
+      getBreadcrumbNode(
+        [
+          {
+            name: locale === "bg" ? "Начало" : "Home",
+            path: localeMeta[locale].homePath
+          },
+          {
+            name: locale === "bg" ? "Сезонни предложения" : "Seasonal Offers",
+            path: promotionsPath
+          }
+        ],
+        breadcrumbId
+      ),
+      {
+        "@type": "WebPage",
+        "@id": `${promotionsUrl}#webpage`,
+        url: promotionsUrl,
+        name:
+          locale === "bg"
+            ? "Сезонни предложения | The Friendly Bear Sofia"
+            : "Seasonal Offers | The Friendly Bear Sofia",
+        description:
+          locale === "bg"
+            ? "Следете сезонните предложения, специалните ястия и поводи за спокойна вечер на ул. Славянска 23."
+            : "Follow seasonal dishes, special evenings, and reasons to come back to The Friendly Bear on Slavyanska 23.",
+        inLanguage: localeMeta[locale].language,
+        breadcrumb: {
+          "@id": breadcrumbId
+        },
+        about: {
+          "@id": restaurantId
+        },
+        mainEntity: {
+          "@id": restaurantId
+        }
+      }
+    ]
+  };
+}
+
 export function getTouristLandingPageSchema(
   locale: SiteLocale,
   audience: TouristAudience,
@@ -653,6 +995,7 @@ export function getTouristLandingPageSchema(
   return {
     "@context": "https://schema.org",
     "@graph": [
+      getRestaurantNode(locale),
       {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
@@ -718,4 +1061,14 @@ export async function getReviewsPageSchemaData(locale: SiteLocale) {
 export async function getContactPageSchemaData(locale: SiteLocale) {
   const profile = await getBusinessProfileData();
   return getContactPageSchema(locale, profile);
+}
+
+export async function getReservationsPageSchemaData(locale: SiteLocale) {
+  const profile = await getBusinessProfileData();
+  return getReservationsPageSchema(locale, profile);
+}
+
+export async function getPromotionsPageSchemaData(locale: SiteLocale) {
+  const profile = await getBusinessProfileData();
+  return getPromotionsPageSchema(locale, profile);
 }

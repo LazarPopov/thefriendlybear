@@ -54,8 +54,27 @@ function getDinerNote(locale: SiteLocale) {
       };
 }
 
+function getSharingAnswer(locale: SiteLocale) {
+  return locale === "bg"
+    ? {
+        label: "За споделяне",
+        title: "Плато със сирена и колбаси",
+        text:
+          "В текущото специално меню няма фиксирано плато със сирена или колбаси. За споделяне започнете със сезонни стартери, мус от сирена, хрупкави лучени кръгчета или попитайте екипа за най-подходящите ястия към вино и бира.",
+        note: "Менюто се променя сезонно, затова най-точният отговор е на място или по телефона."
+      }
+    : {
+        label: "For sharing",
+        title: "Cheese board and charcuterie board",
+        text:
+          "The current special menu does not list a fixed cheese board or charcuterie board. For sharing, start with seasonal starters, cheese mousse, crispy onion rings, or ask the team for the best plates to pair with wine and beer.",
+        note: "The menu changes seasonally, so the most accurate answer is at the table or by phone."
+      };
+}
+
 export function SeasonalMenu({ locale, menu, showDownloadForm = true }: SeasonalMenuProps) {
   const dinerNote = getDinerNote(locale);
+  const sharingAnswer = getSharingAnswer(locale);
 
   return (
     <main className="menu-shell">
@@ -141,6 +160,15 @@ export function SeasonalMenu({ locale, menu, showDownloadForm = true }: Seasonal
           </section>
         ))}
       </div>
+
+      <section className="menu-section-card" data-track-section="menu_sharing_answer" data-track-section-label={sharingAnswer.title}>
+        <header className="menu-section-header">
+          <p className="menu-section-label">{sharingAnswer.label}</p>
+          <h2 className="menu-item-title">{sharingAnswer.title}</h2>
+        </header>
+        <p className="menu-item-description">{sharingAnswer.text}</p>
+        <p className="menu-item-signature-note">{sharingAnswer.note}</p>
+      </section>
 
       <aside className="menu-diner-note" aria-label={dinerNote.title}>
         <p className="menu-diner-note-label">{dinerNote.title}</p>

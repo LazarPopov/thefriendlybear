@@ -10,6 +10,9 @@ import { buildActionTracking, getActionTrackingAttributes, type BusinessActionKi
 
 const instagramUrl = "https://www.instagram.com/friendlybear.bg/";
 const facebookUrl = "https://www.facebook.com/friendlybear.bg/";
+const singletonLanguageSwitchPaths: Record<string, string> = {
+  "/en/hidden-gem-restaurant-sofia": "/bg/tourists"
+};
 
 function InstagramIcon() {
   return (
@@ -58,6 +61,12 @@ function getRootLocalePath(locale: "bg" | "en") {
 function getLanguageSwitchPath(pathname: string, locale: "bg" | "en", touristMarketAudience: string | null) {
   if (touristMarketAudience) {
     return `/en/tourists/${touristMarketAudience}`;
+  }
+
+  const singletonLanguageSwitchPath = singletonLanguageSwitchPaths[pathname];
+
+  if (singletonLanguageSwitchPath) {
+    return singletonLanguageSwitchPath;
   }
 
   const targetLocale = locale === "bg" ? "en" : "bg";
@@ -152,6 +161,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   const contactPath = `/${locale}/contact`;
   const touristsPath = `/${locale}/tourists`;
   const reviewsPath = `/${locale}/reviews`;
+  const photosPath = `/${locale}/photos`;
+  const whereToEatPath = `/${locale}/where-to-eat-sofia-center`;
   const phoneNumber = businessProfileSource.contact.phoneNumber;
   const phoneDisplay = businessProfileSource.contact.phoneDisplay ?? phoneNumber;
   const phoneHref = phoneNumber ? `tel:${normalizePhone(phoneNumber)}` : null;
@@ -165,6 +176,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           about: "За нас",
           tourists: "За туристи",
           reviews: "Отзиви",
+          photos: "Снимки",
+          whereToEat: "Къде да хапнем",
           contact: "Контакти",
           language: "🇬🇧 English",
           mobileLanguage: "EN",
@@ -194,6 +207,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           about: "About",
           tourists: "For tourists",
           reviews: "Reviews",
+          photos: "Photos",
+          whereToEat: "Where to eat",
           contact: "Contact",
           language: "🇧🇬 Bulgarian",
           mobileLanguage: "BG",
@@ -387,6 +402,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
               </Link>
               <Link href={contactPath}>{copy.contact}</Link>
               <Link href={reviewsPath}>{copy.reviews}</Link>
+              <Link href={photosPath}>{copy.photos}</Link>
             </div>
 
             <div className="site-footer-column">
@@ -405,6 +421,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
                 {copy.directions}
               </a>
               <Link href={touristsPath}>{copy.tourists}</Link>
+              <Link href={whereToEatPath}>{copy.whereToEat}</Link>
               <Link href={languagePath} {...tracking("language", "footer_language", languageLabel, languagePath)}>
                 {languageLabel}
               </Link>

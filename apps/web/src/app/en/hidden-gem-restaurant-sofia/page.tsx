@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 const hiddenGemPath = "/en/hidden-gem-restaurant-sofia";
 const hiddenGemTitle = "Hidden Gem Restaurant Sofia | The Friendly Bear";
 const hiddenGemDescription =
-  "A unique hidden gem restaurant in Sofia Center: 1923 house, slightly underground retro interior, hidden courtyard, veal tongue sandwich, slow-roasted lamb and Baileys Crème Brûlée.";
+  "Hidden gem restaurant in Sofia Center: 1923 house, retro interior, hidden courtyard, veal tongue sandwich, slow-roasted lamb, and Baileys Creme Brulee.";
 
 function absoluteUrl(path: string) {
   return new URL(path, siteConfig.siteUrl).toString();

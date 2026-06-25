@@ -7,9 +7,9 @@ import { getHomePageSchemaData } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "home",
-  title: "Традиционна българска кухня и градина в центъра на София | The Friendly Bear",
+  title: "Българска кухня в центъра на София | The Friendly Bear",
   description:
-    "The Friendly Bear Sofia е уютен ресторант с традиционна българска кухня в центъра на София. Насладете се на нашата градина, бавно готвени меса и сезонно меню на ул. „Славянска“ 23."
+    "The Friendly Bear Sofia е уютен ресторант в центъра на София с градина, бавно готвени меса, сезонно меню и адрес на ул. „Славянска“ 23."
 });
 
 export default async function Page() {

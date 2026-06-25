@@ -7,7 +7,7 @@ import { getTouristsHubSchema } from "@/lib/schema";
 export const metadata: Metadata = buildPageMetadata({
   locale: "bg",
   routeKey: "tourists",
-  title: "Наръчник за туристи в София: Храна и гостоприемство | The Friendly Bear",
+  title: "Наръчник за туристи в София | The Friendly Bear",
   description:
     "Наръчник за международни гости в София. Открийте нашата къща от 1923 г., екип с английски език и скрита градина в центъра."
 });
